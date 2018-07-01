@@ -1,0 +1,10 @@
+Django>=2.0,<2.1
+wagtail>=2.1,<2.2
+wagtailmedia
+wagtailcodeblock
+wagtailerrorpages
+wagtailfontawesome
+wagtailmenus
+wagtail-condensedinlinepanel
+django_comments_xtd
+django-debug-toolbar
