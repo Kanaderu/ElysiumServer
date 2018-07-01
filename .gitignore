@@ -50,9 +50,28 @@ coverage.xml
 
 # Django stuff:
 *.log
+db.sqlite3
+*.sqlite
 
 # Sphinx documentation
 docs/_build/
 
 # PyBuilder
 target/
+
+.#*
+[#]*#
+*~
+*$
+*.bak
+*.diff
+*.org
+.project
+*.rej
+.*.sw[nop]
+.sw[nop]
+*.tmp
+*.coverage.*
+/.idea
+
+**/.ipynb_checkpoints
