@@ -12,11 +12,14 @@
         {% if categories %}
             <h3>Posted in:</h3>
             <ul>
-                {% for category in categories %}
+
+                {% for categorypage in categories %}
+                    {% with category=categorypage.category %}
                     <li style="display: inline">
-                        {% image category.icon fill-32x32 style="vertical-align: middle" %}
-                        {{ category.name }}
+                        {% image category.menu_image fill-32x32 style="vertical-align: middle" %}
+                        {{ category}}
                     </li>
+                    {% endwith %}
                 {% endfor %}
             </ul>
         {% endif %}

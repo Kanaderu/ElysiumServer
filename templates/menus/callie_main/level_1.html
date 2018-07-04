@@ -4,14 +4,16 @@
 <ul class="nav-menu">
 {# declare has-drowndown class if there are children #}
 {% for item in menu_items %}
-{% if item.has_children_in_menu %}
+    {% if item.has_children_in_menu and item.text == 'Categories' %}
+        weee
+    {% elif item.has_children_in_menu %}
     <li class="has-dropdown">
-{% else %}
+    {% else %}
     <li>
-{% endif %}
+    {% endif %}
         <a href="{{ item.href }}">{{ item.text }}</a>
         {% if item.has_children_in_menu %}
-            {% sub_menu item %}
+            {% sub_menu item %} {# level_1.html #}
         {% endif %}
     </li>
 {% endfor %}

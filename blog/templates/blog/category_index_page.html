@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+{# debug #}
+{% load debug_tags %}
+
+{% block content %}
+    <h1>{{ page.title }}</h1>
+    {% for category in page.categories %}
+
+        {% image category.menu_image fill-32x32 style="vertical-align: middle" %}
+        {{ category }}<br/>
+
+
+        {% comment %}
+        {# debug #}
+        {{ category|get_obj_attr1 }}
+        {{ category.blogpage_set.all }}
+        {% endcomment %}
+
+        {% for blogpage in category.blogpage_set.all %}
+            <a href="{% pageurl blogpage %}">{{ blogpage.title }}</a><br/>
+        {% endfor %}
+
+        <hr/>
+        {% comment %}
+        {% for blogpage in category %}
+        {% endfor %}
+        {% endcomment %}
+    {% empty %}
+        EMPTY
+    {% endfor %}
+    {# DEBUG Template #}
+    <pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre>
+{% endblock %}

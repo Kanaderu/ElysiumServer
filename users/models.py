@@ -17,4 +17,4 @@ class MembershipStatus(models.Model):
         return self.name
 
     class Meta:
-        verbose_name_plural = 'membership status'
+        verbose_name_plural = 'Membership Status'

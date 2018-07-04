@@ -122,8 +122,55 @@ class BlogIndexPage(Page):
         return context
 
     class Meta:
-        verbose_name = _('Blog index')
+        verbose_name = _('Blog Index')
     subpage_types = ['blog.BlogPage']
+
+
+
+class CategoryIndexPage(Page):
+    @property
+    def categories(self):
+        # Get list of blog pages that are descendants of this page
+        categories = BlogCategory.objects.all()
+        categories = categories.order_by('-name')
+        return categories
+
+    def get_context(self, request, tag=None, category=None, author=None, *args,
+                    **kwargs):
+        context = super(CategoryIndexPage, self).get_context(request, *args, **kwargs)
+
+        categories = self.categories
+
+        '''
+        # Pagination
+        page = request.GET.get('page')
+        page_size = 10
+        if hasattr(settings, 'BLOG_PAGINATION_PER_PAGE'):
+            page_size = settings.BLOG_PAGINATION_PER_PAGE
+
+        paginator = None
+        if page_size is not None:
+            paginator = Paginator(blogs, page_size)  # Show 10 blogs per page
+            try:
+                blogs = paginator.page(page)
+            except PageNotAnInteger:
+                blogs = paginator.page(1)
+            except EmptyPage:
+                blogs = paginator.page(paginator.num_pages)
+
+        context['blogs'] = blogs
+        context['category'] = category
+        context['tag'] = tag
+        context['author'] = author
+        context['COMMENTS_APP'] = settings.COMMENTS_APP
+        context['paginator'] = paginator
+        '''
+        context = get_blog_context(context)
+
+        return context
+
+    class Meta:
+        verbose_name = _('Category Index')
 
 
 # Blog Category
@@ -139,6 +186,13 @@ class BlogCategory(models.Model):
         on_delete=models.CASCADE,
     )
     description = models.CharField(max_length=500, blank=True)
+    
+    menu_image = models.ForeignKey(
+        get_image_model_string(),
+        on_delete=models.CASCADE,
+        related_name='+',
+        verbose_name=_('Menu Image'),
+    )
 
     class Meta:
         ordering = ['name']
@@ -149,6 +203,7 @@ class BlogCategory(models.Model):
         FieldPanel('name'),
         FieldPanel('parent'),
         FieldPanel('description'),
+        ImageChooserPanel('menu_image'),
     ]
 
     def __str__(self):
@@ -191,6 +246,8 @@ class BlogPageTag(TaggedItemBase):
 @register_snippet
 class BlogTag(Tag):
     class Meta:
+        verbose_name = _("Blog Tag")
+        verbose_name_plural = _("Blog Tags")
         proxy = True
 
 
@@ -207,10 +264,13 @@ class BlogTagIndexPage(Page):
         context['blogpages'] = blogpages
         return context
 
+    class Meta:
+        verbose_name = _('Blog Tag Index')
+
 
 # Blog Page
 class BlogPage(Page):
-    body = RichTextField(verbose_name=_('body'), blank=True)
+    body = RichTextField(verbose_name=_('Body'), blank=True)
     tags = ClusterTaggableManager(through='blog.BlogPageTag', blank=True)
     date = models.DateField(
         _("Post date"), default=datetime.datetime.today,
@@ -223,7 +283,7 @@ class BlogPage(Page):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name=_('Header image')
+        verbose_name=_('Header Image')
     )
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -281,7 +341,7 @@ class BlogPage(Page):
         return context
 
     class Meta:
-        verbose_name = _('Blog page')
-        verbose_name_plural = _('Blog pages')
+        verbose_name = _('Blog Page')
+        verbose_name_plural = _('Blog Pages')
 
     parent_page_types = ['blog.BlogIndexPage']
