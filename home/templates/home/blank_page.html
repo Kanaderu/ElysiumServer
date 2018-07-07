@@ -7,8 +7,8 @@
 
 {% block content %}
 {% comment %}{% main_menu max_levels=3 use_specific=USE_SPECIFIC_TOP_LEVEL %}{% endcomment %}
-{% main_menu template="menus/main_menu.html" %}
-{% flat_menu 'test' template="menus/main_menu.html" %}
+{# {% main_menu template="menus/main_menu.html" %} #}
+{# {% flat_menu 'test' template="menus/main_menu.html" %} #}
 {% comment main_menu max_levels=3 use_specific=USE_SPECIFIC_TOP_LEVEL template="menus/custom_main_menu.html" sub_menu_template="menus/custom_sub_menu.html" %}
 {% flat_menu 'footer' max_levels=1 show_menu_heading=True use_specific=USE_SPECIFIC_TOP_LEVEL  fall_back_to_default_site_menus=True %}
 {% flat_menu 'test' max_levels=1 show_menu_heading=False  use_specific=USE_SPECIFIC_TOP_LEVEL  fall_back_to_default_site_menus=True %}
@@ -17,5 +17,18 @@
     {% for block in self.body%}
         {{ block }}
     {% endfor %}
+    {% comment %}
+    {% if block.block_type == 'code' %} {# will always be true, but included here for clarity #}
+        {{ block.block_type }}
+        {{ block }}
+        {% for subblock in block.value %}
+            {% if subblock.block_type == 'item_title' %}
+                <h2>{{ subblock.value }}</h2>
+            {% elif subblock.block_type == 'item_content' %}
+                rendering for item_content...
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% endcomment %}
 
 {% endblock %}

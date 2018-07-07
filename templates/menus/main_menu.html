@@ -8,3 +8,40 @@
     {% endfor %}
   </ul>
 {% endif %}
+
+{% comment %}
+---- menu_tags imports:::
+menu_items:	                If the template is for rendering the first level of a main or flat menu, then menu_items will be a list of MainMenuItem or FlatMenuItem objects (respectively). In all other cases. it will be a list Page objects.
+                            In either case, wagtailmenus adds a number of additional attributes to each item to help keep you menu templates consistent. For more information see: Attributes added to each item in menu_items
+
+current_level:	            An integer indicating the current level being rendered. This starts at 1 for the initial template tag call, then increments by one for each additional <ul> level that is added by calling the {% sub_menu %} tag
+
+max_levels:	                An integer indicating the maximum number of levels that should be rendered for the current menu, as determined by the original main_menu, section_menu, flat_menu or children_menu tag call.
+
+current_template:           The name of the template currently being used for rendering. This is most useful when rendering a sub_menu template that calls sub_menu recursively, and you wish to use the same template for all recursions.
+
+sub_menu_template:          The name of the template that should be used for rendering any further levels (should be picked up automatically by the sub_menu tag).
+
+original_menu_tag:          A string value indicating the name of tag was originally called in order to render the branch currently being rendered. The value will be one of "main_menu", "flat_menu", "section_menu", "children_menu" or "sub_menu".
+
+allow_repeating_parents:    A boolean indicating whether MenuPage fields should be respected when rendering further menu levels.
+
+apply_active_classes:       A boolean indicating whether sub_menu tags should attempt to add ‘active’ and ‘ancestor’ classes to menu items when rendering further menu levels.
+
+use_absolute_page_urls:     A boolean indicating whether absolute page URLs should be used for page links when rendering.
+
+
+
+----Whether menu_items is a list of Page, MainMenuItem or FlatMenuItem objects, the following additional attributes are added to each item to help improve consistency of menu templates:
+
+href:	                The URL that the menu item should link to.
+
+text:	                The text that should be used for the menu item.
+                        You can change the field or attribute used to populate the text attribute by utilising the WAGTAILMENUS_PAGE_FIELD_FOR_MENU_ITEM_TEXT setting.
+
+active_class:	        A class name to indicate the ‘active’ state of the menu item. The value will be ‘active’ if linking to the current page, or ‘ancestor’ if linking to one of it’s ancestors.
+                        You can change the CSS class strings used to indicate ‘active’ and ‘ancestor’ statuses by utilising the WAGTAILMENUS_ACTIVE_CLASS and WAGTAILMENUS_ACTIVE_ANCESTOR_CLASS settings.
+
+has_children_in_menu:   A boolean indicating whether the menu item has children that should be output as a sub-menu.
+
+{% endcomment %}
