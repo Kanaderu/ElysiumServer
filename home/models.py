@@ -19,13 +19,13 @@ from ElysiumServer.models import QuoteBlock
 
 class BlankPage(Page):
     body = StreamField([
-        ('heading', blocks.CharBlock(classname="full title")),
+        ('heading', blocks.CharBlock(icon='title', classname='full title')),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
-        ('embedded_video', EmbedBlock(icon="media")),
-        ('code', CodeBlock(label='Code')),
+        ('embedded_video', EmbedBlock(icon='media')),
+        ('code', CodeBlock(label=_('Code'))),
         ('table', TableBlock()),
-        ('html', blocks.RawHTMLBlock(icon='site', label='HTML')),
+        ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
         ('quote', QuoteBlock(icon='openquote')),
     ])
 

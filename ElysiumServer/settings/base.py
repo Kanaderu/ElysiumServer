@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'search',
     'blog',
     'users',
-    #'recipes',
+    'recipes',
 
     'django.contrib.sitemaps',
 

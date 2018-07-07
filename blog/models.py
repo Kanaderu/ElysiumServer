@@ -279,13 +279,13 @@ class BlogTagIndexPage(Page):
 # Blog Page
 class BlogPage(Page):
     body = StreamField([
-        ('heading', blocks.CharBlock(classname="full title")),
+        ('heading', blocks.CharBlock(icon='title', classname='full title')),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
-        ('embedded_video_sound', EmbedBlock(icon="media", label='Embed Video/Sound')),
+        ('embedded_video_sound', EmbedBlock(icon='media', label=_('Embed Video/Sound'))),
         ('code', CodeBlock(label='Code')),
         ('table', TableBlock()),
-        ('html', blocks.RawHTMLBlock(icon='site', label='HTML')),
+        ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
         ('quote', QuoteBlock(icon='openquote')),
     ])
     tags = ClusterTaggableManager(through='blog.BlogPageTag', blank=True)
