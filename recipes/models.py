@@ -20,7 +20,7 @@ from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtailcodeblock.blocks import CodeBlock
-from ElysiumServer.models import QuoteBlock
+from ElysiumServer.models import QuoteBlock, STANDARD_BLOCKS
 
 from taggit.models import TaggedItemBase, Tag
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -249,16 +249,7 @@ class RecipePage(Page):
             ('ingredient', blocks.CharBlock()),
         ]), icon='list-ul')),
     ], verbose_name=_("Ingredient List"))
-    body = StreamField([
-        ('heading', blocks.CharBlock(icon='title', classname='full title')),
-        ('paragraph', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('embedded_video', EmbedBlock(icon='media')),
-        ('code', CodeBlock(label='Code')),
-        ('table', TableBlock()),
-        ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
-        ('quote', QuoteBlock(icon='openquote')),
-    ])
+    body = StreamField(STANDARD_BLOCKS)
     tags = ClusterTaggableManager(through='recipes.RecipePageTag', blank=True)
     date = models.DateField(
         _("Post date"), default=datetime.datetime.today,

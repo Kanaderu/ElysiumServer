@@ -6,16 +6,117 @@ from wagtail.embeds.blocks import EmbedBlock
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.images.blocks import ImageChooserBlock
 
+from django.utils.translation import ugettext_lazy as _
+
+
 class QuoteBlock(blocks.TextBlock):
     class Meta:
         template = 'blocks/quote.html'
         icon = 'openquote'
         label = 'Quote'
-        '''
-        body = StreamField([
-            ('rich_text', blocks.RichTextBlock(icon='doc-full', label='Rich Text')),
-            ('code', CodeBlock(icon='code')),
-            ('quote', QuoteBlock(icon='openquote')),
-            ('html', blocks.RawHTMLBlock(icon='site', label='HTML')
-        ])
-        '''
+
+
+class GoogleMapBlock(blocks.StructBlock):
+    map_long = blocks.CharBlock(required=True, max_length=255)
+    map_lat = blocks.CharBlock(required=True, max_length=255)
+    map_zoom_level = blocks.CharBlock(default=14, required=True, max_length=3)
+
+    class Meta:
+        template = 'blocks/google_map.html'
+        icon = 'site'
+        label = 'Google Map'
+
+
+class TwoColumnBlock(blocks.StructBlock):
+    COLOUR_CHOICES = [('white', 'White'),
+                      ('black', 'Black')]
+    background = blocks.ChoiceBlock(choices=COLOUR_CHOICES, default="white")
+    left_column = blocks.StreamBlock([
+        ('heading', blocks.CharBlock(icon='title', classname='full title')),
+        ('paragraph', blocks.RichTextBlock()),
+        ('image', ImageChooserBlock()),
+        ('embedded_video', EmbedBlock(icon='media')),
+        ('code', CodeBlock(label=_('Code'))),
+        ('table', TableBlock()),
+        ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
+        ('quote', QuoteBlock(icon='openquote')),
+        ('google_map', GoogleMapBlock()),
+    ], icon='arrow-left', label='Left column content')
+
+    right_column = blocks.StreamBlock([
+        ('heading', blocks.CharBlock(icon='title', classname='full title')),
+        ('paragraph', blocks.RichTextBlock()),
+        ('image', ImageChooserBlock()),
+        ('embedded_video', EmbedBlock(icon='media')),
+        ('code', CodeBlock(label=_('Code'))),
+        ('table', TableBlock()),
+        ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
+        ('quote', QuoteBlock(icon='openquote')),
+        ('google_map', GoogleMapBlock()),
+    ], icon='arrow-right', label='Right column content')
+
+    class Meta:
+        template = 'blocks/two_column_block.html'
+        icon = 'list-ul'
+        label = 'Two Columns'
+
+
+class ThreeColumnBlock(blocks.StructBlock):
+    COLOUR_CHOICES = [('white', 'White'),
+                      ('black', 'Black')]
+    background = blocks.ChoiceBlock(choices=COLOUR_CHOICES, default="white")
+    left_column = blocks.StreamBlock([
+        ('heading', blocks.CharBlock(icon='title', classname='full title')),
+        ('paragraph', blocks.RichTextBlock()),
+        ('image', ImageChooserBlock()),
+        ('embedded_video', EmbedBlock(icon='media')),
+        ('code', CodeBlock(label=_('Code'))),
+        ('table', TableBlock()),
+        ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
+        ('quote', QuoteBlock(icon='openquote')),
+        ('google_map', GoogleMapBlock()),
+    ], icon='arrow-left', label='Left column content')
+
+    middle_column = blocks.StreamBlock([
+        ('heading', blocks.CharBlock(icon='title', classname='full title')),
+        ('paragraph', blocks.RichTextBlock()),
+        ('image', ImageChooserBlock()),
+        ('embedded_video', EmbedBlock(icon='media')),
+        ('code', CodeBlock(label=_('Code'))),
+        ('table', TableBlock()),
+        ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
+        ('quote', QuoteBlock(icon='openquote')),
+        ('google_map', GoogleMapBlock()),
+    ], icon='horizontalrule', label='Middle column content')
+
+    right_column = blocks.StreamBlock([
+        ('heading', blocks.CharBlock(icon='title', classname='full title')),
+        ('paragraph', blocks.RichTextBlock()),
+        ('image', ImageChooserBlock()),
+        ('embedded_video', EmbedBlock(icon='media')),
+        ('code', CodeBlock(label=_('Code'))),
+        ('table', TableBlock()),
+        ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
+        ('quote', QuoteBlock(icon='openquote')),
+        ('google_map', GoogleMapBlock()),
+    ], icon='arrow-right', label='Right column content')
+
+    class Meta:
+        template = 'blocks/three_column_block.html'
+        icon = 'list-ul'
+        label = 'Three Columns'
+
+
+STANDARD_BLOCKS = [
+    ('heading', blocks.CharBlock(icon='title', classname='full title')),
+    ('paragraph', blocks.RichTextBlock()),
+    ('image', ImageChooserBlock()),
+    ('embedded_video', EmbedBlock(icon='media')),
+    ('code', CodeBlock(label=_('Code'))),
+    ('table', TableBlock()),
+    ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
+    ('quote', QuoteBlock(icon='openquote')),
+    ('google_map', GoogleMapBlock()),
+    ('two_column_block', TwoColumnBlock()),
+    ('three_column_block', ThreeColumnBlock()),
+]

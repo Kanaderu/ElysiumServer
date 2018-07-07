@@ -20,7 +20,7 @@ from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtailcodeblock.blocks import CodeBlock
-from ElysiumServer.models import QuoteBlock
+from ElysiumServer.models import QuoteBlock, STANDARD_BLOCKS
 
 from taggit.models import TaggedItemBase, Tag
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -278,16 +278,7 @@ class BlogTagIndexPage(Page):
 
 # Blog Page
 class BlogPage(Page):
-    body = StreamField([
-        ('heading', blocks.CharBlock(icon='title', classname='full title')),
-        ('paragraph', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('embedded_video_sound', EmbedBlock(icon='media', label=_('Embed Video/Sound'))),
-        ('code', CodeBlock(label='Code')),
-        ('table', TableBlock()),
-        ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
-        ('quote', QuoteBlock(icon='openquote')),
-    ])
+    body = StreamField(STANDARD_BLOCKS)
     tags = ClusterTaggableManager(through='blog.BlogPageTag', blank=True)
     date = models.DateField(
         _("Post date"), default=datetime.datetime.today,

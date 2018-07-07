@@ -15,19 +15,10 @@ from wagtail.images.blocks import ImageChooserBlock
 
 from wagtailcodeblock.blocks import CodeBlock
 from wagtail.embeds.blocks import EmbedBlock
-from ElysiumServer.models import QuoteBlock
+from ElysiumServer.models import QuoteBlock, STANDARD_BLOCKS
 
 class BlankPage(Page):
-    body = StreamField([
-        ('heading', blocks.CharBlock(icon='title', classname='full title')),
-        ('paragraph', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('embedded_video', EmbedBlock(icon='media')),
-        ('code', CodeBlock(label=_('Code'))),
-        ('table', TableBlock()),
-        ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
-        ('quote', QuoteBlock(icon='openquote')),
-    ])
+    body = StreamField(STANDARD_BLOCKS)
 
     content_panels = Page.content_panels + [
         StreamFieldPanel('body', classname="full"),
