@@ -36,7 +36,9 @@
     </div>
     {% endif %}
 
-    {{ page.body|richtext }}
+    {% for block in self.body%}
+        {{ block }}
+    {% endfor %}
 
     <div style="float: left; margin: 10px">
         {% image page.header_image fill-320x240 %}

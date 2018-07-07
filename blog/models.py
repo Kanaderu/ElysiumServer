@@ -7,18 +7,21 @@ from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.core import blocks
 from wagtail.core.models import Page
 from wagtail.admin.edit_handlers import (
-    FieldPanel, InlinePanel, MultiFieldPanel, FieldRowPanel)
-from wagtail.contrib.table_block.blocks import TableBlock
+    FieldPanel, InlinePanel, MultiFieldPanel, FieldRowPanel, StreamFieldPanel)
 from wagtail.images.edit_handlers import ImageChooserPanel
-from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images import get_image_model_string
-from wagtail.embeds.blocks import EmbedBlock
 from wagtail.snippets.models import register_snippet
 from wagtail.search import index
+
+from wagtail.core import blocks
+from wagtail.contrib.table_block.blocks import TableBlock
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.embeds.blocks import EmbedBlock
 from wagtailcodeblock.blocks import CodeBlock
+from ElysiumServer.models import QuoteBlock
+
 from taggit.models import TaggedItemBase, Tag
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
@@ -279,9 +282,11 @@ class BlogPage(Page):
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
-        ('embedded_video', EmbedBlock(icon="media")),
+        ('embedded_video_sound', EmbedBlock(icon="media", label='Embed Video/Sound')),
         ('code', CodeBlock(label='Code')),
-        ('table', TableBlock())
+        ('table', TableBlock()),
+        ('html', blocks.RawHTMLBlock(icon='site', label='HTML')),
+        ('quote', QuoteBlock(icon='openquote')),
     ])
     tags = ClusterTaggableManager(through='blog.BlogPageTag', blank=True)
     date = models.DateField(
@@ -330,7 +335,7 @@ class BlogPage(Page):
             InlinePanel('categories', label=_("Categories")),
         ], heading="Tags and Categories"),
         ImageChooserPanel('header_image'),
-        FieldPanel('body', classname="full"),
+        StreamFieldPanel('body', classname="full title"),
     ]
 
     def save_revision(self, *args, **kwargs):
