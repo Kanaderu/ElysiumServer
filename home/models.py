@@ -5,6 +5,7 @@ from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField
 #from wagtail.admin.edit_handlers import FieldPanel
 
+from wagtail.contrib.table_block.blocks import TableBlock
 
 from wagtail.core.fields import StreamField
 from wagtail.core import blocks
@@ -20,7 +21,8 @@ class BlankPage(Page):
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
-        ('code', CodeBlock(lablel='Code'))
+        ('code', CodeBlock(lablel='Code')),
+        ('table', TableBlock())
     ])
 
     content_panels = Page.content_panels + [

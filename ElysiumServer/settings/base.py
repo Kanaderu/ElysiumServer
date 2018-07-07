@@ -33,8 +33,9 @@ INSTALLED_APPS = [
     'search',
     'blog',
     'users',
+    #'recipes',
 
-    "django.contrib.sitemaps",
+    'django.contrib.sitemaps',
 
     'wagtailmedia',
 
@@ -47,6 +48,8 @@ INSTALLED_APPS = [
     'wagtail.contrib.modeladmin',
     'wagtailmenus',
     'condensedinlinepanel',
+
+    'wagtail.contrib.table_block',
 
     #'wagtailgeowidget',
 

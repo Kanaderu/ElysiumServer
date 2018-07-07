@@ -15,7 +15,6 @@ from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images import get_image_model_string
-from wagtail.embeds.blocks import EmbedBlock
 from wagtail.snippets.models import register_snippet
 from wagtail.search import index
 from wagtailcodeblock.blocks import CodeBlock
@@ -25,9 +24,9 @@ from modelcluster.fields import ParentalKey
 from .utils import unique_slugify
 import datetime
 
-
+'''
 # Helper function to get blog context
-def get_blog_context(context):
+def get_recipe_context(context):
     """ Get context data useful on all blog related pages """
     context['authors'] = get_user_model().objects.filter(
         owned_pages__live=True,
@@ -42,64 +41,46 @@ def get_blog_context(context):
         blog_count=Count('blogpage'),
     )
     return context
+'''
 
 
-def limit_author_choices():
-    """ Limit choices in blog author field based on config settings """
-    LIMIT_AUTHOR_CHOICES = getattr(settings, 'BLOG_LIMIT_AUTHOR_CHOICES_GROUP', None)
-    if LIMIT_AUTHOR_CHOICES:
-        if isinstance(LIMIT_AUTHOR_CHOICES, str):
-            limit = Q(groups__name=LIMIT_AUTHOR_CHOICES)
-        else:
-            limit = Q()
-            for s in LIMIT_AUTHOR_CHOICES:
-                limit = limit | Q(groups__name=s)
-        if getattr(settings, 'BLOG_LIMIT_AUTHOR_CHOICES_ADMIN', False):
-            limit = limit | Q(is_staff=True)
-    else:
-        limit = {'is_staff': True}
-    return limit
-
-
-
-
-# Blog Index Page
-class BlogIndexPage(Page):
+# Recipe Index Page
+class RecipeIndexPage(Page):
     @property
-    def blogs(self):
-        # Get list of blog pages that are descendants of this page
-        blogs = BlogPage.objects.descendant_of(self).live()
-        blogs = blogs.order_by(
+    def recipes(self):
+        # Get list of recipe pages that are descendants of this page
+        recipes = RecipePage.objects.descendant_of(self).live()
+        recipes = recipes.order_by(
             '-date'
         ).select_related('owner').prefetch_related(
             'tagged_items__tag',
             'categories',
             'categories__category',
         )
-        return blogs
+        return recipes
 
     def get_context(self, request, tag=None, category=None, author=None, *args,
                     **kwargs):
-        context = super(BlogIndexPage, self).get_context(
+        context = super(RecipeIndexPage, self).get_context(
             request, *args, **kwargs)
-        blogs = self.blogs
+        recipes = self.recipes
 
         if tag is None:
             tag = request.GET.get('tag')
         if tag:
-            blogs = blogs.filter(tags__slug=tag)
+            recipes = recipes.filter(tags__slug=tag)
         if category is None:  # Not coming from category_view in views.py
             if request.GET.get('category'):
-                category = get_object_or_404(BlogCategory, slug=request.GET.get('category'))
+                category = get_object_or_404(RecipeCategory, slug=request.GET.get('category'))
         if category:
             if not request.GET.get('category'):
-                category = get_object_or_404(BlogCategory, slug=category)
-            blogs = blogs.filter(categories__category__name=category)
-        if author:
-            if isinstance(author, str) and not author.isdigit():
-                blogs = blogs.filter(author__username=author)
-            else:
-                blogs = blogs.filter(author_id=author)
+                category = get_object_or_404(RecipeCategory, slug=category)
+            recipes = recipes.filter(categories__category__name=category)
+        #if author:
+        #    if isinstance(author, str) and not author.isdigit():
+        #        recipes = recipes.filter(author__username=author)
+        #    else:
+        #        recipes = recipes.filter(author_id=author)
 
         # Pagination
         page = request.GET.get('page')
@@ -109,40 +90,40 @@ class BlogIndexPage(Page):
 
         paginator = None
         if page_size is not None:
-            paginator = Paginator(blogs, page_size)  # Show 10 blogs per page
+            paginator = Paginator(recipes, page_size)  # Show 10 recipes per page
             try:
-                blogs = paginator.page(page)
+                recipes = paginator.page(page)
             except PageNotAnInteger:
-                blogs = paginator.page(1)
+                recipes = paginator.page(1)
             except EmptyPage:
-                blogs = paginator.page(paginator.num_pages)
+                recipes = paginator.page(paginator.num_pages)
 
-        context['blogs'] = blogs
+        context['recipes'] = recipes
         context['category'] = category
         context['tag'] = tag
         context['author'] = author
         context['COMMENTS_APP'] = settings.COMMENTS_APP
         context['paginator'] = paginator
-        context = get_blog_context(context)
+        #context = get_blog_context(context)
 
         return context
 
     class Meta:
-        verbose_name = _('Blog Index')
-    subpage_types = ['blog.BlogPage']
+        verbose_name = _('Recipe Index')
+    subpage_types = ['recipes.RecipePage']
 
 
-class BlogCategoryIndexPage(Page):
+class RecipeCategoryIndexPage(Page):
     @property
     def categories(self):
-        # Get list of blog pages that are descendants of this page
-        categories = BlogCategory.objects.all()
+        # Get list of recipe pages that are descendants of this page
+        categories = RecipeCategory.objects.all()
         categories = categories.order_by('name')
         return categories
 
     def get_context(self, request, tag=None, category=None, author=None, *args,
                     **kwargs):
-        context = super(BlogCategoryIndexPage, self).get_context(request, *args, **kwargs)
+        context = super(RecipeCategoryIndexPage, self).get_context(request, *args, **kwargs)
 
         categories = self.categories
 
@@ -169,18 +150,18 @@ class BlogCategoryIndexPage(Page):
         context['author'] = author
         context['COMMENTS_APP'] = settings.COMMENTS_APP
         context['paginator'] = paginator
-        '''
         context = get_blog_context(context)
+        '''
 
         return context
 
     class Meta:
-        verbose_name = _('Blog Category Index')
+        verbose_name = _('Recipe Category Index')
 
 
-# Blog Category
+# Recipe Category
 @register_snippet
-class BlogCategory(models.Model):
+class RecipeCategory(models.Model):
     name = models.CharField(max_length=80, unique=True, verbose_name=_('Category Name'))
     slug = models.SlugField(unique=True, max_length=80)
     parent = models.ForeignKey('self', blank=True, null=True, related_name="children",
@@ -191,7 +172,7 @@ class BlogCategory(models.Model):
         on_delete=models.CASCADE,
     )
     description = models.CharField(max_length=500, blank=True)
-    
+
     menu_image = models.ForeignKey(
         get_image_model_string(),
         on_delete=models.CASCADE,
@@ -201,8 +182,8 @@ class BlogCategory(models.Model):
 
     class Meta:
         ordering = ['name']
-        verbose_name = _("Blog Category")
-        verbose_name_plural = _("Blog Categories")
+        verbose_name = _("Recipe Category")
+        verbose_name_plural = _("Recipe Categories")
 
     panels = [
         FieldPanel('name'),
@@ -225,68 +206,53 @@ class BlogCategory(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             unique_slugify(self, self.name)
-        return super(BlogCategory, self).save(*args, **kwargs)
+        return super(RecipeCategory, self).save(*args, **kwargs)
 
 
-# Intermediate between Blog Category and Blog Page
-class BlogCategoryBlogPage(models.Model):
+# Intermediate between Recipe Category and Recipe Page
+class RecipeCategoryRecipePage(models.Model):
     category = models.ForeignKey(
-        'BlogCategory', related_name="+", verbose_name=_('Category'),
+        'RecipeCategory', related_name="+", verbose_name=_('Category'),
         on_delete=models.CASCADE,
     )
 
-    page = ParentalKey('blog.BlogPage', related_name='categories')
+    page = ParentalKey('recipes.RecipePage', related_name='categories')
 
     panels = [
         FieldPanel('category'),
     ]
 
 
-# Intermediate between Blog Page and Blog Tag
-class BlogPageTag(TaggedItemBase):
-    content_object = ParentalKey('blog.BlogPage', related_name='tagged_items')
-
-
-# Blog Tag
+# Recipe Tag
 @register_snippet
-class BlogTag(Tag):
+class RecipeTag(Tag):
     class Meta:
-        verbose_name = _("Blog Tag")
-        verbose_name_plural = _("Blog Tags")
+        verbose_name = _("Recipe Tag")
+        verbose_name_plural = _("Recipe Tags")
         proxy = True
 
 
-# Blog Tag Index Page
-class BlogTagIndexPage(Page):
-
-    def get_context(self, request):
-        # Filter by tag
-        tag = request.GET.get('tag')
-        blogpages = BlogPage.objects.filter(tags__name=tag)
-
-        # Update template context
-        context = super().get_context(request)
-        context['blogpages'] = blogpages
-        return context
-
-    class Meta:
-        verbose_name = _('Blog Tag Index')
+# Intermediate between Recipe Page and Recipe Tag
+class RecipePageTag(TaggedItemBase):
+    content_object = ParentalKey('recipes.RecipePage', related_name='tagged_items')
 
 
-# Blog Page
-class BlogPage(Page):
+# Recipe Page
+class RecipePage(Page):
+    ingredients = StreamField([
+        ('ingredient', blocks.RichTextBlock(blank=True)),
+    ])
     body = StreamField([
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
-        ('embedded_video', EmbedBlock(icon="media")),
         ('code', CodeBlock(label='Code')),
         ('table', TableBlock())
     ])
-    tags = ClusterTaggableManager(through='blog.BlogPageTag', blank=True)
+    tags = ClusterTaggableManager(through='recipes.RecipePageTag', blank=True)
     date = models.DateField(
         _("Post date"), default=datetime.datetime.today,
-        help_text=_("This date may be displayed on the blog post. It is not "
+        help_text=_("This date may be displayed on the recipe. It is not "
                     "used to schedule posts to go live at a later date.")
     )
     header_image = models.ForeignKey(
@@ -297,20 +263,13 @@ class BlogPage(Page):
         related_name='+',
         verbose_name=_('Header Image')
     )
-    author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        blank=True, null=True,
-        limit_choices_to=limit_author_choices,
-        verbose_name=_('Author'),
-        on_delete=models.SET_NULL,
-        related_name='author_pages',
-    )
+    author = models.CharField(max_length=255, default='author/source')
 
     search_fields = Page.search_fields + [
         index.SearchField('body'),
     ]
 
-    blog_categories = models.ManyToManyField('blog.BlogCategory', through='blog.BlogCategoryBlogPage', blank=True)
+    recipe_categories = models.ManyToManyField('recipes.RecipeCategory', through='recipes.RecipeCategoryRecipePage', blank=True)
 
     settings_panels = [
         MultiFieldPanel([
@@ -330,30 +289,26 @@ class BlogPage(Page):
             InlinePanel('categories', label=_("Categories")),
         ], heading="Tags and Categories"),
         ImageChooserPanel('header_image'),
+        FieldPanel('ingredients'),
         FieldPanel('body', classname="full"),
     ]
-
-    def save_revision(self, *args, **kwargs):
-        if not self.author:
-            self.author = self.owner
-        return super(BlogPage, self).save_revision(*args, **kwargs)
 
     def get_absolute_url(self):
         return self.url
 
-    def get_blog_index(self):
-        # Find closest ancestor which is a blog index
-        return self.get_ancestors().type(BlogIndexPage).last()
+    def get_recipe_index(self):
+        # Find closest ancestor which is a recipes index
+        return self.get_ancestors().type(RecipeIndexPage).last()
 
     def get_context(self, request, *args, **kwargs):
-        context = super(BlogPage, self).get_context(request, *args, **kwargs)
-        context['blogs'] = self.get_blog_index().blogindexpage.blogs
-        context = get_blog_context(context)
+        context = super(RecipePage, self).get_context(request, *args, **kwargs)
+        context['recipes'] = self.get_recipe_index().recipeindexpage.recipes
+        #context = get_recipe_context(context)
         context['COMMENTS_APP'] = settings.COMMENTS_APP
         return context
 
     class Meta:
-        verbose_name = _('Blog Page')
-        verbose_name_plural = _('Blog Pages')
+        verbose_name = _('Recipe Page')
+        verbose_name_plural = _('Recipe Pages')
 
-    parent_page_types = ['blog.BlogIndexPage']
+    parent_page_types = ['recipes.RecipeIndexPage']
