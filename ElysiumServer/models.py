@@ -27,33 +27,25 @@ class GoogleMapBlock(blocks.StructBlock):
         label = 'Google Map'
 
 
+COLUMN_BLOCKS = [
+    ('heading', blocks.CharBlock(icon='title', classname='full title')),
+    ('paragraph', blocks.RichTextBlock()),
+    ('image', ImageChooserBlock()),
+    ('embedded_video', EmbedBlock(icon='media')),
+    ('code', CodeBlock(label=_('Code'))),
+    ('table', TableBlock()),
+    ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
+    ('quote', QuoteBlock(icon='openquote')),
+    ('google_map', GoogleMapBlock()),
+]
+
+
 class TwoColumnBlock(blocks.StructBlock):
     COLOUR_CHOICES = [('white', 'White'),
                       ('black', 'Black')]
     background = blocks.ChoiceBlock(choices=COLOUR_CHOICES, default="white")
-    left_column = blocks.StreamBlock([
-        ('heading', blocks.CharBlock(icon='title', classname='full title')),
-        ('paragraph', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('embedded_video', EmbedBlock(icon='media')),
-        ('code', CodeBlock(label=_('Code'))),
-        ('table', TableBlock()),
-        ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
-        ('quote', QuoteBlock(icon='openquote')),
-        ('google_map', GoogleMapBlock()),
-    ], icon='arrow-left', label='Left column content')
-
-    right_column = blocks.StreamBlock([
-        ('heading', blocks.CharBlock(icon='title', classname='full title')),
-        ('paragraph', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('embedded_video', EmbedBlock(icon='media')),
-        ('code', CodeBlock(label=_('Code'))),
-        ('table', TableBlock()),
-        ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
-        ('quote', QuoteBlock(icon='openquote')),
-        ('google_map', GoogleMapBlock()),
-    ], icon='arrow-right', label='Right column content')
+    left_column = blocks.StreamBlock(COLUMN_BLOCKS, icon='arrow-left', label='Left column content')
+    right_column = blocks.StreamBlock(COLUMN_BLOCKS, icon='arrow-right', label='Right column content')
 
     class Meta:
         template = 'blocks/two_column_block.html'
@@ -65,41 +57,9 @@ class ThreeColumnBlock(blocks.StructBlock):
     COLOUR_CHOICES = [('white', 'White'),
                       ('black', 'Black')]
     background = blocks.ChoiceBlock(choices=COLOUR_CHOICES, default="white")
-    left_column = blocks.StreamBlock([
-        ('heading', blocks.CharBlock(icon='title', classname='full title')),
-        ('paragraph', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('embedded_video', EmbedBlock(icon='media')),
-        ('code', CodeBlock(label=_('Code'))),
-        ('table', TableBlock()),
-        ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
-        ('quote', QuoteBlock(icon='openquote')),
-        ('google_map', GoogleMapBlock()),
-    ], icon='arrow-left', label='Left column content')
-
-    middle_column = blocks.StreamBlock([
-        ('heading', blocks.CharBlock(icon='title', classname='full title')),
-        ('paragraph', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('embedded_video', EmbedBlock(icon='media')),
-        ('code', CodeBlock(label=_('Code'))),
-        ('table', TableBlock()),
-        ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
-        ('quote', QuoteBlock(icon='openquote')),
-        ('google_map', GoogleMapBlock()),
-    ], icon='horizontalrule', label='Middle column content')
-
-    right_column = blocks.StreamBlock([
-        ('heading', blocks.CharBlock(icon='title', classname='full title')),
-        ('paragraph', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('embedded_video', EmbedBlock(icon='media')),
-        ('code', CodeBlock(label=_('Code'))),
-        ('table', TableBlock()),
-        ('html', blocks.RawHTMLBlock(icon='site', label=_('HTML'))),
-        ('quote', QuoteBlock(icon='openquote')),
-        ('google_map', GoogleMapBlock()),
-    ], icon='arrow-right', label='Right column content')
+    left_column = blocks.StreamBlock(COLUMN_BLOCKS, icon='arrow-left', label='Left column content')
+    middle_column = blocks.StreamBlock(COLUMN_BLOCKS, icon='horizontalrule', label='Middle column content')
+    right_column = blocks.StreamBlock(COLUMN_BLOCKS, icon='arrow-right', label='Right column content')
 
     class Meta:
         template = 'blocks/three_column_block.html'
