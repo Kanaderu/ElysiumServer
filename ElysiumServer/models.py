@@ -40,9 +40,11 @@ COLUMN_BLOCKS = [
 ]
 
 
+COLOUR_CHOICES = [('white', 'White'),
+                  ('black', 'Black')]
+
+
 class TwoColumnBlock(blocks.StructBlock):
-    COLOUR_CHOICES = [('white', 'White'),
-                      ('black', 'Black')]
     background = blocks.ChoiceBlock(choices=COLOUR_CHOICES, default="white")
     left_column = blocks.StreamBlock(COLUMN_BLOCKS, icon='arrow-left', label='Left column content')
     right_column = blocks.StreamBlock(COLUMN_BLOCKS, icon='arrow-right', label='Right column content')
@@ -54,8 +56,6 @@ class TwoColumnBlock(blocks.StructBlock):
 
 
 class ThreeColumnBlock(blocks.StructBlock):
-    COLOUR_CHOICES = [('white', 'White'),
-                      ('black', 'Black')]
     background = blocks.ChoiceBlock(choices=COLOUR_CHOICES, default="white")
     left_column = blocks.StreamBlock(COLUMN_BLOCKS, icon='arrow-left', label='Left column content')
     middle_column = blocks.StreamBlock(COLUMN_BLOCKS, icon='horizontalrule', label='Middle column content')
