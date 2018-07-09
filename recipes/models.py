@@ -249,6 +249,10 @@ class RecipePage(Page):
             ('ingredient', blocks.CharBlock()),
         ]), icon='list-ul')),
     ], verbose_name=_("Ingredient List"))
+    prep_time = models.TimeField(blank=True, null=True)
+    cook_time = models.TimeField(blank=True, null=True)
+    servings = models.IntegerField(blank=True, null=True)
+    calories = models.IntegerField(blank=True, null=True)
     body = StreamField(STANDARD_BLOCKS)
     tags = ClusterTaggableManager(through='recipes.RecipePageTag', blank=True)
     date = models.DateField(
@@ -285,11 +289,17 @@ class RecipePage(Page):
 
     content_panels = [
         FieldPanel('title', classname="full title"),
+        ImageChooserPanel('header_image'),
         MultiFieldPanel([
             FieldPanel('tags'),
             InlinePanel('categories', label=_("Categories")),
         ], heading="Tags and Categories"),
-        ImageChooserPanel('header_image'),
+        MultiFieldPanel([
+            FieldPanel('prep_time'),
+            FieldPanel('cook_time'),
+            FieldPanel('servings'),
+            FieldPanel('calories'),
+        ], heading="Timing and Stats"),
         StreamFieldPanel('ingredients'),
         StreamFieldPanel('body', classname="full title"),
     ]
