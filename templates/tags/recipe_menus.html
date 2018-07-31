@@ -1,0 +1,38 @@
+{% comment %}
+snippets are all top-level from admin view
+    Specifies Snippet model:
+
+        Parent: Columns (ideally 4, due to col-3 setup)
+            Child_0: Title
+                Child_1: Entry
+{% endcomment %}
+<div class="dropdown">
+    <div class="dropdown-body">
+        <div class="row">
+        {% for column in recipe_category %}
+            {% if column.parent == None %}
+            <div class="col-md-3">
+                {% comment %}NullParent:{{ column }}{% endcomment %}
+                {% for child_0 in column.children.all|dictsort:"name" %}
+                    <h4 class="dropdown-heading">{{ child_0|title }}</h4>
+                    {% if child_0.children %}
+                    <ul class="dropdown-list">
+                    {% endif %}
+                        {% for child_1 in child_0.children.all|dictsort:"name" %}
+                            <li><a href="{{ item.href }}">{{ child_1 }}</a></li>
+                            {% comment %} //CHILD 2?
+                            {% for child_1 in child_0.children.all|dictsort:"name" %}
+                                Child-child{{ child_1|title }}
+                            {% endfor %}
+                            {% endcomment %}
+                        {% endfor %}
+                    {% if child_0.children %}
+                    </ul>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+</div>

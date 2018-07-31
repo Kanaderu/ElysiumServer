@@ -162,7 +162,6 @@ class RecipeCategoryIndexPage(Page):
     class Meta:
         verbose_name = _('Recipe Category Index')
 
-
 # Recipe Category
 @register_snippet
 class RecipeCategory(models.Model):

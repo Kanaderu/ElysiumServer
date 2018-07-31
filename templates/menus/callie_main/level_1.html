@@ -4,7 +4,7 @@
 <ul class="nav-menu">
 {# declare has-drowndown class if there are children #}
 {% for item in menu_items %}
-    {% if item.has_children_in_menu and item.text|lower == "categories" %}
+    {% if item.has_children_in_menu and item.text|lower == "recipes" %}
     <li class="has-dropdown megamenu">
     {% elif item.has_children_in_menu %}
     <li class="has-dropdown">
@@ -12,10 +12,10 @@
     <li>
     {% endif %}
         <a href="{{ item.href }}">{{ item.text }}</a>
-        {% if item.has_children_in_menu and item.text|lower == "categories" %}
+        {% if item.has_children_in_menu and item.text|lower == "recipes" %}
             {% sub_menu item template='menus/callie_main/level_1_megamenu.html' %} {# level_1.html #}
         {% elif item.has_children_in_menu %}
-            {% sub_menu item %} {# level_1.html #}
+            {% sub_menu item template='menus/callie_main/level_2.html'%} {# level_2.html #}
         {% endif %}
     </li>
 {% endfor %}

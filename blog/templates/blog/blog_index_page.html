@@ -5,7 +5,7 @@
 {% endblock %}
 
 
-{% block body_class %}template-blogindexpage{% endblock %}
+{% comment %}{% block body_class %}template-blogindexpage{% endblock %}{% endcomment %}
 
 {% block content %}
     <h1>{{ page.title }}</h1>
@@ -19,14 +19,9 @@
             {% with post.header_image as header_image %}
                 {% if header_image %}{% image header_image fill-160x100 %}{% endif %}
             {% endwith %}
-            {% comment %}
-            {% with post.main_image as main_image %}
-                {% if main_image %}{% image main_image fill-160x100 %}{% endif %}
-            {% endwith %}
-            {% endcomment %}
 
             <p>{{ post.intro }}</p>
-            {{ post.body|richtext }}
+            {% comment %}{{ post.body|richtext }}{% endcomment %}
         {% endwith %}
     {% endfor %}
 
