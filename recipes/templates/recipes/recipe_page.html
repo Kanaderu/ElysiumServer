@@ -16,8 +16,11 @@
                 {% for categorypage in categories %}
                     {% with category=categorypage.category %}
                     <li style="display: inline">
-                        {% image category.menu_image fill-32x32 style="vertical-align: middle" %}
-                        {{ category }}
+                        {% comment %}Category: "{{ category.parent }}"{% endcomment %}
+                        {% if category.parent != None %}
+                            {% image category.menu_image fill-32x32 style="vertical-align: middle" %}
+                            {{ category }}
+                        {% endif %}
                     </li>
                     {% endwith %}
                 {% endfor %}
@@ -35,6 +38,13 @@
         {% endfor %}
     </div>
     {% endif %}
+
+    <!-- check if None -->
+    Prep Time: {{ page.prep_time }}<br/>
+    Cook Time: {{ page.cook_time }}<br/>
+    Cook Time: {{ page.servings }}<br/>
+    Cook Time: {{ page.calories }}<br/>
+    Cook Time: {{ page.date }}<br/>
 
     {% for block in self.body%}
         {{ block }}
