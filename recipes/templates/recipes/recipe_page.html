@@ -8,9 +8,6 @@
 {% comment %} {% block body_class %}template-blogpage{% endblock %} {% endcomment %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
         <div id="recipe" class="recipe">
             <div style="float: right; margin: 10px">
                 {% image page.header_image fill-320x240 %}
@@ -68,16 +65,36 @@
                             <div class="col-md-4">
                                 <p>
                                     <hr/>
-                                    {% if page.servings %}<strong>Servings: </strong>{{ page.servings }}<br/>{% endif %}
-                                    {% if page.calories %}<strong>Calories: </strong>{{ page.calories }}<br/>{% endif %}
+                                    {% if page.servings %}
+                                        <div class="row">
+                                            <div class="col-md-4"><strong>Servings: </strong></div>
+                                            <div class="col-md-8">{{ page.servings }}</div>
+                                        </div>
+                                    {% endif %}
+                                    {% if page.calories %}
+                                        <div class="row">
+                                            <div class="col-md-4"><strong>Calories: </strong></div>
+                                            <div class="col-md-8">{{ page.calories }}</div>
+                                        </div>
+                                    {% endif %}
                                     <hr/>
                                 </p>
                             </div>
                             <div class="col-md-4">
                                 <p>
                                     <hr/>
-                                    {% if page.prep_time %}<strong>Prep Time: </strong>{{ page.prep_time|date:"G:i" }}<br/>{% endif %}
-                                    {% if page.cook_time %}<strong>Cook Time: </strong>{{ page.cook_time|date:"G:i" }}<br/>{% endif %}
+                                    {% if page.prep_time %}
+                                        <div class="row">
+                                            <div class="col-md-6"><strong>Prep Time: </strong></div>
+                                            <div class="col-md-6">{{ page.prep_time|date:"G:i" }}</div>
+                                        </div>
+                                    {% endif %}
+                                    {% if page.cook_time %}
+                                        <div class="row">
+                                            <div class="col-md-6"><strong>Cook Time: </strong></div>
+                                            <div class="col-md-6">{{ page.cook_time|date:"G:i" }}</div>
+                                        </div>
+                                    {% endif %}
                                     <hr/>
                                 </p>
                             </div>
@@ -149,9 +166,6 @@
             {% endcomment %}
             </div>
         </div>
-        <div class="col-md-2"></div>
-    </div>
-</div>
     {% comment %}
     {% for item in page.gallery_images.all %}
         <div style="float: left; margin: 10px">
@@ -162,8 +176,5 @@
     {% endcomment %}
 
     <p><a href="{{ page.get_parent.url }}">Return to Recipes</a></p>
-
-    {# DEBUG Template #}
-    <pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre>
 
 {% endblock %}

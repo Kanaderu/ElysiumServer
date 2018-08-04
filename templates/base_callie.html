@@ -341,7 +341,16 @@
         </header>
         <!-- /HEADER -->
 
-        {% block content %}{% endblock %}
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                {% block content %}{% endblock %}
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        {# DEBUG Template #}
+        <pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre>
 
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/ElysiumServer.js' %}"></script>
