@@ -252,7 +252,8 @@ class RecipePage(Page):
     cook_time = models.TimeField(blank=True, null=True)
     servings = models.IntegerField(blank=True, null=True)
     calories = models.IntegerField(blank=True, null=True)
-    body = StreamField(STANDARD_BLOCKS)
+    summary = StreamField(STANDARD_BLOCKS, blank=True, null=True)
+    directions = StreamField(STANDARD_BLOCKS, blank=True, null=True)
     tags = ClusterTaggableManager(through='recipes.RecipePageTag', blank=True)
     date = models.DateField(
         _("Post date"), default=datetime.datetime.today,
@@ -270,7 +271,9 @@ class RecipePage(Page):
     author = models.CharField(max_length=255, default='author/source')
 
     search_fields = Page.search_fields + [
-        index.SearchField('body'),
+        index.SearchField('ingredients'),
+        index.SearchField('summary'),
+        index.SearchField('directions'),
     ]
 
     recipe_categories = models.ManyToManyField('recipes.RecipeCategory', through='recipes.RecipeCategoryRecipePage', blank=True)
@@ -299,8 +302,9 @@ class RecipePage(Page):
             FieldPanel('servings'),
             FieldPanel('calories'),
         ], heading="Timing and Stats"),
+        StreamFieldPanel('summary'),
         StreamFieldPanel('ingredients'),
-        StreamFieldPanel('body', classname="full title"),
+        StreamFieldPanel('directions', classname="full title"),
     ]
 
     def get_absolute_url(self):

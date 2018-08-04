@@ -1,59 +1,157 @@
 {% extends 'base.html' %}
 {% load wagtailcore_tags wagtailimages_tags static %}
 
+{% block extra_css %}
+<link type="text/css" rel="stylesheet" href="{% static 'css/recipe.css' %}" />
+{% endblock %}
 
 {% comment %} {% block body_class %}template-blogpage{% endblock %} {% endcomment %}
 
 {% block content %}
-    <h1>{{ page.title }}</h1>
-    <p class="meta">{{ page.date }}</p>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div id="recipe" class="recipe">
+            <div style="float: right; margin: 10px">
+                {% image page.header_image fill-320x240 %}
+                <p>{{ item.caption }}</p>
+            </div>
+            <h2><span>{{ page.title }}</span></h2>
+            <p class="meta"><h3>Posted {{ page.date }}</h3></p>
 
-    {% with categories=page.categories.all %}
-        {% if categories %}
-            <h3>Posted in:</h3>
-            <ul>
+            <div class="row">
+                <div class="col-md-4">
+                    {% with categories=page.categories.all %}
+                    {% if categories %}
+                    <div>
+                        <p>
+                            <h3>Posted in:</h3>
+                            <ul>
 
-                {% for categorypage in categories %}
-                    {% with category=categorypage.category %}
-                    <li style="display: inline">
-                        {% comment %}Category: "{{ category.parent }}"{% endcomment %}
-                        {% if category.parent != None %}
-                            {% image category.menu_image fill-32x32 style="vertical-align: middle" %}
-                            {{ category }}
-                        {% endif %}
-                    </li>
+                                {% for categorypage in categories %}
+                                    {% with category=categorypage.category %}
+                                    <li style="display: inline">
+                                        {% comment %}Category: "{{ category.parent }}"{% endcomment %}
+                                        {% if category.parent != None %}
+                                            {% image category.menu_image fill-32x32 style="vertical-align: middle" %}
+                                            {{ category }}
+                                        {% endif %}
+                                    </li>
+                                    {% endwith %}
+                                {% endfor %}
+                            </ul>
+                        </p>
+                    </div>
+                    {% endif %}
                     {% endwith %}
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+                </div>
 
-    <div class="intro">{{ page.intro }}</div>
+                <div class="col-md-4">
+                    {% if page.tags.all.count %}
+                    <div class="tags">
+                        <p>
+                            <h3>Tags</h3>
+                            {% for tag in page.tags.all %}
+                                <a href="{% slugurl 'tags' %}?tag={{ tag }}"  class="badge badge-info">{{ tag }}</a>
+                            {% endfor %}
+                        </p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
 
-    {% if page.tags.all.count %}
-    <div class="tags">
-        <h3>Tags</h3>
-        {% for tag in page.tags.all %}
-            <a href="{% slugurl 'tags' %}?tag={{ tag }}"><button type="button">{{ tag }}</button></a>
-        {% endfor %}
+            <div>
+                <div class="post-meta">
+                    <div class="recipe-meta">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p>
+                                    <hr/>
+                                    {% if page.servings %}<strong>Servings: </strong>{{ page.servings }}<br/>{% endif %}
+                                    {% if page.calories %}<strong>Calories: </strong>{{ page.calories }}<br/>{% endif %}
+                                    <hr/>
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <p>
+                                    <hr/>
+                                    {% if page.prep_time %}<strong>Prep Time: </strong>{{ page.prep_time|date:"G:i" }}<br/>{% endif %}
+                                    {% if page.cook_time %}<strong>Cook Time: </strong>{{ page.cook_time|date:"G:i" }}<br/>{% endif %}
+                                    <hr/>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="summary">
+                    <h3 id="summary">Summary:</h3>
+                    {% for block in self.summary %}
+                        {{ block }}
+                    {% endfor %}
+                    </p>
+                </div>
+
+                <div class="ingredients">
+                    <p>
+                        <h3 id="ingredients">Ingredients:</h3>
+                        {% for block in self.ingredients%}
+                            {% if block.block_type  == 'title' %}
+                                <b>{{ block.value }}</b><br/>
+                            {% elif block.block_type  == 'ingredients_list' %}
+                            <ul>
+                                {% for item in block.value %}
+                                    <li>{{ item.ingredient }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+
+                <div class="instructions">
+                    <h3 id="directions">Directions:</h3>
+                    <p>
+                        <ol>
+                        {% for block in self.directions %}
+                            <li>{{ block }}</li>
+                        {% endfor %}
+                        </ol>
+                    </p>
+                </div>
+
+                {% comment %}
+                <div class="nutrition">
+                    <h3 id="nutrition">Nutrition Information</h3>
+                    <p>Yield: <span class="yield">2 servings</span>, Serving Size: <span>1/2</span>
+                        <ul>
+                            <li><strong>Amount Per Serving:</strong> </li>
+                            <li>Freestyle Points: <span>8</span></li>
+                            <li>Points +: <span>8</span></li>
+                            <li>Calories: <span>271 calories</span></li>
+                            <li>Total Fat: <span>22g</span></li>
+                            <li>Saturated Fat: <span>5.5g</span></li>
+                            <li>Cholesterol: <span>22.5mg</span></li>
+                            <li>Sodium: <span>556mg</span></li>
+                            <li>Carbohydrates: <span>9g</span></li>
+                            <li>Fiber: <span>3g</span></li>
+                            <li>Sugar: <span>3.5g</span></li>
+                            <li>Protein: <span>12g</span></li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+
+            <div class="source">
+                All images and text ©<span class="author" itemprop="author" itemtype="http://schema.org/Person"><span itemprop="name">Gina Homolka</span> for Skinnytaste</span>
+            </div>
+
+            {% endcomment %}
+            </div>
+        </div>
+        <div class="col-md-2"></div>
     </div>
-    {% endif %}
-
-    <!-- check if None -->
-    Prep Time: {{ page.prep_time }}<br/>
-    Cook Time: {{ page.cook_time }}<br/>
-    Cook Time: {{ page.servings }}<br/>
-    Cook Time: {{ page.calories }}<br/>
-    Cook Time: {{ page.date }}<br/>
-
-    {% for block in self.body%}
-        {{ block }}
-    {% endfor %}
-
-    <div style="float: left; margin: 10px">
-        {% image page.header_image fill-320x240 %}
-        <p>{{ item.caption }}</p>
-    </div>
+</div>
     {% comment %}
     {% for item in page.gallery_images.all %}
         <div style="float: left; margin: 10px">
@@ -63,7 +161,7 @@
     {% endfor %}
     {% endcomment %}
 
-    <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+    <p><a href="{{ page.get_parent.url }}">Return to Recipes</a></p>
 
     {# DEBUG Template #}
     <pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre>
