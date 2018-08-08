@@ -375,7 +375,7 @@ WAGTAIL_CODE_BLOCK_LANGUAGES = (
 
 COMMENTS_APP = 'django_comments_xtd'
 COMMENTS_XTD_MAX_THREAD_LEVEL = 2
-BLOG_PAGINATION_PER_PAGE=2
+BLOG_PAGINATION_PER_PAGE=10
 
 # require comment confirmation by email for no logged-in users
 COMMENTS_XTD_CONFIRM_EMAIL = True
