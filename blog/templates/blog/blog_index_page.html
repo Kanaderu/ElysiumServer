@@ -13,9 +13,64 @@
         <!-- CONTAINER -->
         <div class="container">
             <!-- ROW -->
-            <div class="row">
+            <!-- <div class="row"> -->
+            <div id="hot-post" class="row hot-post">
                 {% for post in blogs %}
                 {% with post=post.specific %}
+                {% if forloop.counter0 < 3 %}
+                    {% if forloop.counter0 == 0 %}
+                <div class="col-md-8 hot-post-left">
+                    {% elif forloop.counter0 == 1 %}
+                <div class="col-md-4 hot-post-right">
+                    {% endif %}
+                    <!-- POST -->
+                    <div class="post post-thumb">
+                        <a class="post-img" href="{{ post.url }}">
+                            {% if forloop.counter0 == 0 %}
+                            {% image post.header_image fill-1200x800 %}
+                            {#<img src="/static/img/hot-post-1.jpg" />#}
+                            {% else %}
+                            {% image post.header_image fill-400x212 %}
+                            {% comment %}
+                            {% image post.header_image original as tmp_photo %}
+                            <img src="{{ tmp_photo.url }}" width="100%"/>
+                            {% endcomment %}
+                            {#<img src="/static/img/hot-post-1.jpg" />#}
+                            {% endif %}
+                        </a>
+                        <div class="post-body">
+                            <div class="post-category">
+                                    {% for category in post.blog_categories.all %}
+                                    <a href="">{{ category }}</a>{# <a href="category_link.html">{{ category }}</a> #}
+                                    {% endfor %}
+                            </div>
+                            <h3 class="post-title title-lg">
+                                <a href="blog">{{ post.title }}</a>
+                            </h3>
+                            <ul class="post-meta">
+                                <li><a href="">{{ post.author }}</a></li>
+                                <li>{{ post.date }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    {# {% if forloop.counter0 == 0 or forloop.counter0 == 2 %}#}
+                    {% if forloop.counter0 != 1 %}
+                </div>
+                    {% endif %}
+                    {# {% endif %}#}
+
+        {% if forloop.counter0 == 2 %}
+            </div>
+        </div>
+    </div>
+    <!-- SECTION -->
+    <div class="section">
+        <!-- CONTAINER -->
+        <div class="container">
+            <!-- ROW -->
+            <div class="row">
+        {% endif %}
+                {% else %}
                 <div class="col-md-4">
                     <div class="section-title"><h2 class="title">{{ post.title }}</h2></div>
                     <div class="post">
@@ -23,7 +78,7 @@
                         <div class="post-body">
                             <div class="post-category">
                                 {% for category in post.blog_categories.all %}
-                                <a href="category_link.html">{{ category }}</a>
+                                <a href="">{{ category }}</a>{# <a href="category_link.html">{{ category }}</a> #}
                                 {% endfor %}
                             </div>
                             <h3 class="post-title">
@@ -31,20 +86,22 @@
                             </h3>
                             <ul class="post-meta">
                                 <li><a href="">{{ post.author }}</a></li>
-                                <li>{{ post.date }}<li>
+                                <li>{{ post.date }}</li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                {% endwith %}
-                {% if forloop.counter|divisibleby:3 %}
+                    {% if forloop.counter|divisibleby:3 %}
             </div><div class="row">
+                    {% endif %}
                 {% endif %}
+                {% endwith %}
                 {% endfor %}
             </div>
         </div>
     </div>
 
+    {% comment %}
     <h1>{{ page.title }}</h1>
 
     <div class="intro">{{ page.intro|richtext }}</div>
@@ -58,10 +115,10 @@
             {% endwith %}
 
             <p>{{ post.intro }}</p>
-            {% comment %}{{ post.body|richtext }}{% endcomment %}
+            {# {{ post.body|richtext }}{% endcomment #}
         {% endwith %}
     {% endfor %}
-
+    {% endcomment %}
 
 
 
