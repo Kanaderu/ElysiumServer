@@ -127,7 +127,7 @@
     {% endcomment %}
 
 
-
+    {% comment %}
     <!-- HEADER -->
 	<header id="header">
 		<!-- NAV -->
@@ -766,7 +766,6 @@
 					<!-- /row -->
 				</div>
 				<div class="col-md-4">
-                    {% comment %}
 					<!-- ad widget-->
 					<div class="aside-widget text-center">
 						<a href="#" style="display: inline-block;margin: auto;">
@@ -774,7 +773,6 @@
 						</a>
 					</div>
 					<!-- /ad widget -->
-					{% endcomment %}
 
 					<!-- social widget -->
 					<div class="aside-widget">
@@ -908,7 +906,6 @@
 		<div class="container">
 			<!-- row -->
 			<div class="row">
-                {% comment %}
 				<!-- ad -->
 				<div class="col-md-12 section-row text-center">
 					<a href="#" style="display: inline-block;margin: auto;">
@@ -916,7 +913,6 @@
 					</a>
 				</div>
 				<!-- /ad -->
-                {% endcomment %}
 			</div>
 			<!-- /row -->
 		</div>
@@ -1235,7 +1231,6 @@
 					</div>
 					<!-- /galery widget -->
 
-                    {% comment %}
 					<!-- Ad widget -->
 					<div class="aside-widget text-center">
 						<a href="#" style="display: inline-block;margin: auto;">
@@ -1243,7 +1238,6 @@
 						</a>
 					</div>
 					<!-- /Ad widget -->
-                    {% endcomment %}
 				</div>
 			</div>
 			<!-- /row -->
@@ -1343,6 +1337,7 @@
 		<!-- /container -->
 	</footer>
 	<!-- /FOOTER -->
+    {% endcomment %}
 
 	<!-- jQuery Plugins -->
 	<script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
@@ -1350,8 +1345,5 @@
 	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/jquery.stellar.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
-
-    {# DEBUG Template #}
-    <pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre>
 
 {% endblock %}

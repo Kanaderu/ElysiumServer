@@ -344,9 +344,6 @@
 
         {% block content %}{% endblock %}
 
-        {# DEBUG Template #}
-        <pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre>
-
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/ElysiumServer.js' %}"></script>
 
@@ -354,4 +351,9 @@
             {# Override this in templates to add extra javascript #}
         {% endblock %}
     </body>
+
+    {% if debug %}
+    {# DEBUG Template #}
+    <pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre>
+    {% endif %}
 </html>

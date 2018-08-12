@@ -8,8 +8,8 @@
 {% comment %} {% block body_class %}template-blogpage{% endblock %} {% endcomment %}
 
 {% block content %}
-<div class="col-md-2"></div>
-<div class="col-md-8">
+<div class="section">
+    <div class="container">
         <div id="recipe" class="recipe">
             <div style="float: right; margin: 10px">
                 {% image page.header_image fill-320x240 %}
@@ -69,14 +69,14 @@
                                     <hr/>
                                     {% if page.servings %}
                                         <div class="row">
-                                            <div class="col-md-4"><strong>Servings: </strong></div>
-                                            <div class="col-md-8">{{ page.servings }}</div>
+                                            <div class="col-md-8"><strong>Servings: </strong></div>
+                                            <div class="col-md-4" style="text-align:right">{{ page.servings }}</div>
                                         </div>
                                     {% endif %}
                                     {% if page.calories %}
                                         <div class="row">
-                                            <div class="col-md-4"><strong>Calories: </strong></div>
-                                            <div class="col-md-8">{{ page.calories }}</div>
+                                            <div class="col-md-8"><strong>Calories: </strong></div>
+                                            <div class="col-md-4" style="text-align:right">{{ page.calories }}</div>
                                         </div>
                                     {% endif %}
                                     <hr/>
@@ -87,14 +87,14 @@
                                     <hr/>
                                     {% if page.prep_time %}
                                         <div class="row">
-                                            <div class="col-md-6"><strong>Prep Time: </strong></div>
-                                            <div class="col-md-6">{{ page.prep_time|date:"G:i" }}</div>
+                                            <div class="col-md-8"><strong>Prep Time: </strong></div>
+                                            <div class="col-md-4" style="text-align:right">{{ page.prep_time|date:"G:i" }}</div>
                                         </div>
                                     {% endif %}
                                     {% if page.cook_time %}
                                         <div class="row">
-                                            <div class="col-md-6"><strong>Cook Time: </strong></div>
-                                            <div class="col-md-6">{{ page.cook_time|date:"G:i" }}</div>
+                                            <div class="col-md-8"><strong>Cook Time: </strong></div>
+                                            <div class="col-md-4" style="text-align:right">{{ page.cook_time|date:"G:i" }}</div>
                                         </div>
                                     {% endif %}
                                     <hr/>
@@ -178,6 +178,7 @@
     {% endcomment %}
 
     <p><a href="{{ page.get_parent.url }}">Return to Recipes</a></p>
+
+    </div>
 </div>
-<div class="col-md-2"></div>
 {% endblock %}
