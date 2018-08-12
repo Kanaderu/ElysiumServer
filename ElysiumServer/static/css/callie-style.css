@@ -1259,7 +1259,7 @@ textarea.input {
 }
 
 .newsletter-widget:after {
-  content: "\f003";
+  content: "\f0e0";
   font-family: 'Font Awesome 5 Free';
   position: absolute;
   bottom: -25px;
