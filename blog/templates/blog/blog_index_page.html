@@ -41,11 +41,13 @@
                         <div class="post-body">
                             <div class="post-category">
                                     {% for category in post.blog_categories.all %}
-                                    <a href="">{{ category }}</a>{# <a href="category_link.html">{{ category }}</a> #}
+                                    {# <a href="{% pageurl blogcategorypage %}?category={{ category }}">{{ category }}</a> #}
+                                    {# <a href="{% slugurl 'category' %}?category={{ category }}">{{ category }}</a> #}
+                                    <a href="{% pageurl self %}?category={{ category }}">{{ category }}</a>
                                     {% endfor %}
                             </div>
                             <h3 class="post-title title-lg">
-                                <a href="blog">{{ post.title }}</a>
+                                <a href="{{ post.url }}">{{ post.title }}</a>
                             </h3>
                             <ul class="post-meta">
                                 <li><a href="">{{ post.author }}</a></li>
@@ -63,6 +65,9 @@
             </div>
         </div>
     </div>
+        {% endif %}
+                {% else %}
+        {% if forloop.counter0 == 3 %}
     <!-- SECTION -->
     <div class="section">
         <!-- CONTAINER -->
@@ -73,7 +78,6 @@
                     <div class="section-title"><h2 class="title">Recent Posts</h2></div>
                 </div>
         {% endif %}
-                {% else %}
                 <div class="col-md-4">
                     {# <div class="section-title"><h2 class="title">{{ post.title }}</h2></div> #}
                     <div class="post">
@@ -81,7 +85,9 @@
                         <div class="post-body">
                             <div class="post-category">
                                 {% for category in post.blog_categories.all %}
-                                <a href="">{{ category }}</a>{# <a href="category_link.html">{{ category }}</a> #}
+                                {# <a href="{% pageurl blogcategorypage %}?category={{ category }}">{{ category }}</a> #}
+                                {# <a href="{% slugurl 'category' %}?category={{ category }}">{{ category }}</a> #}
+                                <a href="{% pageurl self %}?category={{ category }}">{{ category }}</a>
                                 {% endfor %}
                             </div>
                             <h3 class="post-title">

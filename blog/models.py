@@ -15,6 +15,7 @@ from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
 from wagtail.search import index
 
+
 from wagtail.core import blocks
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.images.blocks import ImageChooserBlock
@@ -91,13 +92,18 @@ class BlogIndexPage(Page):
             tag = request.GET.get('tag')
         if tag:
             blogs = blogs.filter(tags__slug=tag)
-        if category is None:  # Not coming from category_view in views.py
-            if request.GET.get('category'):
-                category = get_object_or_404(BlogCategory, slug=request.GET.get('category'))
+        #if category is None:  # Not coming from category_view in views.py
+        #    if request.GET.get('category'):
+        #        category = get_object_or_404(BlogCategory, slug=request.GET.get('category'))
+        #if category:
+        #    if not request.GET.get('category'):
+        #        category = get_object_or_404(BlogCategory, slug=category)
+        #    blogs = blogs.filter(categories__category__name=category)
+        if category is None:
+            category = request.GET.get('category')
         if category:
-            if not request.GET.get('category'):
-                category = get_object_or_404(BlogCategory, slug=category)
             blogs = blogs.filter(categories__category__name=category)
+            #BlogPage.objects.filter(blog_categories__name=category)
         if author:
             if isinstance(author, str) and not author.isdigit():
                 blogs = blogs.filter(author__username=author)
@@ -230,7 +236,6 @@ class BlogCategory(models.Model):
             unique_slugify(self, self.name)
         return super(BlogCategory, self).save(*args, **kwargs)
 
-
 # Intermediate between Blog Category and Blog Page
 class BlogCategoryBlogPage(models.Model):
     category = models.ForeignKey(
@@ -273,7 +278,7 @@ class BlogTagIndexPage(Page):
         return context
 
     class Meta:
-        verbose_name = _('Blog Tag Index')
+        verbose_name = _('Blog Tag Index [REST]')
 
 
 # Blog Page
