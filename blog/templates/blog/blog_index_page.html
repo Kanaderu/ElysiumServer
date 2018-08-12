@@ -27,7 +27,7 @@
                     <div class="post post-thumb">
                         <a class="post-img" href="{{ post.url }}">
                             {% if forloop.counter0 == 0 %}
-                            {% image post.header_image fill-1200x800 %}
+                            {% image post.header_image fill-648x432 %}
                             {#<img src="/static/img/hot-post-1.jpg" />#}
                             {% else %}
                             {% image post.header_image fill-400x212 %}
@@ -69,10 +69,13 @@
         <div class="container">
             <!-- ROW -->
             <div class="row">
+                <div class="col-md-12">
+                    <div class="section-title"><h2 class="title">Recent Posts</h2></div>
+                </div>
         {% endif %}
                 {% else %}
                 <div class="col-md-4">
-                    <div class="section-title"><h2 class="title">{{ post.title }}</h2></div>
+                    {# <div class="section-title"><h2 class="title">{{ post.title }}</h2></div> #}
                     <div class="post">
                         <a class="post-img" href="{{ post.url }}">{% image post.header_image fill-400x200 %}</a>
                         <div class="post-body">
