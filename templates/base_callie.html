@@ -418,13 +418,7 @@
                         <div class="footer-copyright">Copyright ©{% now "Y" %} All rights reserved</div>
                     </div>
                     <div class="col-md-6 col-md-push-6">
-                        <ul class="footer-nav">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="contact.html">Contacts</a></li>
-                            <li><a href="#">Advertise</a></li>
-                            <li><a href="#">Privacy</a></li>
-                        </ul>
+                        {% flat_menu 'footer' max_levels=1 show_menu_heading=False  use_specific=USE_SPECIFIC_TOP_LEVEL  fall_back_to_default_site_menus=True template="menus/callie_main/footer.html" %}
                     </div>
                 </div>
                 <!-- /row -->
