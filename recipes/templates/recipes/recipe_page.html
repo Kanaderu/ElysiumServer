@@ -8,6 +8,8 @@
 {% comment %} {% block body_class %}template-blogpage{% endblock %} {% endcomment %}
 
 {% block content %}
+<div class="col-md-2"></div>
+<div class="col-md-8">
         <div id="recipe" class="recipe">
             <div style="float: right; margin: 10px">
                 {% image page.header_image fill-320x240 %}
@@ -176,5 +178,6 @@
     {% endcomment %}
 
     <p><a href="{{ page.get_parent.url }}">Return to Recipes</a></p>
-
+</div>
+<div class="col-md-2"></div>
 {% endblock %}

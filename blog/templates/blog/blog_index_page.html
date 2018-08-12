@@ -26,17 +26,8 @@
                     <!-- POST -->
                     <div class="post post-thumb">
                         <a class="post-img" href="{{ post.url }}">
-                            {% if forloop.counter0 == 0 %}
-                            {% image post.header_image fill-648x432 %}
-                            {#<img src="/static/img/hot-post-1.jpg" />#}
-                            {% else %}
-                            {% image post.header_image fill-400x212 %}
-                            {% comment %}
-                            {% image post.header_image original as tmp_photo %}
-                            <img src="{{ tmp_photo.url }}" width="100%"/>
-                            {% endcomment %}
-                            {#<img src="/static/img/hot-post-1.jpg" />#}
-                            {% endif %}
+                            {% image post.header_image fill-1200x800 as photo %} {# resize image and insert #}
+                            <img src="{{ photo.url }}"/>
                         </a>
                         <div class="post-body">
                             <div class="post-category">
@@ -46,7 +37,11 @@
                                     <a href="{% pageurl self %}?category={{ category }}">{{ category }}</a>
                                     {% endfor %}
                             </div>
+                            {% if forloop.counter0 == 0 %}
                             <h3 class="post-title title-lg">
+                            {% else %}
+                            <h3 class="post-title">
+                            {% endif %}
                                 <a href="{{ post.url }}">{{ post.title }}</a>
                             </h3>
                             <ul class="post-meta">
@@ -81,7 +76,9 @@
                 <div class="col-md-4">
                     {# <div class="section-title"><h2 class="title">{{ post.title }}</h2></div> #}
                     <div class="post">
-                        <a class="post-img" href="{{ post.url }}">{% image post.header_image fill-400x200 %}</a>
+                        <a class="post-img" href="{{ post.url }}">
+                            {% image post.header_image fill-700x467 as photo %} {# resize image and insert #}
+                            <img src="{{ photo.url }}"/> {# {% image post.header_image fill-400x200 %}</a> #}
                         <div class="post-body">
                             <div class="post-category">
                                 {% for category in post.blog_categories.all %}

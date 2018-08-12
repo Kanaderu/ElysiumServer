@@ -3,6 +3,9 @@
 
 {% block content %}
 
+<div class="col-md-2"></div>
+<div class="col-md-8">
+
     {% if request.GET.tag|length %}
         <h4>Showing pages tagged "{{ request.GET.tag }}"</h4>
     {% endif %}
@@ -23,4 +26,6 @@
         No pages found with that tag.
     {% endfor %}
 
+</div>
+<div class="col-md-2"></div>
 {% endblock %}

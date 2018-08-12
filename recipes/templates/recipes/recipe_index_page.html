@@ -8,6 +8,9 @@
 {% comment %} {% block body_class %}template-blogpage{% endblock %} {% endcomment %}
 
 {% block content %}
+<div class="col-md-2"></div>
+<div class="col-md-8">
+
     {% for recipe in page.recipes.all %}
         <div id="recipe" class="recipe">
             <div style="float: right; margin: 10px">
@@ -175,4 +178,6 @@
     {% endfor %}
     {% endcomment %}
     {% endfor %}
+</div>
+<div class="col-md-2"></div>
 {% endblock %}

@@ -13,6 +13,7 @@ from wagtail.admin.edit_handlers import (
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
+from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.search import index
 
 
@@ -235,6 +236,23 @@ class BlogCategory(models.Model):
         if not self.slug:
             unique_slugify(self, self.name)
         return super(BlogCategory, self).save(*args, **kwargs)
+
+
+class BlogCategoryPage(Page):
+
+    def get_context(self, request):
+        # Filter by category
+        category = request.GET.get('category')
+        blogpages = BlogPage.objects.filter(blog_categories__name=category)
+
+        context = super(BlogCategoryPage, self).get_context(request)
+        context['blogpages'] = blogpages
+        return context
+
+    class Meta:
+        verbose_name = _('Blog Category Page [REST]')
+        verbose_name_plural = _('Blog Category Pages [REST]')
+
 
 # Intermediate between Blog Category and Blog Page
 class BlogCategoryBlogPage(models.Model):
