@@ -104,6 +104,7 @@ class BlogIndexPage(Page):
             category = request.GET.get('category')
         if category:
             blogs = blogs.filter(categories__category__name=category)
+            category = BlogCategory.objects.filter(name=category)
             #BlogPage.objects.filter(blog_categories__name=category)
         if author:
             if isinstance(author, str) and not author.isdigit():
@@ -146,7 +147,7 @@ class BlogCategoryIndexPage(Page):
     @property
     def categories(self):
         # Get list of blog pages that are descendants of this page
-        categories = BlogCategory.objects.all()
+        categories = BlogCategory.objects.filter(parent__isnull=True)
         categories = categories.order_by('name')
         return categories
 

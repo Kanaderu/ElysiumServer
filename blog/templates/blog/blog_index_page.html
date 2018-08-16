@@ -1,11 +1,23 @@
 {% extends 'base.html' %}
 {% load static wagtailuserbar wagtailcore_tags wagtailimages_tags %}
 
-{% block extra_css %}
+{% block header %}
+    {% if category %}
+    {% with category=category.0 %}
+    <div class="page-header">
+        {% image category.menu_image fill-1920x480 as img %}
+        <div class="page-header-bg" style="background-image: url('{{ img.url }}');" data-stellar-background-ratio="0.5"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-1 col-md-10 text-center">
+                    <h1 class="text-uppercase">{{ category }}</h1>
+                </div>
+            </div>
+		</div>
+    </div>
+    {% endwith %}
+    {% endif %}
 {% endblock %}
-
-
-{% comment %}{% block body_class %}template-blogindexpage{% endblock %}{% endcomment %}
 
 {% block content %}
     <!-- SECTION -->
@@ -1338,12 +1350,14 @@
 	</footer>
 	<!-- /FOOTER -->
     {% endcomment %}
+{% endblock %}
 
+
+{% block extra_js %}
 	<!-- jQuery Plugins -->
-	<script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/jquery.stellar.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
-
+	<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
 {% endblock %}
