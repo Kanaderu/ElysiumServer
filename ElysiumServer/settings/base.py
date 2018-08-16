@@ -377,6 +377,8 @@ COMMENTS_APP = 'django_comments_xtd'
 COMMENTS_XTD_MAX_THREAD_LEVEL = 2
 BLOG_PAGINATION_PER_PAGE=10
 
+WAGTAILIMAGES_MAX_UPLOAD_SIZE = 20 * 1024 * 1024 # 20 MB
+
 # require comment confirmation by email for no logged-in users
 COMMENTS_XTD_CONFIRM_EMAIL = True
 #EMAIL_HOST = "smtp.mail.com"

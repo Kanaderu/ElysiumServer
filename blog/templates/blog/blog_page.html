@@ -6,7 +6,7 @@
 {% block header %}
     <div id="post-header" class="page-header">
         {% image page.header_image fill-1920x720 as photo %}
-        <div class="page-header-bg" style="background-image: url('{{ photo.url }}'); background-position: 0% 0%;" data-stellar-background-ratio="0.5"></div>
+        <div id="post-header" class="page-header-bg" style="background-image: url('{{ photo.url }}'); background-position: 0% 0%;" data-stellar-background-ratio="0.5"></div>
         <div class="container">
             <div class="row">
                 <div class="col-md-10">
@@ -328,4 +328,14 @@
     {% endfor %}
     {% endcomment %}
 
+{% endblock %}
+
+
+{% block extra_js %}
+	<!-- jQuery Plugins -->
+	<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
 {% endblock %}
