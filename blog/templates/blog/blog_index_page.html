@@ -20,12 +20,12 @@
 {% endblock %}
 
 {% block content %}
+    <!-- HOT POST SECTION -->
     <!-- SECTION -->
     <div class="section">
         <!-- CONTAINER -->
         <div class="container">
             <!-- ROW -->
-            <!-- <div class="row"> -->
             <div id="hot-post" class="row hot-post">
                 {% for post in blogs %}
                 {% with post=post.specific %}
@@ -43,11 +43,9 @@
                         </a>
                         <div class="post-body">
                             <div class="post-category">
-                                    {% for category in post.blog_categories.all %}
-                                    {# <a href="{% pageurl blogcategorypage %}?category={{ category }}">{{ category }}</a> #}
-                                    {# <a href="{% slugurl 'category' %}?category={{ category }}">{{ category }}</a> #}
-                                    <a href="{% pageurl self %}?category={{ category }}">{{ category }}</a>
-                                    {% endfor %}
+                                {% for category in post.blog_categories.all %}
+                                <a href="{% pageurl self %}?category={{ category }}">{{ category }}</a>
+                                {% endfor %}
                             </div>
                             {% if forloop.counter0 == 0 %}
                             <h3 class="post-title title-lg">
@@ -62,18 +60,149 @@
                             </ul>
                         </div>
                     </div>
-                    {# {% if forloop.counter0 == 0 or forloop.counter0 == 2 %}#}
                     {% if forloop.counter0 != 1 %}
                 </div>
                     {% endif %}
-                    {# {% endif %}#}
-
-        {% if forloop.counter0 == 2 %}
+                {% endif %}
+                {% endwith %}
+                {% endfor %}
             </div>
         </div>
     </div>
+
+
+    {% for post in blogs %}
+    {% with post=post.specific %}
+    {% if forloop.counter0 >= 3 %}
+        {% if forloop.counter0 == 3 %}
+    <!-- POST / CATEGORY SECTION -->
+    <!-- SECTION -->
+    <div class="section">
+        <!-- CONTAINER -->
+        <div class="container">
+            <!-- ROW -->
+            <div class="row">
+                <div class="col-md-9"> {# left column of posts #}
+                    <div class="section-title"><h2 class="title">Recent Posts</h2></div>
+                    <div class="row">
         {% endif %}
-                {% else %}
+                        <div class="col-md-6">
+                            {# <div class="section-title"><h2 class="title">{{ post.title }}</h2></div> #}
+                            <div class="post">
+                                <a class="post-img" href="{{ post.url }}">
+                                    {% image post.header_image fill-700x467 as photo %} {# resize image and insert #}
+                                    <img src="{{ photo.url }}"/> {# {% image post.header_image fill-400x200 %}</a> #}
+                                </a>
+                                <div class="post-body">
+                                    <div class="post-category">
+                                        {% for category in post.blog_categories.all %}
+                                        {# <a href="{% pageurl blogcategorypage %}?category={{ category }}">{{ category }}</a> #}
+                                        {# <a href="{% slugurl 'category' %}?category={{ category }}">{{ category }}</a> #}
+                                        <a href="{% pageurl self %}?category={{ category }}">{{ category }}</a>
+                                        {% endfor %}
+                                    </div>
+                                    <h3 class="post-title">
+                                        <a href="blog_post.html">{{ post.title }}</a>
+                                    </h3>
+                                    <ul class="post-meta">
+                                        <li><a href="">{{ post.author }}</a></li>
+                                        <li>{{ post.date }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+    {% endif %}
+    {% endwith %}
+    {% endfor %}
+    {% if blogs|length >= 3 %}
+                    </div>
+                </div>
+                <div class="col-md-3"> {# right column of sub-category #}
+					<!-- category widget -->
+					<div class="aside-widget">
+						<div class="section-title">
+                        {% if category %}
+                            {# show subcategories #}
+							<h2 class="title">Sub-Categories</h2>
+                        {% else %}
+                            {# show root categories #}
+							<h2 class="title">Categories</h2>
+                        {% endif %}
+						</div>
+						<div class="category-widget">
+							<ul>
+                            {% if category %}
+                                {# show subcategories #}
+                                {% for subcategory in category.0.children.all %}
+                                <li><a href="{% pageurl self %}?category={{ subcategory }}">{{ subcategory }}<span>101010</span></a></li>
+                                {% endfor %}
+                            {% else %}
+                                {# show root categories #}
+                                {% for root_cat in root_categories.all %}
+                                <li><a href="{% pageurl self %}?category={{ root_cat }}">{{ root_cat }}<span>101010</span></a></li>
+                                {% endfor %}
+                            {% endif %}
+							</ul>
+						</div>
+					</div>
+					<!-- /category widget -->
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {# show posts 3 in a row after the 7th post #}
+    {% for post in blogs %}
+    {% with post=post.specific %}
+    {% if forloop.counter0 >= 7 %}
+        {% if forloop.counter0 == 7 %}
+    <!-- POST / CATEGORY SECTION -->
+    <!-- SECTION -->
+    <div class="section">
+        <!-- CONTAINER -->
+        <div class="container">
+            <div class="row">
+        {% endif %}
+                <div class="col-md-4">
+                    <div class="post">
+                        <a class="post-img" href="{{ post.url }}">
+                            {% image post.header_image fill-700x467 as photo %} {# resize image and insert #}
+                            <img src="{{ photo.url }}"/>
+                        </a>
+                        <div class="post-body">
+                            <div class="post-category">
+                                {% for category in post.blog_categories.all %}
+                                <a href="{% pageurl self %}?category={{ category }}">{{ category }}</a>
+                                {% endfor %}
+                            </div>
+                            <h3 class="post-title">
+                                <a href="blog_post.html">{{ post.title }}</a>
+                            </h3>
+                            <ul class="post-meta">
+                                <li><a href="">{{ post.author }}</a></li>
+                                <li>{{ post.date }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+    {% endif %}
+    {% endwith %}
+    {% endfor %}
+    {% if blogs|length >= 7 %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+
+    {% comment %}
+    <!-- SECTION -->
+    <div class="section">
+        <!-- CONTAINER -->
+        <div class="container">
+            <!-- ROW -->
         {% if forloop.counter0 == 3 %}
     <!-- SECTION -->
     <div class="section">
@@ -112,12 +241,10 @@
                     {% if forloop.counter|divisibleby:3 %}
             </div><div class="row">
                     {% endif %}
-                {% endif %}
-                {% endwith %}
-                {% endfor %}
             </div>
         </div>
     </div>
+    {% endcomment %}
 
     {% comment %}
     <h1>{{ page.title }}</h1>
