@@ -63,10 +63,8 @@ class RecipeIndexPage(Page):
         )
         return recipes
 
-    def get_context(self, request, tag=None, category=None, author=None, *args,
-                    **kwargs):
-        context = super(RecipeIndexPage, self).get_context(
-            request, *args, **kwargs)
+    def get_context(self, request, tag=None, category=None, author=None, *args, **kwargs):
+        context = super(RecipeIndexPage, self).get_context(request, *args, **kwargs)
         recipes = self.recipes
 
         if tag is None:
@@ -76,10 +74,14 @@ class RecipeIndexPage(Page):
         if category is None:  # Not coming from category_view in views.py
             if request.GET.get('category'):
                 category = get_object_or_404(RecipeCategory, slug=request.GET.get('category'))
-        if category:
-            if not request.GET.get('category'):
-                category = get_object_or_404(RecipeCategory, slug=category)
-            recipes = recipes.filter(categories__category__name=category)
+                recipes = recipes.filter(recipe_categories=category)
+                #category = request.GET.get('category')
+                #recipes = recipes.filter(recipe_categories__name=category)
+        #if category:
+        #    if not request.GET.get('category'):
+        #        category = get_object_or_404(RecipeCategory, slug=category)
+        #    recipes = recipes.filter(categories__category__name=category)
+
         #if author:
         #    if isinstance(author, str) and not author.isdigit():
         #        recipes = recipes.filter(author__username=author)
@@ -89,8 +91,8 @@ class RecipeIndexPage(Page):
         # Pagination
         page = request.GET.get('page')
         page_size = 10
-        if hasattr(settings, 'BLOG_PAGINATION_PER_PAGE'):
-            page_size = settings.BLOG_PAGINATION_PER_PAGE
+        if hasattr(settings, 'RECIPE_PAGINATION_PER_PAGE'):
+            page_size = settings.RECIPE_PAGINATION_PER_PAGE
 
         paginator = None
         if page_size is not None:
@@ -183,6 +185,9 @@ class RecipeCategory(models.Model):
         verbose_name=_('Menu Image'),
     )
 
+    # group organizational value
+    group_index = models.PositiveIntegerField(verbose_name='Group Index')
+
     class Meta:
         ordering = ['name']
         verbose_name = _("Recipe Category")
@@ -190,7 +195,14 @@ class RecipeCategory(models.Model):
 
     panels = [
         FieldPanel('name'),
-        FieldPanel('parent'),
+        FieldRowPanel([
+            MultiFieldPanel([
+                FieldPanel('parent'),
+            ]),
+            MultiFieldPanel([
+                FieldPanel('group_index'),
+            ]),
+        ], heading="Recipe Organization"),
         FieldPanel('description'),
         ImageChooserPanel('menu_image'),
     ]

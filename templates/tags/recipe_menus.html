@@ -6,13 +6,41 @@ snippets are all top-level from admin view
             Child_0: Title
                 Child_1: Entry
 {% endcomment %}
+{% load common %}
+
 <div class="dropdown">
     <div class="dropdown-body">
         <div class="row">
-        {% for column in recipe_category %}
+        {% set group_iterator = 1 %}
+        {% for category in recipe_categories %}
+            {# Check to move to the other column #}
+            {% if category.group_index > group_iterator %}
+                {% set group_iterator = category.group_index %}
+            {% endif %}
+            {% if category.parent == None %}
+            <div class="col-md-3">
+                <h4 class="dropdown-heading">{{ category.group_index }}/{{ group_iterator }} {{ category|title }} (MAXGROUP: {{ num_groups }})</h4>
+                    {% if category.children %}
+                    <ul class="dropdown-list">
+                    {% endif %}
+                        {% for sub_category in category.children.all|dictsort:"name" %}
+                            <li><a href="{{ item.href }}">SUB:{{ sub_category }}</a></li>
+                            {% comment %} //CHILD 2?
+                            {% for child_1 in child_0.children.all|dictsort:"name" %}
+                                Child-child{{ child_1|title }}
+                            {% endfor %}
+                            {% endcomment %}
+                        {% endfor %}
+                    {% if category.children %}
+                    </ul>
+                    {% endif %}
+            </div>
+            {% endif %}
+        {% endfor %}
+        {% comment %}
+        {% for column in recipe_categories %}
             {% if column.parent == None %}
             <div class="col-md-3">
-                {% comment %}NullParent:{{ column }}{% endcomment %}
                 {% for child_0 in column.children.all|dictsort:"name" %}
                     <h4 class="dropdown-heading">{{ child_0|title }}</h4>
                     {% if child_0.children %}
@@ -20,11 +48,6 @@ snippets are all top-level from admin view
                     {% endif %}
                         {% for child_1 in child_0.children.all|dictsort:"name" %}
                             <li><a href="{{ item.href }}">{{ child_1 }}</a></li>
-                            {% comment %} //CHILD 2?
-                            {% for child_1 in child_0.children.all|dictsort:"name" %}
-                                Child-child{{ child_1|title }}
-                            {% endfor %}
-                            {% endcomment %}
                         {% endfor %}
                     {% if child_0.children %}
                     </ul>
@@ -33,6 +56,7 @@ snippets are all top-level from admin view
             </div>
             {% endif %}
         {% endfor %}
+        {% endcomment %}
         </div>
     </div>
 </div>

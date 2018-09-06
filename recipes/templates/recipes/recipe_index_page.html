@@ -5,12 +5,31 @@
 <link type="text/css" rel="stylesheet" href="{% static 'css/recipe.css' %}" />
 {% endblock %}
 
-{% comment %} {% block body_class %}template-blogpage{% endblock %} {% endcomment %}
+{% block header %}
+    {% if category %}
+    {# {% with category=category.0 %}#}
+    <div class="page-header">
+        {% image category.menu_image fill-1920x480 as img %}
+        <div class="page-header-bg" style="background-image: url('{{ img.url }}');" data-stellar-background-ratio="0.5"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-1 col-md-10 text-center">
+                    <h1 class="text-uppercase">{{ category }}</h1>
+                </div>
+            </div>
+		</div>
+    </div>
+    {# {% endwith %}#}
+    {% endif %}
+{% endblock %}
+
 
 {% block content %}
 <div class="section">
     <div class="container">
-    {% for recipe in page.recipes.all %}
+    {# {% for recipe in page.recipes.all %}#}
+    {% for recipe in recipes %}
+        {% with recipe=recipe.specific %}
         <div id="recipe" class="recipe">
             <div style="float: right; margin: 10px">
                 {% image recipe.header_image fill-320x240 %}
@@ -31,10 +50,10 @@
                                 {% with category=categorypage.category %}
                                 <li style="display: inline">
                                     {% comment %}Category: "{{ category.parent }}"{% endcomment %}
-                                    {% if category.parent != None %}
+                                    {# comment {% if category.parent != None %}#}
                                         {% image category.menu_image fill-32x32 style="vertical-align: middle" %}
                                         {{ category }}
-                                    {% endif %}
+                                    {# comment {% endif %}#}
                                 </li>
                                 {% endwith %}
                             {% endfor %}
@@ -176,8 +195,18 @@
         </div>
     {% endfor %}
     {% endcomment %}
+    {% endwith %}
     {% endfor %}
 
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+	<!-- jQuery Plugins -->
+	<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

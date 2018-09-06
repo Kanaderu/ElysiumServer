@@ -26,9 +26,9 @@
         <!-- CONTAINER -->
         <div class="container">
             <!-- ROW -->
-            <div id="hot-post" class="row hot-post">
-                {% for post in blogs %}
-                {% with post=post.specific %}
+                <div id="hot-post" class="row hot-post">
+                    {% for post in blogs %}
+                    {% with post=post.specific %}
                 {% if forloop.counter0 < 3 %}
                     {% if forloop.counter0 == 0 %}
                 <div class="col-md-8 hot-post-left">
@@ -138,8 +138,8 @@
                                 {% endfor %}
                             {% else %}
                                 {# show root categories #}
-                                {% for root_cat in root_categories.all %}
-                                <li><a href="{% pageurl self %}?category={{ root_cat }}">{{ root_cat }}<span>101010</span></a></li>
+                                {% for root_category in root_categories.all %}
+                                <li><a href="{% pageurl self %}?category={{ root_category }}">{{ root_category }}<span>101010</span></a></li>
                                 {% endfor %}
                             {% endif %}
 							</ul>
@@ -1478,7 +1478,6 @@
 	<!-- /FOOTER -->
     {% endcomment %}
 {% endblock %}
-
 
 {% block extra_js %}
 	<!-- jQuery Plugins -->
