@@ -7,24 +7,35 @@ snippets are all top-level from admin view
                 Child_1: Entry
 {% endcomment %}
 {% load common %}
+{% load wagtailcore_tags %}
 
 <div class="dropdown">
     <div class="dropdown-body">
         <div class="row">
-        {% set group_iterator = 1 %}
+        {% set group_iterator = 0 %}
+        {% set col_tags = True %}
+            <div class="col-md-3">
         {% for category in recipe_categories %}
+            {% if category.parent == None %}
             {# Check to move to the other column #}
             {% if category.group_index > group_iterator %}
                 {% set group_iterator = category.group_index %}
-            {% endif %}
-            {% if category.parent == None %}
+                {% set col_tags = True %}
+            </div>
+            {% if recipe_categories|length != category.group_index%}
             <div class="col-md-3">
-                <h4 class="dropdown-heading">{{ category.group_index }}/{{ group_iterator }} {{ category|title }} (MAXGROUP: {{ num_groups }})</h4>
+            {% endif %}
+            {% endif %}
+                <h4 class="dropdown-heading"><a href="{% slugurl 'recipes' %}?category={{ category }}">{{ category.group_index }}({{ group_iterator }}). {{ category|title }}</a></h4>
+                {# <h4 class="dropdown-heading">{{ category.group_index }}/{{ group_iterator }} {{ category|title }} (MAXGROUP: {{ num_groups }})</h4>#}
                     {% if category.children %}
                     <ul class="dropdown-list">
                     {% endif %}
                         {% for sub_category in category.children.all|dictsort:"name" %}
-                            <li><a href="{{ item.href }}">SUB:{{ sub_category }}</a></li>
+                            {# <li><a href="{{ item.href }}">SUB:{{ sub_category }}</a></li> #}
+                            <li><a href="{% slugurl 'recipes' %}?category={{ sub_category }}">{{ sub_category }}</a></li>
+                            {# <li><a href="{% pageurl recipeindexpage %}?category={{ sub_category }}">{{ sub_category }}</a></li> #}
+                            {# <li><a href="{% pageurl self %}?category={{ sub_category }}">{{ sub_category }}</a></li> #}
                             {% comment %} //CHILD 2?
                             {% for child_1 in child_0.children.all|dictsort:"name" %}
                                 Child-child{{ child_1|title }}
@@ -34,7 +45,7 @@ snippets are all top-level from admin view
                     {% if category.children %}
                     </ul>
                     {% endif %}
-            </div>
+            {# </div> #}
             {% endif %}
         {% endfor %}
         {% comment %}

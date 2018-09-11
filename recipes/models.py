@@ -73,7 +73,8 @@ class RecipeIndexPage(Page):
             recipes = recipes.filter(tags__slug=tag)
         if category is None:  # Not coming from category_view in views.py
             if request.GET.get('category'):
-                category = get_object_or_404(RecipeCategory, slug=request.GET.get('category'))
+                #category = get_object_or_404(RecipeCategory, slug=request.GET.get('category'))
+                category = get_object_or_404(RecipeCategory, name=request.GET.get('category')) # get objects by name instead of slug
                 recipes = recipes.filter(recipe_categories=category)
                 #category = request.GET.get('category')
                 #recipes = recipes.filter(recipe_categories__name=category)
@@ -168,7 +169,7 @@ class RecipeCategoryIndexPage(Page):
 @register_snippet
 class RecipeCategory(models.Model):
     name = models.CharField(max_length=80, unique=True, verbose_name=_('Category Name'))
-    slug = models.SlugField(unique=True, max_length=80)
+    slug = models.SlugField(max_length=80, unique=True)
     parent = models.ForeignKey('self', blank=True, null=True, related_name="children",
         help_text=_(
             'Categories, unlike tags, can have a hierarchy. You might have a '
