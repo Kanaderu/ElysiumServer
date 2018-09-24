@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static wagtailuserbar wagtailcore_tags wagtailimages_tags %}
+{% load common static wagtailuserbar wagtailcore_tags wagtailimages_tags %}
 
 {% block header %}
     {% if category %}
@@ -189,6 +189,7 @@
     {% endif %}
     {% endwith %}
     {% endfor %}
+    {# T"{% settings 'BLOG_NUM_RECENT_POSTS' %}" #}
     {% if blogs|length >= 7 %}
             </div>
         </div>

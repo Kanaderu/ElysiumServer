@@ -12,8 +12,6 @@ Evaluates a math expression in the current context and saves the value into a va
 
 Example usage, {% math a b "min($1, $2)" as result %} {% math a|length b|length 3 "($1 + $2) % $3" as result %}
 '''
-
-
 register = Library()
 
 # taken from http://lybniz2.sourceforge.net/safeeval.html

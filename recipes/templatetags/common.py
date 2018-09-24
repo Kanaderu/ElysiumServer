@@ -1,4 +1,6 @@
 from django import template
+from django.template.defaultfilters import stringfilter
+from ElysiumServer.settings import base
 register = template.Library()
 
 
@@ -31,3 +33,13 @@ def set_var(parser, token):
         raise template.TemplateSyntaxError("'set' tag must be of the form: {% set <var_name> = <var_value> %}")
 
     return SetVarNode(parts[1], parts[3])
+
+
+@register.tag(name='settings')
+@stringfilter
+def get_settings(value, token):
+    parts = token.split_contents()
+    print('val is ' + str(parts))
+    print('BLOG_NUM_RECENT_POSTS is ' + str(base.BLOG_NUM_RECENT_POSTS))
+    setting = getattr(base, parts[1])
+    return setting
