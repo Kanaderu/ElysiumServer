@@ -25,8 +25,6 @@ if DEBUG:
 
     INSTALLED_APPS += (
         'debug_toolbar',
-
-        'wagtail.contrib.styleguide', # access guide at http://localhost:8000/admin/styleguide/
     )
 
     DEBUG_TOOLBAR_PANELS = [
