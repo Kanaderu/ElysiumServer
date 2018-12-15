@@ -11,3 +11,5 @@ export DB_PASSWORD=''
 # postgres setup
 export DB_HOST='localhost'
 export DB_PORT='5432'
+
+export SECRET_KEY=''
