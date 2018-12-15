@@ -1,5 +1,7 @@
 from .base import *
 
+print('Running In Development Mode')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
