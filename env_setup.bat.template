@@ -1,0 +1,13 @@
+:: Environment setup for ES configuration
+:: Set file to owner access only and hide server access
+
+:: setup server database configuration
+set DB_NAME=''
+set DB_USER=''
+set DB_PASSWORD=''
+
+:: postgres setup
+set DB_HOST='localhost'
+set DB_PORT='5432'
+
+set SECRET_KEY=''
