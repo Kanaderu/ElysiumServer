@@ -11,3 +11,8 @@ set DB_HOST='localhost'
 set DB_PORT='5432'
 
 set SECRET_KEY=''
+set AWS_STORAGE_BUCKET_NAME=''
+set AWS_ACCESS_KEY_ID=''
+set AWS_SECRET_ACCESS_KEY=''
+set AWS_REGION_NAME=''
+
