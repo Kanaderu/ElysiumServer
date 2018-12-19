@@ -364,12 +364,22 @@
                                 <a href="index.html" class="logo"><img src="{% static 'img/logo-alt.png' %}" alt=""></a>
                             </div>
                             <p>Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa enim nec.</p>
+                            {% if settings.home.SocialMediaSettings.facebook or settings.home.SocialMediaSettings.twitter or settings.home.SocialMediaSettings.google_plus or settings.home.SocialMediaSettings.instagram %}
                             <ul class="contact-social">
-                                <li><a href="#" class="social-facebook"><i class="fab fa-facebook"></i></a></li>
-                                <li><a href="#" class="social-twitter"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#" class="social-google-plus"><i class="fab fa-google-plus"></i></a></li>
-                                <li><a href="#" class="social-instagram"><i class="fab fa-instagram"></i></a></li>
+                                {% if settings.home.SocialMediaSettings.facebook %}
+                                <li><a href="{{ settings.home.SocialMediaSettings.facebook }}" class="social-facebook"><i class="fab fa-facebook"></i></a></li>
+                                {% endif %}
+                                {% if settings.home.SocialMediaSettings.twitter %}
+                                <li><a href="https://twitter.com/{{ settings.home.SocialMediaSettings.twitter }}" class="social-twitter"><i class="fab fa-twitter"></i></a></li>
+                                {% endif %}
+                                {% if settings.home.SocialMediaSettings.google_plus %}
+                                <li><a href="https://plus.google.com/+{{ settings.home.SocialMediaSettings.google_plus }}" class="social-google-plus"><i class="fab fa-google-plus"></i></a></li>
+                                {% endif %}
+                                {% if settings.home.SocialMediaSettings.instagram %}
+                                <li><a href="https://www.instagram.com/{{ settings.home.SocialMediaSettings.instagram }}" class="social-instagram"><i class="fab fa-instagram"></i></a></li>
+                                {% endif %}
                             </ul>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-md-3">
