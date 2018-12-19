@@ -84,6 +84,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'wagtail.contrib.styleguide', # access guide at http://localhost:8000/admin/styleguide/
+
+    'wagtail.contrib.settings', # http://docs.wagtail.io/en/v2.3/reference/contrib/settings.html
 ]
 
 MIDDLEWARE = [
@@ -97,6 +99,12 @@ MIDDLEWARE = [
 
     'wagtail.core.middleware.SiteMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'htmlmin.middleware.HtmlMinifyMiddleware',
+
+    'django.middleware.cache.FetchFromCacheMiddleware',
+    'htmlmin.middleware.MarkRequestMiddleware',
 
 ]
 

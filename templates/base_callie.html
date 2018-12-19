@@ -1,5 +1,4 @@
 {% load static wagtailuserbar menu_tags %}
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -50,14 +49,24 @@
                 {# Top Nav #}
                 <div id="nav-top">
                     <div class="container">
+                        {% if settings.home.SocialMediaSettings.facebook or settings.home.SocialMediaSettings.twitter or settings.home.SocialMediaSettings.google_plus or settings.home.SocialMediaSettings.instagram %}
                         {# Social #}
                         <ul class="nav-social">
-                            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
-                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                            {% if settings.home.SocialMediaSettings.facebook %}
+                            <li><a href="{{ settings.home.SocialMediaSettings.facebook }}"><i class="fab fa-facebook"></i></a></li>
+                            {% endif %}
+                            {% if settings.home.SocialMediaSettings.twitter %}
+                            <li><a href="https://twitter.com/{{ settings.home.SocialMediaSettings.twitter }}"><i class="fab fa-twitter"></i></a></li>
+                            {% endif %}
+                            {% if settings.home.SocialMediaSettings.google_plus %}
+                            <li><a href="https://plus.google.com/+{{ settings.home.SocialMediaSettings.google_plus }}"><i class="fab fa-google-plus"></i></a></li>
+                            {% endif %}
+                            {% if settings.home.SocialMediaSettings.instagram %}
+                            <li><a href="https://www.instagram.com/{{ settings.home.SocialMediaSettings.instagram }}"><i class="fab fa-instagram"></i></a></li>
+                            {% endif %}
                         </ul>
                         {# /Social #}
+                        {% endif %}
 
                         {# Logo #}
                         <div class="nav-logo">
