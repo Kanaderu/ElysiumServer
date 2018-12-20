@@ -99,13 +99,6 @@ MIDDLEWARE = [
 
     'wagtail.core.middleware.SiteMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
-
-    'django.middleware.cache.UpdateCacheMiddleware',
-    'htmlmin.middleware.HtmlMinifyMiddleware',
-
-    'django.middleware.cache.FetchFromCacheMiddleware',
-    'htmlmin.middleware.MarkRequestMiddleware',
-
 ]
 
 ROOT_URLCONF = 'ElysiumServer.urls'
