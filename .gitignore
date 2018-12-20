@@ -55,7 +55,7 @@ coverage.xml
 *.log
 db.sqlite3
 *.sqlite
-^static/*
+static/*
 
 # Sphinx documentation
 docs/_build/
