@@ -618,6 +618,7 @@ textarea.input {
   font-family: 'Font Awesome 5 Free';
   content: "\f0d7";
   float: right;
+  font-weight: 900;
 }
 
 .nav-aside-menu li.has-dropdown>.dropdown {
