@@ -327,6 +327,8 @@
 
                 <!-- Aside Nav -->
                 <div id="nav-aside">
+                    {% main_menu max_levels=2 use_specific=USE_SPECIFIC_TOP_LEVEL template="menus/callie_main/level_1_aside_menu.html" %}
+                    {% comment %}
                     <ul class="nav-aside-menu">
                         <li><a href="index.html">Home</a></li>
                         <li class="has-dropdown"><a>Categories</a>
@@ -342,6 +344,7 @@
                         <li><a href="contact.html">Contacts</a></li>
                         <li><a href="#">Advertise</a></li>
                     </ul>
+                    {% endcomment %}
                     <button class="nav-close nav-aside-close"><span></span></button>
                 </div>
                 <!-- /Aside Nav -->
