@@ -1,0 +1,36 @@
+{% load menu_tags static %}
+
+{% if menu_items %}
+<ul class="nav-aside-menu">
+{% for item in menu_items %}
+    {% if item.has_children_in_menu %}
+    <li class="has-dropdown">
+    {% else %}
+    <li>
+    {% endif %}
+        <!--<a href="{{ item.href }}">{{ item.text }}</a>-->
+        {% if item.has_children_in_menu and item.text|lower == "recipes" %}
+            <a>{{ item.text }}</a>
+            {% sub_menu item template='menus/callie_main/level_1_aside_menu_recipes.html' %} {# level_1.html #}
+        {% else %}
+            <a href="{{ item.href }}">{{ item.text }}</a>
+        {% endif %}
+    </li>
+{% endfor %}
+{% comment %}
+    <li><a href="index.html">Home Page</a></li>
+    <li class="has-dropdown"><a>Categories</a>
+        <ul class="dropdown">
+            <li><a href="#">Lifestyle</a></li>
+            <li><a href="#">Fashion</a></li>
+            <li><a href="#">Technology</a></li>
+            <li><a href="#">Travel</a></li>
+            <li><a href="#">Health</a></li>
+        </ul>
+    </li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="contact.html">Contacts</a></li>
+    <li><a href="#">Advertise</a></li>
+{% endcomment %}
+</ul>
+{% endif %}
