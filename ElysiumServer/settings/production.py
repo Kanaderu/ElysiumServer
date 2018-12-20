@@ -36,6 +36,15 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 S3_USE_SIGV4 = True
 '''
 
+# setup middleware for caching and htmlmin
+MIDDLEWARE += [
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'htmlmin.middleware.HtmlMinifyMiddleware',
+
+    'django.middleware.cache.FetchFromCacheMiddleware',
+    'htmlmin.middleware.MarkRequestMiddleware',
+]
+
 try:
     from .local import *
 except ImportError:
