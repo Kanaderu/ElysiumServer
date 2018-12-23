@@ -35,27 +35,6 @@ INSTALLED_APPS = [
     'users',
     'recipes',
 
-    #'wagtailgeowidget',
-    #'wagtailgmaps',
-    #'wagtailmedia',
-    'wagtailcodeblock',
-    'wagtailerrorpages',
-    'wagtailfontawesome',
-    'wagtailmenus',
-    'condensedinlinepanel',
-
-    'wagtail.contrib.search_promotions',
-    'wagtail.contrib.table_block',
-    'wagtail.contrib.modeladmin',
-    'wagtail.contrib.styleguide', # access guide at http://localhost:8000/admin/styleguide/
-    'wagtail.contrib.settings', # http://docs.wagtail.io/en/v2.3/reference/contrib/settings.html
-
-    'django.contrib.sitemaps',
-    'django.contrib.sites',
-    'django_comments_xtd',
-    'django_comments',
-    #'wagtailcomments_xtd',
-
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
@@ -77,6 +56,27 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #'wagtailgeowidget',
+    #'wagtailgmaps',
+    #'wagtailmedia',
+    'wagtailcodeblock',
+    'wagtailerrorpages',
+    'wagtailfontawesome',
+    'wagtailmenus',
+    'condensedinlinepanel',
+
+    'wagtail.contrib.search_promotions',
+    'wagtail.contrib.table_block',
+    'wagtail.contrib.modeladmin',
+    'wagtail.contrib.styleguide', # access guide at http://localhost:8000/admin/styleguide/
+    'wagtail.contrib.settings', # http://docs.wagtail.io/en/v2.3/reference/contrib/settings.html
+
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
+    'django_comments_xtd',
+    'django_comments',
+    #'wagtailcomments_xtd',
 ]
 
 MIDDLEWARE = [
