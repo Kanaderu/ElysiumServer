@@ -35,26 +35,21 @@ INSTALLED_APPS = [
     'users',
     'recipes',
 
-    'django.contrib.sitemaps',
-
-    'wagtailmedia',
-
+    #'wagtailgeowidget',
+    #'wagtailgmaps',
+    #'wagtailmedia',
     'wagtailcodeblock',
-
     'wagtailerrorpages',
-
     'wagtailfontawesome',
-
-    'wagtail.contrib.modeladmin',
     'wagtailmenus',
     'condensedinlinepanel',
 
     'wagtail.contrib.table_block',
+    'wagtail.contrib.modeladmin',
+    'wagtail.contrib.styleguide', # access guide at http://localhost:8000/admin/styleguide/
+    'wagtail.contrib.settings', # http://docs.wagtail.io/en/v2.3/reference/contrib/settings.html
 
-    #'wagtailgeowidget',
-
-    #'wagtailgmaps',
-
+    'django.contrib.sitemaps',
     'django.contrib.sites',
     'django_comments_xtd',
     'django_comments',
@@ -69,8 +64,8 @@ INSTALLED_APPS = [
     'wagtail.documents',
     'wagtail.images',
     'wagtail.search',
-    'wagtail.core',
     'wagtail.admin',
+    'wagtail.core',
 
     'modelcluster',
     'taggit',
@@ -80,12 +75,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-
     'django.contrib.staticfiles',
-
-    'wagtail.contrib.styleguide', # access guide at http://localhost:8000/admin/styleguide/
-
-    'wagtail.contrib.settings', # http://docs.wagtail.io/en/v2.3/reference/contrib/settings.html
 ]
 
 MIDDLEWARE = [
