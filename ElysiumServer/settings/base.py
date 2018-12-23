@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'wagtailmenus',
     'condensedinlinepanel',
 
+    'wagtail.contrib.search_promotions',
     'wagtail.contrib.table_block',
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.styleguide', # access guide at http://localhost:8000/admin/styleguide/

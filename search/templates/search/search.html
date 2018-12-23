@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static wagtailcore_tags %}
+{% load wagtailsearchpromotions_tags %} {# Add search promotions #}
 
 {% block body_class %}template-searchresults{% endblock %}
 
@@ -13,6 +14,18 @@
         <input type="submit" value="Search" class="button">
     </form>
 
+    {# Add search promotions #}
+    <ul>
+    {% get_search_promotions search_query as search_promotions %}
+        {% for search_promotion in search_promotions %}
+        <li>
+            <a href="{% pageurl search_promotion.page %}">
+                <h2>{{ search_promotion.page.title }}</h2>
+                <p>{{ search_promotion.description }}</p>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
     {% if search_results %}
         <ul>
             {% for result in search_results %}
