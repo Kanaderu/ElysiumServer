@@ -29,7 +29,7 @@ sqlparse==0.2.4
 Unidecode==1.0.22
 urllib3==1.23
 uWSGI==2.0.17.1
-wagtail==2.3
+wagtail==2.4
 wagtail-condensedinlinepanel==0.5.2
 wagtailcodeblock==1.14.0.0
 wagtailerrorpages==1.2.1
