@@ -18,16 +18,13 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 # BASE_DIR set to Project Root : ElysiumServer/
 # PROJECT_DIR set to BASE_DIR/ElysiumServer
-print('PROJECT_DIR=' + PROJECT_DIR)
 print('BASE_DIR=' + BASE_DIR)
-
+print('PROJECT_DIR=' + PROJECT_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'home',
     'search',
@@ -98,7 +95,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            #os.path.join(PROJECT_DIR, 'templates'),
             os.path.join(BASE_DIR, 'templates'),
         ],
         'APP_DIRS': True,
@@ -123,10 +119,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ElysiumServer.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -144,7 +138,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -163,21 +156,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -195,15 +181,12 @@ MEDIA_URL = '/media/'
 
 
 # Wagtail settings
-
 WAGTAIL_SITE_NAME = "ElysiumServer"
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'http://example.com'
-#BASE_URL = 'http://localhost'
 SITE_ID = 1
-
 AUTH_USER_MODEL = 'users.User'
 
 WAGTAILADMIN_RECENT_EDITS_LIMIT = 5
@@ -212,11 +195,10 @@ WAGTAILADMIN_RECENT_EDITS_LIMIT = 5
 WAGTAIL_USER_EDIT_FORM = 'users.forms.CustomUserEditForm'
 WAGTAIL_USER_CREATION_FORM = 'users.forms.CustomUserCreationForm'
 WAGTAIL_USER_CUSTOM_FIELDS = ['country', 'status']
-
 WAGTAIL_USER_TIME_ZONES = ['America/New_York']
 
 #WAGTAILIMAGES_IMAGE_MODEL = 'myapp.MyImage'
-#WAGTAILIMAGES_MAX_UPLOAD_SIZE = 20 * 1024 * 1024  # i.e. 20MB
+WAGTAILIMAGES_MAX_UPLOAD_SIZE = 20 * 1024 * 1024 # 20 MB
 #WAGTAILIMAGES_FEATURE_DETECTION_ENABLED = True
 
 #WAGTAIL_PASSWORD_MANAGEMENT_ENABLED = True
@@ -380,13 +362,6 @@ WAGTAIL_CODE_BLOCK_LANGUAGES = (
 COMMENTS_APP = 'django_comments_xtd'
 COMMENTS_XTD_MAX_THREAD_LEVEL = 2
 
-#BLOG_NUM_RECENT_POSTS=6
-
-BLOG_PAGINATION_PER_PAGE=10
-RECIPE_PAGINATION_PER_PAGE=10
-
-WAGTAILIMAGES_MAX_UPLOAD_SIZE = 20 * 1024 * 1024 # 20 MB
-
 # require comment confirmation by email for no logged-in users
 COMMENTS_XTD_CONFIRM_EMAIL = True
 #EMAIL_HOST = "smtp.mail.com"
@@ -395,6 +370,13 @@ COMMENTS_XTD_CONFIRM_EMAIL = True
 #EMAIL_HOST_PASSWORD = "yourpassword"
 #DEFAULT_FROM_EMAIL = "Helpdesk <helpdesk@yourdomain>"
 
+# APP settings
+#BLOG_NUM_RECENT_POSTS=6
+BLOG_PAGINATION_PER_PAGE=10
+
+RECIPE_PAGINATION_PER_PAGE=10
+
+# Logging
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -411,7 +393,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'mysite.log',
+            'filename': 'ElysiumServer.log',
             'formatter': 'verbose',
         },
         'console': {
