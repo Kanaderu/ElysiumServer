@@ -83,15 +83,40 @@ def register_strikethrough_feature(features):
 
 
 @hooks.register('register_rich_text_features')
-def register_strikethrough_feature(features):
+def register_superscript_feature(features):
     feature_name = 'superscript'
     type_ = 'SUPERSCRIPT'
     tag = 'sup'
 
     control = {
         'type': type_,
-        'icon': 'fas fa-superscript',
+        'icon': 'fa-superscript',
         'description': 'Superscript',
+    }
+
+    features.register_editor_plugin(
+        'draftail', feature_name, draftail_features.InlineStyleFeature(control)
+    )
+
+    db_conversion = {
+        'from_database_format': {tag: InlineStyleElementHandler(type_)},
+        'to_database_format': {'style_map': {type_: tag}},
+    }
+
+    features.default_features.append(feature_name)
+    features.register_converter_rule('contentstate', feature_name, db_conversion)
+
+
+@hooks.register('register_rich_text_features')
+def register_subscript_feature(features):
+    feature_name = 'subscript'
+    type_ = 'SUBSCRIPT'
+    tag = 'sub'
+
+    control = {
+        'type': type_,
+        'icon': 'fa-subscript',
+        'description': 'Subscript',
     }
 
     features.register_editor_plugin(
