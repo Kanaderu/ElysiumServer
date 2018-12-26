@@ -34,6 +34,7 @@
         <link rel="stylesheet" href="{% static 'css/all.css' %}">
         {# Callie Custom Style #}
         <link type="text/css" rel="stylesheet" href="{% static 'css/callie-style.css' %}" />
+        <link type="text/css" rel="stylesheet" href="{% static 'css/katex.min.css' %}">
 
         {% block extra_css %}
             {# Override this in templates to add extra stylesheets #}
@@ -450,6 +451,8 @@
 
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/ElysiumServer.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/katex.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/katex_frontend_renderer.js' %}"></script>
 
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
