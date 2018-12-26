@@ -1,0 +1,13 @@
+/* Draftail Editor CSS */
+/* strikethrough */
+.icon.icon-fas.fa-strikethrough:before{
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f0cc";
+}
+/* superscript */
+.icon.icon-fas.fa-superscript:before{
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f12b";
+}
