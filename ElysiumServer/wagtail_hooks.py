@@ -151,8 +151,8 @@ def register_katex_feature(features):
             css={
                 'all': [
                     static('css/katex.min.css')
-            ]
-}
+                ]
+            }
         )
     )
 
