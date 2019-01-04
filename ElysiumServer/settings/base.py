@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'users',
     'recipes',
 
+    'fontawesome',
     'katex',
 
     'wagtail.contrib.forms',
