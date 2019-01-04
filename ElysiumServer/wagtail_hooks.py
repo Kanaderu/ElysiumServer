@@ -133,6 +133,31 @@ def register_subscript_feature(features):
 
 
 @hooks.register('register_rich_text_features')
+def register_monospace_feature(features):
+    feature_name = 'monospace'
+    type_ = 'CODE'
+    tag = 'code'
+
+    control = {
+        'type': type_,
+        'label': '{ }',
+        'description': 'Monospace',
+    }
+
+    features.register_editor_plugin(
+        'draftail', feature_name, draftail_features.InlineStyleFeature(control)
+    )
+
+    db_conversion = {
+        'from_database_format': {tag: InlineStyleElementHandler(type_)},
+        'to_database_format': {'style_map': {type_: tag}},
+    }
+
+    features.default_features.append(feature_name)
+    features.register_converter_rule('contentstate', feature_name, db_conversion)
+
+
+@hooks.register('register_rich_text_features')
 def register_katex_feature(features):
     feature_name = 'katex'
     type_ = 'KATEX'
