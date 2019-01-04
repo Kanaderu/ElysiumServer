@@ -1,4 +1,4 @@
-{% load static wagtailuserbar menu_tags %}
+{% load static wagtailuserbar wagtailcore_tags menu_tags %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -71,7 +71,7 @@
 
                         {# Logo #}
                         <div class="nav-logo">
-                            <a href="index.html" class="logo"><img src="{% static 'img/logo.png' %}" alt=""></a>
+                            <a href="/" class="logo"><img src="{% static 'img/logo.png' %}" alt=""></a>
                         </div>
                         {# /Logo #}
 
@@ -365,7 +365,7 @@
                     <div class="col-md-3">
                         <div class="footer-widget">
                             <div class="footer-logo">
-                                <a href="index.html" class="logo"><img src="{% static 'img/logo-alt.png' %}" alt=""></a>
+                                <a href="/" class="logo"><img src="{% static 'img/logo-alt.png' %}" alt=""></a>
                             </div>
                             <p>Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa enim nec.</p>
                             {% if settings.home.SocialMediaSettings.facebook or settings.home.SocialMediaSettings.twitter or settings.home.SocialMediaSettings.google_plus or settings.home.SocialMediaSettings.instagram %}
