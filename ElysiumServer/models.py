@@ -1,5 +1,4 @@
 from wagtail.core import blocks
-from wagtail.core.fields import StreamField
 
 from wagtailcodeblock.blocks import CodeBlock
 from wagtail.embeds.blocks import EmbedBlock
@@ -9,7 +8,6 @@ from wagtail.images.blocks import ImageChooserBlock
 from django.utils.translation import ugettext_lazy as _
 
 # load in wagtail hooks
-from . import wagtail_hooks
 
 
 class QuoteBlock(blocks.TextBlock):
