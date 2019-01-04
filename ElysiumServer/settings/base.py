@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'users',
     'recipes',
 
+    'katex',
+
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
