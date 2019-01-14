@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'blog',
     'users',
     'recipes',
+    'note',
 
     'template_apps.bootstrap',
     'template_apps.fontawesome',
@@ -194,7 +195,7 @@ WAGTAILIMAGES_MAX_UPLOAD_SIZE = 20 * 1024 * 1024 # 20 MB
 #WAGTAILUSERS_PASSWORD_ENABLED = True
 #WAGTAILUSERS_PASSWORD_REQUIRED = True
 
-WAGTAIL_CODE_BLOCK_THEME = 'okaidia'
+WAGTAIL_CODE_BLOCK_THEME = 'coy'
 WAGTAIL_CODE_BLOCK_LANGUAGES = (
     ('abap', 'ABAP'),
     ('actionscript', 'ActionScript'),
