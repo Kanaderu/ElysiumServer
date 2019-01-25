@@ -269,7 +269,7 @@ class NoteCategoryNotePage(models.Model):
 
 # Intermediate between Note Page and Note Tag
 class NotePageTag(TaggedItemBase):
-    content_object = ParentalKey('note.NotePage', related_name='tagged_items')
+    content_object = ParentalKey('note.NotePage', related_name='tagged_note_items')
 
 
 # Note Tag
@@ -321,7 +321,7 @@ class NotePage(Page):
         limit_choices_to=limit_author_choices,
         verbose_name=_('Author'),
         on_delete=models.SET_NULL,
-        related_name='author_pages',
+        related_name='author_note_pages',
     )
 
     search_fields = Page.search_fields + [
