@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+{% block header %}
+    <div id="post-header" class="page-header">
+        {% image page.header_image fill-1920x720 as photo %}
+        <div id="post-header" class="page-header-bg" style="background-image: url('{{ photo.url }}');" data-stellar-background-ratio="0.5"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="post-category">
+                        {% with categories=page.categories.all %}
+                            {% for categorypage in categories %}
+                                {% with category=categorypage.category %}
+                        <a href="{{ page.get_parent.url  }}?category={{ category }}">{{ category }}</a>
+                            {% endwith %}
+                        {% endfor %}
+                        {% endwith %}
+                    </div>
+                    <h1>{{ page.title }}</h1>
+                    <ul class="post-meta">
+                        <li><a href="author.html">{{ page.author }}</a></li>
+                        <li>{{ page.date }}</li>
+                        <li><i class="fa fa-comments"></i> 3</li>
+                        <li><i class="fa fa-eye"></i> 807</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-12">
+					<!-- post share -->
+					<div class="section-row">
+						<div class="post-share">
+							<a href="#" class="social-facebook"><i class="fab fa-facebook"></i><span>Share</span></a>
+							<a href="#" class="social-twitter"><i class="fab fa-twitter"></i><span>Tweet</span></a>
+							<a href="#" class="social-pinterest"><i class="fab fa-pinterest"></i><span>Pin</span></a>
+							<a href="#"><i class="fa fa-envelope"></i><span>Email</span></a>
+						</div>
+					</div>
+					<!-- /post share -->
+
+					<!-- post content -->
+					<div class="section-row">
+                        {% for block in self.body%}
+                            {{ block }}
+                        {% endfor %}
+					</div>
+					<!-- /post content -->
+
+                    {% if page.tags.all|length %}
+					<!-- post tags -->
+					<div class="section-row">
+						<div class="post-tags">
+							<ul>
+								<li>TAGS:</li>
+                            {% for tag in page.tags.all %}
+                                <li><a href="{% slugurl 'tags' %}?tag={{ tag }}">{{ tag }}</a></li>
+                            {% endfor %}
+							</ul>
+						</div>
+					</div>
+					<!-- /post tags -->
+                    {% endif %}
+
+                    <!-- return to notes -->
+                    <p><a href="{{ page.get_parent.url }}">Return to notes</a></p>
+
+				</div>
+			</div>
+			<!-- /row -->
+		</div>
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+	<!-- jQuery Plugins -->
+	<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
