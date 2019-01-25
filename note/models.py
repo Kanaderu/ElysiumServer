@@ -74,7 +74,7 @@ class NoteIndexPage(Page):
         notes = notes.order_by(
             '-date'
         ).select_related('owner').prefetch_related(
-            'tagged_items__tag',
+            'tagged_note_items__tag',
             'categories',
             'categories__category',
         )
@@ -279,23 +279,6 @@ class NoteTag(Tag):
         verbose_name = _("Note Tag")
         verbose_name_plural = _("Note Tags")
         proxy = True
-
-
-# Note Tag Index Page
-class NoteTagIndexPage(Page):
-
-    def get_context(self, request):
-        # Filter by tag
-        tag = request.GET.get('tag')
-        notepages = NotePage.objects.filter(tags__name=tag)
-
-        # Update template context
-        context = super().get_context(request)
-        context['notepages'] = notepages
-        return context
-
-    class Meta:
-        verbose_name = _('Note Tag Index [REST]')
 
 
 # Note Page
