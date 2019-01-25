@@ -39,7 +39,7 @@ class BlankPage(Page):
     class Meta:
         verbose_name = _('Blank Page')
 
-
+'''
 class CodePage(Page):
     author = models.CharField(max_length=255)
     date = models.DateField("Post date")
@@ -57,3 +57,4 @@ class CodePage(Page):
         FieldPanel('date'),
         StreamFieldPanel('body'),
     ]
+'''
