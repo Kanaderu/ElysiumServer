@@ -379,26 +379,38 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
+        'file_info': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/ElysiumServer_INFO.log',
+            'formatter': 'verbose',
+        },
+        'file_debug': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'ElysiumServer.log',
+            'filename': 'logs/ElysiumServer_DEBUG.log',
+            'formatter': 'verbose',
+        },
+        'file_error': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/ElysiumServer_ERROR.log',
             'formatter': 'verbose',
         },
         'console': {
-            'level': 'ERROR',
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
         },
     },
     'loggers': {
         'django': {
-            'handlers':['file', 'console'],
+            'handlers':['file_info', 'file_debug', 'file_error', 'console'],
             'propagate': True,
-            'level':'DEBUG',
+            'level':'INFO',
         },
         'MYAPP': {
-            'handlers': ['file', 'console'],
+            'handlers': ['file_debug', 'console'],
             'level': 'DEBUG',
         },
     }
