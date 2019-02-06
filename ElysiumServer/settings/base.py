@@ -365,6 +365,7 @@ BLOG_PAGINATION_PER_PAGE=10
 
 RECIPE_PAGINATION_PER_PAGE=10
 
+LOGS_DIR = os.path.join(BASE_DIR, 'logs')
 # Logging
 LOGGING = {
     'version': 1,
@@ -382,19 +383,19 @@ LOGGING = {
         'file_info': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': 'logs/ElysiumServer_INFO.log',
+            'filename': os.path.join(LOGS_DIR, 'ElysiumServer_INFO.log'),
             'formatter': 'verbose',
         },
         'file_debug': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'logs/ElysiumServer_DEBUG.log',
+            'filename': os.path.join(LOGS_DIR, 'ElysiumServer_DEBUG.log'),
             'formatter': 'verbose',
         },
         'file_error': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename': 'logs/ElysiumServer_ERROR.log',
+            'filename': os.path.join(LOGS_DIR, 'ElysiumServer_ERROR.log'),
             'formatter': 'verbose',
         },
         'console': {
