@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'users',
     'recipes',
     'note',
+    'template_tags',
 
     'template_apps.bootstrap',
     'template_apps.fontawesome',
