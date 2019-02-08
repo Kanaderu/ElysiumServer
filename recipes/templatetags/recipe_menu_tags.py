@@ -1,6 +1,12 @@
 from django import template
 from recipes.models import *
+
 register = template.Library()
+
+
+@register.simple_tag(name='get_num_recipe_categories')
+def get_num_recipe_categories():
+    return len(RecipeCategory.objects.all())
 
 
 @register.inclusion_tag('tags/recipe_menu.html', takes_context=True)
