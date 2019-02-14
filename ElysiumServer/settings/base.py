@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'wagtailfontawesome',
     'wagtailmenus',
     'condensedinlinepanel',
+    'wagtailgridder',
 
     'wagtail.contrib.search_promotions',
     'wagtail.contrib.table_block',

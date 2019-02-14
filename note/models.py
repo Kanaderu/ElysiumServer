@@ -4,7 +4,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import Count, Q
-from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Page
@@ -13,15 +12,9 @@ from wagtail.admin.edit_handlers import (
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
-from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.search import index
 
-from wagtail.core import blocks
-from wagtail.contrib.table_block.blocks import TableBlock
-from wagtail.images.blocks import ImageChooserBlock
-from wagtail.embeds.blocks import EmbedBlock
-from wagtailcodeblock.blocks import CodeBlock
-from ElysiumServer.models import QuoteBlock, STANDARD_BLOCKS
+from ElysiumServer.models import STANDARD_BLOCKS
 
 from taggit.models import TaggedItemBase, Tag
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -37,6 +30,7 @@ def get_note_context(context):
         owned_pages__live=True,
         owned_pages__content_type__model='notepage'
     ).annotate(Count('owned_pages')).order_by('-owned_pages__count')
+    '''
     context['all_categories'] = NoteCategory.objects.all()
     context['root_categories'] = NoteCategory.objects.filter(
         parent=None,
@@ -45,6 +39,7 @@ def get_note_context(context):
     ).annotate(
         note_count=Count('notepage'),
     )
+    '''
     return context
 
 
@@ -85,24 +80,16 @@ class NoteIndexPage(Page):
         context = super(NoteIndexPage, self).get_context(
             request, *args, **kwargs)
         notes = self.notes
-
+        '''
         if tag is None:
             tag = request.GET.get('tag')
         if tag:
             notes = notes.filter(tags__slug=tag)
-        # if category is None:  # Not coming from category_view in views.py
-        #    if request.GET.get('category'):
-        #        category = get_object_or_404(NoteCategory, slug=request.GET.get('category'))
-        # if category:
-        #    if not request.GET.get('category'):
-        #        category = get_object_or_404(NoteCategory, slug=category)
-        #    notes = notes.filter(categories__category__name=category)
-        if category is None:
             category = request.GET.get('category')
         if category:
             notes = notes.filter(categories__category__name=category)
             category = NoteCategory.objects.filter(name=category)
-            # NotePage.objects.filter(note_categories__name=category)
+        '''
         if author:
             if isinstance(author, str) and not author.isdigit():
                 notes = notes.filter(author__username=author)
@@ -126,8 +113,8 @@ class NoteIndexPage(Page):
                 notes = paginator.page(paginator.num_pages)
 
         context['notes'] = notes
-        context['category'] = category
-        context['tag'] = tag
+        #context['category'] = category
+        #context['tag'] = tag
         context['author'] = author
         context['COMMENTS_APP'] = settings.COMMENTS_APP
         context['paginator'] = paginator
@@ -138,153 +125,99 @@ class NoteIndexPage(Page):
     class Meta:
         verbose_name = _('Note Index')
 
-    subpage_types = ['note.NotePage']
+    subpage_types = ['note.NoteSubjectIndexPage']
 
 
-class NoteCategoryIndexPage(Page):
-    @property
-    def categories(self):
-        # Get list of note pages that are descendants of this page
-        categories = NoteCategory.objects.filter(parent__isnull=True)
-        categories = categories.order_by('name')
-        return categories
-
-    def get_context(self, request, tag=None, category=None, author=None, *args,
-                    **kwargs):
-        context = super(NoteCategoryIndexPage, self).get_context(request, *args, **kwargs)
-
-        categories = self.categories
-
-        '''
-        # Pagination
-        page = request.GET.get('page')
-        page_size = 10
-        if hasattr(settings, 'NOTE_PAGINATION_PER_PAGE'):
-            page_size = settings.NOTE_PAGINATION_PER_PAGE
-
-        paginator = None
-        if page_size is not None:
-            paginator = Paginator(notes, page_size)  # Show 10 notes per page
-            try:
-                notes = paginator.page(page)
-            except PageNotAnInteger:
-                notes = paginator.page(1)
-            except EmptyPage:
-                notes = paginator.page(paginator.num_pages)
-
-        context['notes'] = notes
-        context['category'] = category
-        context['tag'] = tag
-        context['author'] = author
-        context['COMMENTS_APP'] = settings.COMMENTS_APP
-        context['paginator'] = paginator
-        '''
-        context = get_note_context(context)
-
-        return context
-
-    class Meta:
-        verbose_name = _('Note Category Index')
-
-
-# Note Category
-@register_snippet
-class NoteCategory(models.Model):
-    name = models.CharField(max_length=80, unique=True, verbose_name=_('Category Name'))
-    slug = models.SlugField(unique=True, max_length=80)
-    parent = models.ForeignKey('self', blank=True, null=True, related_name="children",
-                               help_text=_(
-                                   'Categories, unlike tags, can have a hierarchy. You might have a '
-                                   'Jazz category, and under that have children categories for Bebop'
-                                   ' and Big Band. Totally optional.'),
-                               on_delete=models.CASCADE,
-                               )
-    description = models.CharField(max_length=500, blank=True)
-
-    menu_image = models.ForeignKey(
+class NoteSubjectIndexPage(Page):
+    body = StreamField(STANDARD_BLOCKS)
+    date = models.DateField(
+        _("Post date"), default=datetime.datetime.today,
+        help_text=_("This date may be displayed on the note post. It is not "
+                    "used to schedule posts to go live at a later date.")
+    )
+    header_image = models.ForeignKey(
         get_image_model_string(),
-        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
         related_name='+',
-        verbose_name=_('Menu Image'),
+        verbose_name=_('Header Image')
     )
 
-    class Meta:
-        ordering = ['name']
-        verbose_name = _("Note Category")
-        verbose_name_plural = _("Note Categories")
-
-    panels = [
-        FieldPanel('name'),
-        FieldPanel('parent'),
-        FieldPanel('description'),
-        ImageChooserPanel('menu_image'),
+    search_fields = Page.search_fields + [
+        index.SearchField('body'),
     ]
 
-    def __str__(self):
-        return self.name
+    settings_panels = [
+        MultiFieldPanel([
+            FieldRowPanel([
+                FieldPanel('go_live_at'),
+                FieldPanel('expire_at'),
+            ], classname="label-above"),
+        ], 'Scheduled publishing', classname="publishing"),
+        FieldPanel('date'),
+     ]
 
-    def clean(self):
-        if self.parent:
-            parent = self.parent
-            if self.parent == self:
-                raise ValidationError('Parent category cannot be self.')
-            if parent.parent and parent.parent == self:
-                raise ValidationError('Cannot have circular Parents.')
+    content_panels = [
+        FieldPanel('title', classname="full title"),
+        ImageChooserPanel('header_image'),
+        StreamFieldPanel('body', classname="full title"),
+    ]
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            unique_slugify(self, self.name)
-        return super(NoteCategory, self).save(*args, **kwargs)
-
-
-class NoteCategoryPage(Page):
-
-    def get_context(self, request):
-        # Filter by category
-        category = request.GET.get('category')
-        notepages = NotePage.objects.filter(note_categories__name=category)
-
-        context = super(NoteCategoryPage, self).get_context(request)
-        context['notepages'] = notepages
-        return context
+    subpage_types = ['note.NoteSubjectPage']
+    parent_page_types = ['note.NoteIndexPage']
 
     class Meta:
-        verbose_name = _('Note Category Page [REST]')
-        verbose_name_plural = _('Note Category Pages [REST]')
+        verbose_name = _('Subject Index Page')
 
 
-# Intermediate between Note Category and Note Page
-class NoteCategoryNotePage(models.Model):
-    category = models.ForeignKey(
-        'NoteCategory', related_name="+", verbose_name=_('Category'),
-        on_delete=models.CASCADE,
+class NoteSubjectPage(Page):
+    body = StreamField(STANDARD_BLOCKS)
+    date = models.DateField(
+        _("Post date"), default=datetime.datetime.today,
+        help_text=_("This date may be displayed on the note post. It is not "
+                    "used to schedule posts to go live at a later date.")
+    )
+    header_image = models.ForeignKey(
+        get_image_model_string(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name=_('Header Image')
     )
 
-    page = ParentalKey('note.NotePage', related_name='categories')
-
-    panels = [
-        FieldPanel('category'),
+    search_fields = Page.search_fields + [
+        index.SearchField('body'),
     ]
 
+    settings_panels = [
+        MultiFieldPanel([
+            FieldRowPanel([
+                FieldPanel('go_live_at'),
+                FieldPanel('expire_at'),
+            ], classname="label-above"),
+        ], 'Scheduled publishing', classname="publishing"),
+        FieldPanel('date'),
+     ]
 
-# Intermediate between Note Page and Note Tag
-class NotePageTag(TaggedItemBase):
-    content_object = ParentalKey('note.NotePage', related_name='tagged_note_items')
+    content_panels = [
+        FieldPanel('title', classname="full title"),
+        ImageChooserPanel('header_image'),
+        StreamFieldPanel('body', classname="full title"),
+    ]
 
+    subpage_type = ['note.NoteSubjectPage', 'note.NotePage']
+    parent_page_types = ['note.NoteSubjectIndexPage']
 
-# Note Tag
-@register_snippet
-class NoteTag(Tag):
     class Meta:
-        verbose_name = _("Note Tag")
-        verbose_name_plural = _("Note Tags")
-        proxy = True
+        verbose_name = _('Subject Page')
 
 
 # Note Page
 class NotePage(Page):
     body = StreamField(STANDARD_BLOCKS)
-    tags = ClusterTaggableManager(through='note.NotePageTag', blank=True)
+    #tags = ClusterTaggableManager(through='note.NotePageTag', blank=True)
     date = models.DateField(
         _("Post date"), default=datetime.datetime.today,
         help_text=_("This date may be displayed on the note post. It is not "
@@ -311,7 +244,7 @@ class NotePage(Page):
         index.SearchField('body'),
     ]
 
-    note_categories = models.ManyToManyField('note.NoteCategory', through='note.NoteCategoryNotePage', blank=True)
+    #note_categories = models.ManyToManyField('note.NoteCategory', through='note.NoteCategoryNotePage', blank=True)
 
     settings_panels = [
         MultiFieldPanel([
@@ -326,10 +259,10 @@ class NotePage(Page):
 
     content_panels = [
         FieldPanel('title', classname="full title"),
-        MultiFieldPanel([
-            FieldPanel('tags'),
-            InlinePanel('categories', label=_("Categories")),
-        ], heading="Tags and Categories"),
+        #MultiFieldPanel([
+        #    FieldPanel('tags'),
+        #    InlinePanel('categories', label=_("Categories")),
+        #], heading="Tags and Categories"),
         ImageChooserPanel('header_image'),
         StreamFieldPanel('body', classname="full title"),
     ]
@@ -357,4 +290,4 @@ class NotePage(Page):
         verbose_name = _('Note Page')
         verbose_name_plural = _('Note Pages')
 
-    parent_page_types = ['note.NoteIndexPage']
+    parent_page_types = ['note.NoteSubjectPage']
