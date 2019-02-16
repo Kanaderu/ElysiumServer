@@ -4,6 +4,7 @@ from wagtailcodeblock.blocks import CodeBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.images.blocks import ImageChooserBlock
+from template_apps.markdown.utils import MarkdownBlock
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -69,6 +70,7 @@ class ThreeColumnBlock(blocks.StructBlock):
 
 
 STANDARD_BLOCKS = [
+    ('markdown', MarkdownBlock()),
     ('heading', blocks.CharBlock(icon='title', classname='full title')),
     ('paragraph', blocks.RichTextBlock()),
     ('image', ImageChooserBlock()),

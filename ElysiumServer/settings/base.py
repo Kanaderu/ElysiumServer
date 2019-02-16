@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'template_apps.fontawesome',
     'template_apps.jquery',
     'template_apps.katex',
+    'template_apps.markdown',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
