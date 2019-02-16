@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'template_apps.jquery',
     'template_apps.katex',
     'template_apps.markdown',
+    'template_apps.prism',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',

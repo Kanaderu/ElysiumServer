@@ -14,15 +14,19 @@ def render(text):
     formatted_html = markdown(
         text,
         extensions=[
+            'pymdownx.arithmatex',
             'pymdownx.superfences',
+            'pymdownx.highlight',
             'pymdownx.caret',
             'pymdownx.mark',
             'pymdownx.tilde',
             'pymdownx.progressbar',
             'pymdownx.smartsymbols',
             'pymdownx.tasklist',
-            'markdown.extensions.extra',
-            'markdown.extensions.codehilite',
+            'pymdownx.extra',
+            
+            #'markdown.extensions.extra',
+            #'markdown.extensions.codehilite',
             'markdown.extensions.meta',
             'markdown.extensions.nl2br',
             'markdown.extensions.sane_lists',
@@ -30,6 +34,24 @@ def render(text):
             'markdown.extensions.toc',
             'markdown.extensions.wikilinks',
         ],
+        extension_configs={
+            # settings to switch from MathJax to KaTex
+            'pymdownx.arithmatex': {
+                'generic': True,
+                'preview': False,
+            },
+            'pymdownx.highlight': {
+                'use_pygments': False,
+                'css_class': 'highlight line-numbers'
+            },
+            #'pymdownx.superfences': {
+            #    'custom_fences': [
+            #        {'name': 'math',
+            #         'class': 'arithmatex',
+            #         'format': arithmatex.inline_generic_format}
+            #    ]
+            #},
+        },
         output_format='html5'
     )
 
@@ -40,7 +62,8 @@ def render(text):
         tags=[
             'p', 'div', 'span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'tt', 'pre', 'em', 'strong', 'ul', 'li',
             'dl', 'dd', 'dt', 'code', 'img', 'a', 'table', 'tr', 'th', 'td', 'tbody', 'caption', 'colgroup',
-            'thead', 'tfoot', 'blockquote', 'ol', 'hr', 'br', 'sub', 'sup', 'strike', 'del', 'mark', 'input', 'label'
+            'thead', 'tfoot', 'blockquote', 'ol', 'hr', 'br', 'sub', 'sup', 'strike', 'del', 'mark', 'input', 'label',
+            #'script'
         ],
         attributes={
             '*': ['class', 'style', 'id'],
@@ -54,6 +77,7 @@ def render(text):
             'div': ['class'],
             'span': ['class'],
             'label': ['for'],
+            #'script': ['type', 'mode'],
         },
         styles=[
             'color', 'background-color', 'font-family', 'font-weight', 'font-size', 'width', 'height',
@@ -62,7 +86,7 @@ def render(text):
             'margin-bottom', 'margin-left', 'margin-right'
         ]
     )
-
+    print(formatted_html)
     return mark_safe(sanitized_html)
 
 
