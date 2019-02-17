@@ -102,7 +102,7 @@ def render(text):
             'margin-bottom', 'margin-left', 'margin-right'
         ]
     )
-    print(formatted_html)
+    
     return mark_safe(sanitized_html)
 
 
