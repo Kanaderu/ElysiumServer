@@ -7,6 +7,7 @@ from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
 from bleach import clean as bleach_clean
 from markdown import markdown
+from pymdownx import superfences, arithmatex
 
 
 def render(text):
@@ -15,7 +16,6 @@ def render(text):
         text,
         extensions=[
             'pymdownx.arithmatex',
-            'pymdownx.superfences',
             'pymdownx.highlight',
             'pymdownx.caret',
             'pymdownx.mark',
@@ -23,10 +23,12 @@ def render(text):
             'pymdownx.progressbar',
             'pymdownx.smartsymbols',
             'pymdownx.tasklist',
+
+            # contains: pymdownx.betterem, pymdownx.superfences, markdown.extensions.footnotes,
+            # markdown.extensions.attr_list, markdown.extensions.def_list, markdown.extensions.tables
+            # markdown.extensions.abbr, pymdownx.extrarawhtml
             'pymdownx.extra',
-            
-            #'markdown.extensions.extra',
-            #'markdown.extensions.codehilite',
+
             'markdown.extensions.meta',
             'markdown.extensions.nl2br',
             'markdown.extensions.sane_lists',
@@ -44,13 +46,27 @@ def render(text):
                 'use_pygments': False,
                 'css_class': 'highlight line-numbers'
             },
-            #'pymdownx.superfences': {
-            #    'custom_fences': [
-            #        {'name': 'math',
-            #         'class': 'arithmatex',
-            #         'format': arithmatex.inline_generic_format}
-            #    ]
-            #},
+            'pymdownx.extra': {
+                'pymdownx.superfences': {
+                    'custom_fences': [
+                        {
+                            'name': 'flow',
+                            'class': 'uml-flowchart',
+                            'format': superfences.fence_div_format
+                        },
+                        {
+                            'name': 'sequence',
+                            'class': 'uml-sequence-diagram',
+                            'format': superfences.fence_div_format
+                        },
+                        {
+                            'name': 'math',
+                            'class': 'arithmatex',
+                            'format': arithmatex.inline_generic_format
+                        },
+                    ]
+                }
+            }
         },
         output_format='html5'
     )

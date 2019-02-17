@@ -40,6 +40,11 @@ INSTALLED_APPS = [
     'template_apps.katex',
     'template_apps.markdown',
     'template_apps.prism',
+    'template_apps.js-sequence-diagrams',
+    'template_apps.raphael',
+    'template_apps.snap-svg',
+    'template_apps.underscore',
+    'template_apps.flowchart',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',

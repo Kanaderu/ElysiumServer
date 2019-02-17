@@ -455,11 +455,20 @@
 
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/ElysiumServer.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/katex.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/katex_frontend_renderer.js' %}"></script>
         {# prob add method to dynamically add these as needed #}
+        {# tailored scripts #}
+        <script type="text/javascript" src="{% static 'js/katex_frontend_renderer.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/katex_markdown.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/superfences_UML.js' %}"></script>
+
+        {# public scripts #}
+        <script type="text/javascript" src="{% static 'js/katex.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/prism-coy.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/raphael.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/underscore.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/sequence-diagram-min.js' %}"></script> {# warning can't find map when using min version #}
+        <script type="text/javascript" src="{% static 'js/flowchart.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/snap.svg-min.js' %}"></script>
 
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}
