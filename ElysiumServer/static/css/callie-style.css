@@ -4,8 +4,8 @@ Author: yaminncco
 
 Colors:
 	Body 		  : #505050
-	Headers 	: #11151c
-	Primary 	: #ee4266
+	Headers 	  : #11151c
+	Primary 	  : #ee4266 --> #2c8c93ff
 	Dark 		  : #1b1c1e
 	Grey 		  : #e8eaed #97989b #323335
 
@@ -75,18 +75,18 @@ a {
 }
 
 a:hover, a:focus {
-  color: #ee4266;
+  color: #2c8c93ff;
   text-decoration: none;
   outline: none;
 }
 
 ::-moz-selection {
-  background-color: #ee4266;
+  background-color: #2c8c93ff;
   color: #FFF;
 }
 
 ::selection {
-  background-color: #ee4266;
+  background-color: #2c8c93ff;
   color: #FFF;
 }
 
@@ -123,7 +123,7 @@ blockquote.blockquote:before {
   line-height: 70px;
   text-align: center;
   border-radius: 50%;
-  color: #ee4266;
+  color: #2c8c93ff;
   font-size: 30px;
   background: #fff;
   border: 2px solid #e8eaed;
@@ -235,10 +235,10 @@ textarea.input {
 }
 
 .primary-button {
-  background-color: #ee4266;
+  background-color: #2c8c93ff;
   color: #fff;
-  -webkit-box-shadow: 0px 0px 0px 2px #ee4266 inset;
-  box-shadow: 0px 0px 0px 2px #ee4266 inset;
+  -webkit-box-shadow: 0px 0px 0px 2px #2c8c93ff inset;
+  box-shadow: 0px 0px 0px 2px #2c8c93ff inset;
 }
 
 .secondary-button {
@@ -250,7 +250,7 @@ textarea.input {
 
 .primary-button:hover, .primary-button:focus {
   background-color: transparent;
-  color: #ee4266;
+  color: #2c8c93ff;
 }
 
 .secondary-button:hover, .secondary-button:focus {
@@ -485,7 +485,7 @@ textarea.input {
   background-color: #fff;
   -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-  border-top: 2px solid #ee4266;
+  border-top: 2px solid #2c8c93ff;
 }
 
 .dropdown .dropdown-list li {
@@ -563,7 +563,7 @@ textarea.input {
 }
 
 .nav-menu li.has-dropdown.megamenu>.dropdown.tab-dropdown .nav-tabs a.active {
-  background: #ee4266
+  background: #2c8c93ff
 }
 
 .nav-menu li.has-dropdown.megamenu>.dropdown.tab-dropdown .nav-tabs a.active a {
@@ -610,7 +610,7 @@ textarea.input {
 }
 
 .nav-aside-menu li a:hover, .nav-aside-menu li a:focus {
-  color: #ee4266;
+  color: #2c8c93ff;
 }
 
 .nav-aside-menu li.has-dropdown>a {
@@ -777,7 +777,7 @@ textarea.input {
 }
 
 .post-category a {
-  color: #ee4266;
+  color: #2c8c93ff;
   font-weight: 700;
   font-size: 12px;
   text-transform: uppercase;
@@ -809,7 +809,7 @@ textarea.input {
 }
 
 .post-meta li a:hover, .post-meta li a:focus {
-  color: #ee4266;
+  color: #2c8c93ff;
 }
 
 .post-meta li:after {
@@ -878,7 +878,7 @@ textarea.input {
 }
 
 .post.post-thumb .post-title a:hover, .post.post-thumb .post-title a:focus {
-  color: #ee4266;
+  color: #2c8c93ff;
 }
 
 .post.post-thumb .post-meta li {
@@ -890,7 +890,7 @@ textarea.input {
 }
 
 .post.post-thumb .post-meta li a:hover, .post.post-thumb .post-meta li a:focus {
-  color: #ee4266;
+  color: #2c8c93ff;
 }
 
 /*----------------------------*\
@@ -967,7 +967,7 @@ textarea.input {
 }
 
 .page-header .post-meta li a:hover, .page-header .post-meta li a:focus {
-  color: #ee4266;
+  color: #2c8c93ff;
 }
 
 .post-share a {
@@ -1119,7 +1119,7 @@ textarea.input {
 }
 
 .page-header .author .author-social li a:hover, .page-header .author .author-social li a:focus {
-  color: #ee4266;
+  color: #2c8c93ff;
 }
 
 /*----------------------------*\
@@ -1186,11 +1186,11 @@ textarea.input {
 }
 
 .post-comments .media.media-author .media-heading h4 {
-  color: #ee4266;
+  color: #2c8c93ff;
 }
 
 .post-comments .media.media-author .media-left:after {
-  background-color: #ee4266;
+  background-color: #2c8c93ff;
 }
 
 /*=========================================================
@@ -1335,7 +1335,7 @@ textarea.input {
 
 .tags-widget ul li a:hover, .tags-widget ul li a:focus {
   color: #fff !important;
-  background-color: #ee4266;
+  background-color: #2c8c93ff;
 }
 
 /*----------------------------*\
@@ -1392,7 +1392,7 @@ textarea.input {
 }
 
 #footer a:hover, #footer a:focus {
-  color: #ee4266;
+  color: #2c8c93ff;
 }
 
 .footer-widget {
@@ -1450,7 +1450,7 @@ textarea.input {
   text-align: center;
   height: 40px;
   background: #fff;
-  color: #ee4266;
+  color: #2c8c93ff;
   border: 1px solid #e8eaed;
   line-height: 40px;
   border-radius: 50%;
