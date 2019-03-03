@@ -375,7 +375,7 @@
             <div class="container">
                 <!-- row -->
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <div class="footer-widget">
                             <div class="footer-logo">
                                 <a href="/" class="logo"><img src="{% static 'logo/text_w.png' %}" alt="" style="height:35px"></a>
@@ -413,6 +413,7 @@
                             </div>
                         </div>
                     </div>
+                    {% comment %}
                     <div class="col-md-3">
                         <div class="footer-widget">
                             <h3 class="footer-title">Tags</h3>
@@ -433,6 +434,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endcomment %}
                     <div class="col-md-3">
                         <div class="footer-widget">
                             <h3 class="footer-title">Newsletter</h3>
@@ -451,7 +453,8 @@
                 <!-- row -->
                 <div class="footer-bottom row">
                     <div class="col-md-6 col-md-pull-6">
-                        <div class="footer-copyright">Copyright ©{% now "Y" %} All rights reserved</div>
+                        <div class="footer-copyright"><img src="{% static 'logo/icon_w.png' %}" style="height:30px"></img>
+                            Copyright ©{% now "Y" %} All rights reserved</div>
                     </div>
                     <div class="col-md-6 col-md-push-6">
                         {% flat_menu 'footer' max_levels=1 show_menu_heading=False  use_specific=USE_SPECIFIC_TOP_LEVEL  fall_back_to_default_site_menus=True template="menus/callie_main/footer.html" %}
