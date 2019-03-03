@@ -8,9 +8,8 @@ from template_apps.markdown.utils import MarkdownBlock
 
 from django.utils.translation import ugettext_lazy as _
 
+
 # load in wagtail hooks
-
-
 class QuoteBlock(blocks.TextBlock):
     class Meta:
         template = 'blocks/quote.html'

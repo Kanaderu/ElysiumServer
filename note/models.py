@@ -14,7 +14,7 @@ from wagtail.images import get_image_model_string
 from wagtail.snippets.models import register_snippet
 from wagtail.search import index
 
-from ElysiumServer.models import STANDARD_BLOCKS
+from ElysiumServer.editor import STANDARD_BLOCKS
 
 from taggit.models import TaggedItemBase, Tag
 from modelcluster.contrib.taggit import ClusterTaggableManager

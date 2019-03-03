@@ -12,10 +12,32 @@ from wagtail.core import blocks
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.images.blocks import ImageChooserBlock
 
-from wagtailcodeblock.blocks import CodeBlock
-from wagtail.embeds.blocks import EmbedBlock
-from ElysiumServer.models import QuoteBlock, STANDARD_BLOCKS
 from wagtail.contrib.settings.models import BaseSetting, register_setting
+
+from django.db import models
+
+from wagtail.core.fields import StreamField
+from wagtail.admin.edit_handlers import StreamFieldPanel
+from wagtail.snippets.models import register_snippet
+
+from ElysiumServer.editor import STANDARD_BLOCKS
+
+
+# load in wagtail hooks
+@register_snippet
+class SiteDescriptions(models.Model):
+    #footer_description = models.TextField(name='footer_description', blank=True, null=False)
+    footer_description = StreamField(STANDARD_BLOCKS)
+
+    panels = [
+        StreamFieldPanel('footer_description'),
+    ]
+
+    def __init__(self):
+        self.text = 'Site Descriptions'
+
+    def __str__(self):
+        return self.text
 
 
 @register_setting(icon='group')

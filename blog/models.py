@@ -16,13 +16,7 @@ from wagtail.snippets.models import register_snippet
 from wagtail.snippets.edit_handlers import SnippetChooserPanel
 from wagtail.search import index
 
-
-from wagtail.core import blocks
-from wagtail.contrib.table_block.blocks import TableBlock
-from wagtail.images.blocks import ImageChooserBlock
-from wagtail.embeds.blocks import EmbedBlock
-from wagtailcodeblock.blocks import CodeBlock
-from ElysiumServer.models import QuoteBlock, STANDARD_BLOCKS
+from ElysiumServer.editor import STANDARD_BLOCKS
 
 from taggit.models import TaggedItemBase, Tag
 from modelcluster.contrib.taggit import ClusterTaggableManager
