@@ -2,43 +2,24 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from wagtail.core.models import Page
-from wagtail.core.fields import RichTextField
-#from wagtail.admin.edit_handlers import FieldPanel
-
-from wagtail.contrib.table_block.blocks import TableBlock
-
-from wagtail.core.fields import StreamField
-from wagtail.core import blocks
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
-from wagtail.images.blocks import ImageChooserBlock
-
 from wagtail.contrib.settings.models import BaseSetting, register_setting
-
-from django.db import models
-
 from wagtail.core.fields import StreamField
 from wagtail.admin.edit_handlers import StreamFieldPanel
-from wagtail.snippets.models import register_snippet
 
 from ElysiumServer.editor import STANDARD_BLOCKS
 
 
 # load in wagtail hooks
-@register_snippet
-class SiteDescriptions(models.Model):
-    #footer_description = models.TextField(name='footer_description', blank=True, null=False)
-    footer_description = StreamField(STANDARD_BLOCKS)
+@register_setting(icon='doc-empty')
+class DescriptionSettings(BaseSetting):
+    footer_description = StreamField(STANDARD_BLOCKS, blank=True, null=True)
 
     panels = [
         StreamFieldPanel('footer_description'),
     ]
 
-    def __init__(self):
-        self.text = 'Site Descriptions'
-
-    def __str__(self):
-        return self.text
-
+    class Meta:
+        verbose_name = _('Site Descriptions')
 
 @register_setting(icon='group')
 class SocialMediaSettings(BaseSetting):

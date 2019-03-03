@@ -380,7 +380,7 @@
                             <div class="footer-logo">
                                 <a href="/" class="logo"><img src="{% static 'logo/text_w.png' %}" alt="" style="height:35px"></a>
                             </div>
-                            <p>Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa enim nec.</p>
+                            {{ settings.home.DescriptionSettings.footer_description }}
                             {% if settings.home.SocialMediaSettings.facebook or settings.home.SocialMediaSettings.twitter or settings.home.SocialMediaSettings.google_plus or settings.home.SocialMediaSettings.instagram %}
                             <ul class="contact-social">
                                 {% if settings.home.SocialMediaSettings.facebook %}
