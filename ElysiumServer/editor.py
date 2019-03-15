@@ -2,6 +2,7 @@ from wagtail.core import blocks
 
 from wagtailcodeblock.blocks import CodeBlock
 from wagtail.embeds.blocks import EmbedBlock
+from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.images.blocks import ImageChooserBlock
 from template_apps.markdown.utils import MarkdownBlock
@@ -66,6 +67,18 @@ class ThreeColumnBlock(blocks.StructBlock):
         template = 'blocks/three_column_block.html'
         icon = 'list-ul'
         label = 'Three Columns'
+
+
+class ParallaxBlock(blocks.StructBlock):
+    video = DocumentChooserBlock(required=True, icon='media')
+    poster_image = ImageChooserBlock(required=True, icon='image')
+
+    class Meta:
+        template = 'blocks/parallax_block.html'
+        icon = 'arrows-up-down'
+        label = 'Parallax Video'
+    #class Meta:
+    #    template = 'blocks/person_block.html'
 
 
 STANDARD_BLOCKS = [

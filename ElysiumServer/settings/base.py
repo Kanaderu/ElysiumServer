@@ -178,6 +178,11 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+WAGTAILEMBEDS_FINDERS = [
+    {
+        'class': 'wagtail.embeds.finders.oembed'
+    }
+]
 
 # Wagtail settings
 WAGTAIL_SITE_NAME = "ElysiumServer"

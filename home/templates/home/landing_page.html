@@ -10,6 +10,13 @@
 
 
 {% block content %}
+{% for block in page.parallax %}
+    {% if block.block_type == 'parallax' %}
+        <div>
+            {% include_block block %}
+        </div>
+    {% endif %}
+{% endfor %}
 <div>
     <div id="top" class="parallax-container" style="height:800px">
       <!--<div class="parallax"><img src="{% static 'img/home_slider.jpg' %}"></div>-->

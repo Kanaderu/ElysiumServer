@@ -1,0 +1,17 @@
+{% load wagtailcore_tags wagtailimages_tags wagtailembeds_tags static %}
+
+
+<div class="parallax-container" style="height:800px">
+
+    <div id="parallax">
+    {% image value.poster_image original as poster %}
+    <video class="visible-desktop" id="video" poster="{{ poster.url }}" autoplay loop muted>
+        <source type="video/mp4" src="{{ value.video.url }}"></source>
+    </video>
+    <div id="state" class="visible-desktop">
+        <span class="fa fa-pause"></span>
+    </div>
+    {% image value.poster_image original id="state" class="hidden-desktop" alt="" %}
+    </div>
+
+</div>

@@ -6,7 +6,7 @@ from wagtail.contrib.settings.models import BaseSetting, register_setting
 from wagtail.core.fields import StreamField
 from wagtail.admin.edit_handlers import StreamFieldPanel
 
-from ElysiumServer.editor import STANDARD_BLOCKS
+from ElysiumServer.editor import STANDARD_BLOCKS, ParallaxBlock
 
 
 # load in wagtail hooks
@@ -20,6 +20,7 @@ class DescriptionSettings(BaseSetting):
 
     class Meta:
         verbose_name = _('Site Descriptions')
+
 
 @register_setting(icon='group')
 class SocialMediaSettings(BaseSetting):
@@ -44,10 +45,10 @@ class BlankPage(Page):
 
 
 class LandingPage(Page):
-    body = StreamField(STANDARD_BLOCKS)
+    parallax = StreamField([('parallax', ParallaxBlock())])
 
     content_panels = Page.content_panels + [
-        StreamFieldPanel('body'),
+        StreamFieldPanel('parallax'),
     ]
 
     class Meta:
