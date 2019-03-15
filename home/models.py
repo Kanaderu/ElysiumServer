@@ -42,6 +42,17 @@ class BlankPage(Page):
     class Meta:
         verbose_name = _('Blank Page')
 
+
+class LandingPage(Page):
+    body = StreamField(STANDARD_BLOCKS)
+
+    content_panels = Page.content_panels + [
+        StreamFieldPanel('body'),
+    ]
+
+    class Meta:
+        verbose_name = _('Landing Page')
+
 '''
 class CodePage(Page):
     author = models.CharField(max_length=255)

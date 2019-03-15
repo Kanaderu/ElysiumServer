@@ -437,6 +437,7 @@ textarea.input {
 }
 
 .nav-menu>li>a {
+  color: #000000;
   display: block;
   padding: 25px 15px;
   line-height: 20px;
@@ -1377,7 +1378,7 @@ textarea.input {
 ===========================================================*/
 
 #footer {
-  margin-top: 40px;
+  /*margin-top: 40px;*/
   padding-top: 80px;
   padding-bottom: 40px;
   background-color: #1b1c1e;

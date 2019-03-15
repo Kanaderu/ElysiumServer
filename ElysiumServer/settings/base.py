@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'template_apps.snap-svg',
     'template_apps.underscore',
     'template_apps.flowchart',
+    'template_apps.materialize',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
