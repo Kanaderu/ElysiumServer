@@ -1,17 +1,22 @@
 {% load wagtailcore_tags wagtailimages_tags wagtailembeds_tags static %}
 
-
-<div class="parallax-container" style="height:800px">
-
-    <div id="parallax">
+<div>
     {% image value.poster_image original as poster %}
-    <video class="visible-desktop" id="video" poster="{{ poster.url }}" autoplay loop muted>
-        <source type="video/mp4" src="{{ value.video.url }}"></source>
-    </video>
-    <div id="state" class="visible-desktop">
-        <span class="fa fa-pause"></span>
+    {% if value.focus %}
+    <div id="top" class="parallax-container" style="height:200px">
+    {% else %}
+    <div class="parallax-container" style="height:200px">
+    {% endif %}
+        <div class="parallax">
+            <video class="visible-desktop" id="video" poster="{{ poster.url }}" autoplay loop muted>
+                <source type="video/mp4" src="{{ value.video.url }}"/>
+            </video>
+            {% comment %}
+            <div id="state" class="visible-desktop">
+                <span class="fa fa-pause"/>
+            </div>
+            {% endcomment %}
+            {% image value.poster_image original class="hidden-desktop" id="state" %}
+        </div>
     </div>
-    {% image value.poster_image original id="state" class="hidden-desktop" alt="" %}
-    </div>
-
 </div>

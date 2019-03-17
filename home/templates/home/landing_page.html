@@ -8,47 +8,16 @@
 <link rel="stylesheet" type="text/css" href="{% static 'parallax/parallax.css' %}">
 {% endblock %}
 
-
 {% block content %}
 {% for block in page.parallax %}
     {% if block.block_type == 'parallax' %}
-        <div>
-            {% include_block block %}
-        </div>
+    {% include_block block %}
+    {% else %}
+    <div class="container">
+        {% include_block block %}
+    </div>
     {% endif %}
 {% endfor %}
-<div>
-    <div id="top" class="parallax-container" style="height:800px">
-      <!--<div class="parallax"><img src="{% static 'img/home_slider.jpg' %}"></div>-->
-
-        <div id="parallax">
-        <video class="visible-desktop" id="video" poster="http://www.markhillard.com/sandbox/media/polina.jpg" autoplay loop muted>
-            <source type="video/mp4" src="{% static 'codepen/Pexels Videos 4708.mp4' %}"></source>
-        </video>
-        <div id="state" class="visible-desktop"><span class="fa fa-pause"></span></div>
-        <img id="hero-pic" class="hidden-desktop" src="http://www.markhillard.com/sandbox/media/polina.jpg" alt="">
-        </div>
-
-    </div>
-    <div class="section white">
-      <div class="row container">
-        <h2 class="header">Parallax</h2>
-        <p class="grey-text text-darken-3 lighten-3">Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.</p>
-      </div>
-    </div>
-    <div class="parallax-container" style="height:800px">
-          <!--<img src="{% static 'img/home_slider.jpg' %}">-->
-        <div id="parallax">
-            <video class="visible-desktop" id="video" poster="{% static 'img/home_slider.jpg' %}" autoplay loop muted>
-                <source type="video/mp4" src="{% static 'codepen/Pexels Videos 4708.mp4' %}"></source>
-            </video>
-            <div id="state" class="visible-desktop">
-                <span class="fa fa-pause"></span>
-            </div>
-            <img id="hero-pic" class="hidden-desktop" src="{% static 'img/home_slider.jpg' %}" alt="">
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 {% block extra_js %}

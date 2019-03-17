@@ -33,6 +33,10 @@
             {% endblock %}
         </title>
 
+        {% block extra_css %}
+            {# Override this in templates to add extra stylesheets #}
+        {% endblock %}
+
         {# Global stylesheets #}
         <link rel="stylesheet" type="text/css" href="{% static 'css/ElysiumServer.css' %}" />
         {# Google Fonts #}
@@ -48,10 +52,6 @@
         <link type="text/css" rel="stylesheet" href="{% static 'css/simplemde.min.css' %}" /> {# TODO: check if really needed #}
         <link type="text/css" rel="stylesheet" href="{% static 'css/prism-coy.css' %}" />
         <link type="text/css" rel="stylesheet" href="{% static 'css/superfences.css' %}" />
-
-        {% block extra_css %}
-            {# Override this in templates to add extra stylesheets #}
-        {% endblock %}
     </head>
 
     <body class="{% block body_class %}{% endblock %}">

@@ -1,4 +1,5 @@
 from wagtail.core import blocks
+from wagtail.core.blocks import BooleanBlock
 
 from wagtailcodeblock.blocks import CodeBlock
 from wagtail.embeds.blocks import EmbedBlock
@@ -72,6 +73,7 @@ class ThreeColumnBlock(blocks.StructBlock):
 class ParallaxBlock(blocks.StructBlock):
     video = DocumentChooserBlock(required=True, icon='media')
     poster_image = ImageChooserBlock(required=True, icon='image')
+    focus = BooleanBlock(required=False, help_text=_('Auto focus to parallax on page load'), )
 
     class Meta:
         template = 'blocks/parallax_block.html'
@@ -94,4 +96,5 @@ STANDARD_BLOCKS = [
     ('google_map', GoogleMapBlock()),
     ('two_column_block', TwoColumnBlock()),
     ('three_column_block', ThreeColumnBlock()),
+    ('parallax', ParallaxBlock()),
 ]

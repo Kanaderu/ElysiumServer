@@ -2,42 +2,26 @@ html,body {
   height:100%;
 }
 
-#state {
-bottom:0;
-cursor:pointer;
-font-size:2.25rem;
-left:0;
-line-height:1;
-padding:2rem 2.5rem 1.65rem;
-position:absolute;
-}
-
 #video {
-backface-visibility:hidden;
-background:url("http://www.markhillard.com/sandbox/media/polina.jpg") no-repeat scroll 0 0 #000;
-background-size:cover;
-bottom:0;
-height:auto;
-min-height:100%;
-min-width:100%;
-perspective:1000;
-/*position:fixed;*/
-right:0;
-width:auto;
-z-index:-999999;
+  display: flex;
+  flex: 1 0 auto;
+  position: relative;
+  z-index: -1;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  transform: translateZ(-1px) scale(2);
 }
 
-.parallax-container {
-    background-color:rgba(0,0,0,.2);
-    height:100%;
-    left:0;
-    position:relative;
-    top:0;
-    transition:background-color 300ms ease;
-    width:100%;
+#state {
+    bottom:0;
+    cursor:pointer;
+    font-size:2.25rem;
+    /*left:0;*/
+    line-height:1;
+    padding:2rem 2.5rem 1.65rem;
+    position:absolute;
 }
-
-.fade { background-color:rgba(0,0,0,.2) !important; }
 
 /* Visibility Helpers */
 @media only screen and (min-width:700px) {

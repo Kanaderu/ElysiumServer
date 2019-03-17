@@ -1,13 +1,29 @@
-/*
+// Set parallax on images using Materialize
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.parallax');
-    var instances = M.Parallax.init(elems, options);
+    var instances = M.Parallax.init(elems);
 });
-*/
-// Or with jQuery
+
 $(document).ready(function(){
-    // Set parallax
-    $('.parallax').parallax();
+    /*
+    // Set parallax on videos
+    $(window).on('load scroll', function () {
+        var scrolled = $(this).scrollTop();
+        // set on title tags
+        $('#title').css({
+            'transform': 'translate3d(0, ' + -(scrolled * 0.2) + 'px, 0)', // parallax (20% scroll rate)
+            'opacity': 1 - scrolled / 400 // fade out at 400px from top
+        });
+        // set on video tags
+        $('#video').css('transform', 'translate3d(0, ' + -(scrolled * 0.50) + 'px, 0)'); // parallax (25% scroll rate)
+    });
+    */
+    // Set parallax on videos
+    $(window).on('load scroll', function () {
+        var scrolled = $(this).scrollTop();
+        // set on video tags
+        $('#video').parent().css('transform', 'translate3d(0, ' + -(scrolled * 0.25) + 'px, 0)'); // parallax (25% scroll rate)
+    });
 
     // Scroll to #top
     $('html, body').animate({
@@ -35,7 +51,6 @@ $(document).ready(function(){
         var icons = $(this).children('span');
         //$('.parallax-container').toggleClass('fade');
         //$(this).toggleClass('fade')
-
         //$(this).parent().toggleClass('fade');
         if (video.paused) {
             video.play();

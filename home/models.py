@@ -45,7 +45,7 @@ class BlankPage(Page):
 
 
 class LandingPage(Page):
-    parallax = StreamField([('parallax', ParallaxBlock())])
+    parallax = StreamField(STANDARD_BLOCKS)
 
     content_panels = Page.content_panels + [
         StreamFieldPanel('parallax'),
