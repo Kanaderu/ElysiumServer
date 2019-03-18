@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static wagtailuserbar wagtailcore_tags wagtailimages_tags %}
+
+{% block header %}
+    {% if category %}
+    {% with category=category.0 %}
+    <div class="page-header">
+        {% image category.menu_image fill-1920x480 as img %}
+        <div class="page-header-bg" style="background-image: url('{{ img.url }}');" data-stellar-background-ratio="0.5"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-1 col-md-10 text-center">
+                    <h1 class="text-uppercase">{{ category }}</h1>
+                </div>
+            </div>
+		</div>
+    </div>
+    {% endwith %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="section">
+        <div class="container">
+        {% for note in page.notes.all %}
+            <a href="{{ note.url }}">{{ note }}</a>
+        {% endfor %}
+        </div>
+    </div>
+
+    <!-- SECTION -->
+    <div class="section">
+        <!-- CONTAINER -->
+        <div class="container">
+            <!-- ROW -->
+                <div id="hot-post" class="row hot-post">
+                    {% for post in notes %}
+                    {% with post=post.specific %}
+                {% if forloop.counter0 < 3 %}
+                    {% if forloop.counter0 == 0 %}
+                <div class="col-md-8 hot-post-left">
+                    {% elif forloop.counter0 == 1 %}
+                <div class="col-md-4 hot-post-right">
+                    {% endif %}
+                    <!-- POST -->
+                    <div class="post post-thumb">
+                        <a class="post-img" href="{{ post.url }}">
+                            {% image post.header_image fill-1200x800 as photo %} {# resize image and insert #}
+                            <img src="{{ photo.url }}"/>
+                        </a>
+                        <div class="post-body">
+                            <div class="post-category">
+                                {% for category in post.note_categories.all %}
+                                <a href="{% pageurl self %}?category={{ category }}">{{ category }}</a>
+                                {% endfor %}
+                            </div>
+                            {% if forloop.counter0 == 0 %}
+                            <h3 class="post-title title-lg">
+                            {% else %}
+                            <h3 class="post-title">
+                            {% endif %}
+                                <a href="{{ post.url }}">{{ post.title }}</a>
+                            </h3>
+                            <ul class="post-meta">
+                                <li><a href="">{{ post.author }}</a></li>
+                                <li>{{ post.date }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    {% if forloop.counter0 != 1 %}
+                </div>
+                    {% endif %}
+                {% endif %}
+                {% endwith %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    {% for post in notes %}
+    {% with post=post.specific %}
+    {% if forloop.counter0 >= 3 %}
+        {% if forloop.counter0 == 3 %}
+    <!-- POST / CATEGORY SECTION -->
+    <!-- SECTION -->
+    <div class="section">
+        <!-- CONTAINER -->
+        <div class="container">
+            <!-- ROW -->
+            <div class="row">
+                <div class="col-md-9"> {# left column of posts #}
+                    <div class="section-title"><h2 class="title">Recent Posts</h2></div>
+                    <div class="row">
+        {% endif %}
+                        <div class="col-md-6">
+                            {# <div class="section-title"><h2 class="title">{{ post.title }}</h2></div> #}
+                            <div class="post">
+                                <a class="post-img" href="{{ post.url }}">
+                                    {% image post.header_image fill-700x467 as photo %} {# resize image and insert #}
+                                    <img src="{{ photo.url }}"/> {# {% image post.header_image fill-400x200 %}</a> #}
+                                </a>
+                                <div class="post-body">
+                                    <div class="post-category">
+                                        {% for category in post.note_categories.all %}
+                                        {# <a href="{% pageurl blogcategorypage %}?category={{ category }}">{{ category }}</a> #}
+                                        {# <a href="{% slugurl 'category' %}?category={{ category }}">{{ category }}</a> #}
+                                        <a href="{% pageurl self %}?category={{ category }}">{{ category }}</a>
+                                        {% endfor %}
+                                    </div>
+                                    <h3 class="post-title">
+                                        <a href="note_post.html">{{ post.title }}</a>
+                                    </h3>
+                                    <ul class="post-meta">
+                                        <li><a href="">{{ post.author }}</a></li>
+                                        <li>{{ post.date }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+    {% endif %}
+    {% endwith %}
+    {% endfor %}
+    {% if notes|length >= 3 %}
+                    </div>
+                </div>
+                <div class="col-md-3"> {# right column of sub-category #}
+					<!-- category widget -->
+					<div class="aside-widget">
+						<div class="section-title">
+                        {% if category %}
+                            {# show subcategories #}
+							<h2 class="title">Sub-Categories</h2>
+                        {% else %}
+                            {# show root categories #}
+							<h2 class="title">Categories</h2>
+                        {% endif %}
+						</div>
+						<div class="category-widget">
+							<ul>
+                            {% if category %}
+                                {# show subcategories #}
+                                {% for subcategory in category.0.children.all %}
+                                <li><a href="{% pageurl self %}?category={{ subcategory }}">{{ subcategory }}<span>101010</span></a></li>
+                                {% endfor %}
+                            {% else %}
+                                {# show root categories #}
+                                {% for root_category in root_categories.all %}
+                                <li><a href="{% pageurl self %}?category={{ root_category }}">{{ root_category }}<span>101010</span></a></li>
+                                {% endfor %}
+                            {% endif %}
+							</ul>
+						</div>
+					</div>
+					<!-- /category widget -->
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {# show posts 3 in a row after the 7th post #}
+    {% for post in notes %}
+    {% with post=post.specific %}
+    {% if forloop.counter0 >= 7 %}
+        {% if forloop.counter0 == 7 %}
+    <!-- POST / CATEGORY SECTION -->
+    <!-- SECTION -->
+    <div class="section">
+        <!-- CONTAINER -->
+        <div class="container">
+            <div class="row">
+        {% endif %}
+                <div class="col-md-4">
+                    <div class="post">
+                        <a class="post-img" href="{{ post.url }}">
+                            {% image post.header_image fill-700x467 as photo %} {# resize image and insert #}
+                            <img src="{{ photo.url }}"/>
+                        </a>
+                        <div class="post-body">
+                            <div class="post-category">
+                                {% for category in post.note_categories.all %}
+                                <a href="{% pageurl self %}?category={{ category }}">{{ category }}</a>
+                                {% endfor %}
+                            </div>
+                            <h3 class="post-title">
+                                <a href="note_post.html">{{ post.title }}</a>
+                            </h3>
+                            <ul class="post-meta">
+                                <li><a href="">{{ post.author }}</a></li>
+                                <li>{{ post.date }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+    {% endif %}
+    {% endwith %}
+    {% endfor %}
+    {# T"{% settings 'BLOG_NUM_RECENT_POSTS' %}" #}
+    {% if notes|length >= 7 %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock %}

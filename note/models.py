@@ -63,23 +63,23 @@ def limit_author_choices():
 # Note Index Page
 class NoteIndexPage(Page):
     @property
-    def notes(self):
+    def subject_indices(self):
         # Get list of note pages that are descendants of this page
-        notes = NotePage.objects.descendant_of(self).live()
-        notes = notes.order_by(
+        subject_indices = NoteSubjectIndexPage.objects.descendant_of(self).live()
+        subject_indices.order_by(
             '-date'
         ).select_related('owner').prefetch_related(
             'tagged_note_items__tag',
             'categories',
             'categories__category',
         )
-        return notes
+        return subject_indices
 
     def get_context(self, request, tag=None, category=None, author=None, *args,
                     **kwargs):
         context = super(NoteIndexPage, self).get_context(
             request, *args, **kwargs)
-        notes = self.notes
+        subject_indices = self.subject_indices
         '''
         if tag is None:
             tag = request.GET.get('tag')
@@ -90,6 +90,158 @@ class NoteIndexPage(Page):
             notes = notes.filter(categories__category__name=category)
             category = NoteCategory.objects.filter(name=category)
         '''
+        if author:
+            if isinstance(author, str) and not author.isdigit():
+                subject_indices = subject_indices.filter(author__username=author)
+            else:
+                subject_indices = subject_indices.filter(author_id=author)
+
+        # Pagination
+        page = request.GET.get('page')
+        page_size = 10
+        if hasattr(settings, 'NOTE_PAGINATION_PER_PAGE'):
+            page_size = settings.NOTE_PAGINATION_PER_PAGE
+
+        paginator = None
+        if page_size is not None:
+            paginator = Paginator(subject_indices, page_size)  # Show 10 notes per page
+            try:
+                subject_indices = paginator.page(page)
+            except PageNotAnInteger:
+                subject_indices = paginator.page(1)
+            except EmptyPage:
+                subject_indices = paginator.page(paginator.num_pages)
+
+        context['subject_indices'] = subject_indices
+        #context['category'] = category
+        #context['tag'] = tag
+        context['author'] = author
+        context['COMMENTS_APP'] = settings.COMMENTS_APP
+        context['paginator'] = paginator
+        context = get_note_context(context)
+
+        return context
+
+    class Meta:
+        verbose_name = _('Note Index')
+
+    subpage_types = ['note.NoteSubjectIndexPage']
+
+
+class NoteSubjectIndexPage(Page):
+    @property
+    def subjects(self):
+        # Get list of note pages that are descendants of this page
+        subjects = NoteSubjectPage.objects.descendant_of(self).live()
+        subjects.order_by(
+            '-date'
+        ).select_related('owner').prefetch_related(
+            'tagged_note_items__tag',
+            'categories',
+            'categories__category',
+        )
+        return subjects
+
+    def get_context(self, request, tag=None, category=None, author=None, *args,
+                    **kwargs):
+        context = super(NoteSubjectIndexPage, self).get_context(
+            request, *args, **kwargs)
+        subjects = self.subjects
+
+        if author:
+            if isinstance(author, str) and not author.isdigit():
+                subjects = subjects.filter(author__username=author)
+            else:
+                subjects = subjects.filter(author_id=author)
+
+        # Pagination
+        page = request.GET.get('page')
+        page_size = 10
+        if hasattr(settings, 'NOTE_PAGINATION_PER_PAGE'):
+            page_size = settings.NOTE_PAGINATION_PER_PAGE
+
+        paginator = None
+        if page_size is not None:
+            paginator = Paginator(subjects, page_size)  # Show 10 notes per page
+            try:
+                subjects = paginator.page(page)
+            except PageNotAnInteger:
+                subjects = paginator.page(1)
+            except EmptyPage:
+                subjects = paginator.page(paginator.num_pages)
+
+        context['subjects'] = subjects
+        #context['category'] = category
+        #context['tag'] = tag
+        context['author'] = author
+        context['COMMENTS_APP'] = settings.COMMENTS_APP
+        context['paginator'] = paginator
+        context = get_note_context(context)
+
+        return context
+
+    body = StreamField(STANDARD_BLOCKS)
+    date = models.DateField(
+        _("Post date"), default=datetime.datetime.today,
+        help_text=_("This date may be displayed on the note post. It is not "
+                    "used to schedule posts to go live at a later date.")
+    )
+    header_image = models.ForeignKey(
+        get_image_model_string(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        verbose_name=_('Header Image')
+    )
+
+    search_fields = Page.search_fields + [
+        index.SearchField('body'),
+    ]
+
+    settings_panels = [
+        MultiFieldPanel([
+            FieldRowPanel([
+                FieldPanel('go_live_at'),
+                FieldPanel('expire_at'),
+            ], classname="label-above"),
+        ], 'Scheduled publishing', classname="publishing"),
+        FieldPanel('date'),
+     ]
+
+    content_panels = [
+        FieldPanel('title', classname="full title"),
+        ImageChooserPanel('header_image'),
+        StreamFieldPanel('body', classname="full title"),
+    ]
+
+    parent_page_types = ['note.NoteIndexPage']
+    subpage_types = ['note.NoteSubjectPage']
+
+    class Meta:
+        verbose_name = _('Subject Index Page')
+
+
+class NoteSubjectPage(Page):
+    @property
+    def notes(self):
+        # Get list of note pages that are descendants of this page
+        notes = NotePage.objects.descendant_of(self).live()
+        notes.order_by(
+            '-date'
+        ).select_related('owner').prefetch_related(
+            'tagged_note_items__tag',
+            'categories',
+            'categories__category',
+        )
+        return notes
+
+    def get_context(self, request, tag=None, category=None, author=None, *args,
+                    **kwargs):
+        context = super(NoteSubjectPage, self).get_context(
+            request, *args, **kwargs)
+        notes = self.notes
+
         if author:
             if isinstance(author, str) and not author.isdigit():
                 notes = notes.filter(author__username=author)
@@ -122,13 +274,6 @@ class NoteIndexPage(Page):
 
         return context
 
-    class Meta:
-        verbose_name = _('Note Index')
-
-    subpage_types = ['note.NoteSubjectIndexPage']
-
-
-class NoteSubjectIndexPage(Page):
     body = StreamField(STANDARD_BLOCKS)
     date = models.DateField(
         _("Post date"), default=datetime.datetime.today,
@@ -164,51 +309,8 @@ class NoteSubjectIndexPage(Page):
         StreamFieldPanel('body', classname="full title"),
     ]
 
-    subpage_types = ['note.NoteSubjectPage']
-    parent_page_types = ['note.NoteIndexPage']
-
-    class Meta:
-        verbose_name = _('Subject Index Page')
-
-
-class NoteSubjectPage(Page):
-    body = StreamField(STANDARD_BLOCKS)
-    date = models.DateField(
-        _("Post date"), default=datetime.datetime.today,
-        help_text=_("This date may be displayed on the note post. It is not "
-                    "used to schedule posts to go live at a later date.")
-    )
-    header_image = models.ForeignKey(
-        get_image_model_string(),
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        verbose_name=_('Header Image')
-    )
-
-    search_fields = Page.search_fields + [
-        index.SearchField('body'),
-    ]
-
-    settings_panels = [
-        MultiFieldPanel([
-            FieldRowPanel([
-                FieldPanel('go_live_at'),
-                FieldPanel('expire_at'),
-            ], classname="label-above"),
-        ], 'Scheduled publishing', classname="publishing"),
-        FieldPanel('date'),
-     ]
-
-    content_panels = [
-        FieldPanel('title', classname="full title"),
-        ImageChooserPanel('header_image'),
-        StreamFieldPanel('body', classname="full title"),
-    ]
-
-    subpage_type = ['note.NoteSubjectPage', 'note.NotePage']
     parent_page_types = ['note.NoteSubjectIndexPage']
+    subpage_type = ['note.NoteSubjectPage', 'note.NotePage']
 
     class Meta:
         verbose_name = _('Subject Page')
@@ -281,13 +383,13 @@ class NotePage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super(NotePage, self).get_context(request, *args, **kwargs)
-        context['notes'] = self.get_note_index().noteindexpage.notes
+        #context['notes'] = self.get_note_index().noteindexpage.notes
         context = get_note_context(context)
         context['COMMENTS_APP'] = settings.COMMENTS_APP
         return context
 
+    parent_page_types = ['note.NoteSubjectPage']
+
     class Meta:
         verbose_name = _('Note Page')
         verbose_name_plural = _('Note Pages')
-
-    parent_page_types = ['note.NoteSubjectPage']
