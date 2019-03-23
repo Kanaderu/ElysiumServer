@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load wagtailcore_tags wagtailimages_tags static %}
+{% load wagtailcore_tags wagtailimages_tags static hitcount_tags %}
 
 {% block header %}
     <div id="post-header" class="page-header">
@@ -22,7 +22,8 @@
                         <li><a href="author.html">{{ page.author }}</a></li>
                         <li>{{ page.date }}</li>
                         <li><i class="fa fa-comments"></i> 3</li>
-                        <li><i class="fa fa-eye"></i> 807</li>
+                        {% get_hit_count for page as hitcount %}
+                        <li><i class="fa fa-eye"></i> {{ hitcount }}</li>
                     </ul>
                 </div>
             </div>

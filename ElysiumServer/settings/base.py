@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'template_apps.flowchart',
     'template_apps.materialize',
 
+    'hitcount',
+
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
