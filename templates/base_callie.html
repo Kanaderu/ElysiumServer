@@ -63,20 +63,26 @@
                 {# Top Nav #}
                 <div id="nav-top">
                     <div class="container">
-                        {% if settings.home.SocialMediaSettings.facebook or settings.home.SocialMediaSettings.twitter or settings.home.SocialMediaSettings.google_plus or settings.home.SocialMediaSettings.instagram %}
+                        {% if settings.home.SocialMediaSettings.facebook or settings.home.SocialMediaSettings.twitter or settings.home.SocialMediaSettings.google_plus or settings.home.SocialMediaSettings.instagram or settings.home.SocialMediaSettings.linkedin or settings.home.SocialMediaSettings.pinterest %}
                         {# Social #}
                         <ul class="nav-social">
                             {% if settings.home.SocialMediaSettings.facebook %}
-                            <li><a href="{{ settings.home.SocialMediaSettings.facebook }}"><i class="fab fa-facebook"></i></a></li>
+                            <li><a href="https://www.facebook.com/{{ settings.home.SocialMediaSettings.facebook }}"><i class="fab fa-facebook"></i></a></li>
                             {% endif %}
                             {% if settings.home.SocialMediaSettings.twitter %}
                             <li><a href="https://twitter.com/{{ settings.home.SocialMediaSettings.twitter }}"><i class="fab fa-twitter"></i></a></li>
                             {% endif %}
+                            {% if settings.home.SocialMediaSettings.instagram %}
+                            <li><a href="https://www.instagram.com/{{ settings.home.SocialMediaSettings.instagram }}"><i class="fab fa-instagram"></i></a></li>
+                            {% endif %}
+                            {% if settings.home.SocialMediaSettings.pinterest %}
+                            <li><a href="https://www.pinterest.com/{{ settings.home.SocialMediaSettings.pinterest }}"><i class="fab fa-pinterest"></i></a></li>
+                            {% endif %}
                             {% if settings.home.SocialMediaSettings.google_plus %}
                             <li><a href="https://plus.google.com/+{{ settings.home.SocialMediaSettings.google_plus }}"><i class="fab fa-google-plus"></i></a></li>
                             {% endif %}
-                            {% if settings.home.SocialMediaSettings.instagram %}
-                            <li><a href="https://www.instagram.com/{{ settings.home.SocialMediaSettings.instagram }}"><i class="fab fa-instagram"></i></a></li>
+                            {% if settings.home.SocialMediaSettings.linkedin%}
+                            <li><a href="https://linkedin.com/in/{{ settings.home.SocialMediaSettings.linkedin }}"><i class="fab fa-linkedin"></i></a></li>
                             {% endif %}
                         </ul>
                         {# /Social #}
@@ -381,19 +387,25 @@
                                 <a href="/" class="logo"><img src="{% static 'logo/text_w.png' %}" alt="" style="height:35px"></a>
                             </div>
                             {{ settings.home.DescriptionSettings.footer_description }}
-                            {% if settings.home.SocialMediaSettings.facebook or settings.home.SocialMediaSettings.twitter or settings.home.SocialMediaSettings.google_plus or settings.home.SocialMediaSettings.instagram %}
+                            {% if settings.home.SocialMediaSettings.facebook or settings.home.SocialMediaSettings.twitter or settings.home.SocialMediaSettings.google_plus or settings.home.SocialMediaSettings.instagram or settings.home.SocialMediaSettings.linkedin or settings.home.SocialMediaSettings.pinterest %}
                             <ul class="contact-social">
                                 {% if settings.home.SocialMediaSettings.facebook %}
-                                <li><a href="{{ settings.home.SocialMediaSettings.facebook }}" class="social-facebook"><i class="fab fa-facebook"></i></a></li>
+                                <li><a href="https://www.facebook.com/{{ settings.home.SocialMediaSettings.facebook }}" class="social-facebook"><i class="fab fa-facebook"></i></a></li>
                                 {% endif %}
                                 {% if settings.home.SocialMediaSettings.twitter %}
                                 <li><a href="https://twitter.com/{{ settings.home.SocialMediaSettings.twitter }}" class="social-twitter"><i class="fab fa-twitter"></i></a></li>
                                 {% endif %}
+                                {% if settings.home.SocialMediaSettings.instagram %}
+                                <li><a href="https://www.instagram.com/{{ settings.home.SocialMediaSettings.instagram }}" class="social-instagram"><i class="fab fa-instagram"></i></a></li>
+                                {% endif %}
+                                {% if settings.home.SocialMediaSettings.pinterest %}
+                                <li><a href="https://www.pinterest.com/{{ settings.home.SocialMediaSettings.pinterest }}" class="social-pinterest"><i class="fab fa-pinterest"></i></a></li>
+                                {% endif %}
                                 {% if settings.home.SocialMediaSettings.google_plus %}
                                 <li><a href="https://plus.google.com/+{{ settings.home.SocialMediaSettings.google_plus }}" class="social-google-plus"><i class="fab fa-google-plus"></i></a></li>
                                 {% endif %}
-                                {% if settings.home.SocialMediaSettings.instagram %}
-                                <li><a href="https://www.instagram.com/{{ settings.home.SocialMediaSettings.instagram }}" class="social-instagram"><i class="fab fa-instagram"></i></a></li>
+                                {% if settings.home.SocialMediaSettings.linkedin %}
+                                <li><a href="https://linkedin.com/in/{{ settings.home.SocialMediaSettings.linkedin }}" class="social-linkedin"><i class="fab fa-linkedin-in"></i></a></li>
                                 {% endif %}
                             </ul>
                             {% endif %}
