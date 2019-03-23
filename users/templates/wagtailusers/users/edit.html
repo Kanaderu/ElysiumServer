@@ -3,4 +3,11 @@
 {% block extra_fields %}
     {% include "wagtailadmin/shared/field_as_li.html" with field=form.country %}
     {% include "wagtailadmin/shared/field_as_li.html" with field=form.status %}
+    {% include "wagtailadmin/shared/header.html" with title='Social Media' subtitle='Link Social Media Profiles' %}
+    {% include "wagtailadmin/shared/field_as_li.html" with field=form.facebook %}
+    {% include "wagtailadmin/shared/field_as_li.html" with field=form.twitter %}
+    {% include "wagtailadmin/shared/field_as_li.html" with field=form.instagram %}
+    {% include "wagtailadmin/shared/field_as_li.html" with field=form.pinterest %}
+    {% include "wagtailadmin/shared/field_as_li.html" with field=form.google_plus %}
+    {% include "wagtailadmin/shared/field_as_li.html" with field=form.linkedin %}
 {% endblock extra_fields %}
