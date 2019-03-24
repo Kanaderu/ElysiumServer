@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'note',
     'template_tags',
 
+    'django_bitly',
+
     'template_apps.bootstrap',
     'template_apps.fontawesome',
     'template_apps.jquery',
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
     'template_apps.js-sequence-diagrams',
     'template_apps.raphael',
     'template_apps.snap-svg',
+    'template_apps.social_share',
     'template_apps.underscore',
     'template_apps.flowchart',
     'template_apps.materialize',
