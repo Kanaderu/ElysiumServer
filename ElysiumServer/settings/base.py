@@ -34,8 +34,6 @@ INSTALLED_APPS = [
     'note',
     'template_tags',
 
-    'django_bitly',
-
     'template_apps.bootstrap',
     'template_apps.fontawesome',
     'template_apps.jquery',
