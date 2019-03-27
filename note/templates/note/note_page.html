@@ -40,10 +40,19 @@
 					<!-- post share -->
 					<div class="section-row">
 						<div class="post-share">
+                            {# TODO: Add Pinterest Share #}
+                            {% post_to_facebook page "Share" %}
+                            {% post_to_linkedin page.title page "Share" %}
+                            {% post_to_gplus page "Share" %}
+                            {% post_to_reddit page.title page "Share" %}
+                            {% post_to_twitter page.title page "Tweet" %}
+                            {% send_email page.title "Check out this page: {{ page.title }}" page "Email" %}
+                            {% comment %}
 							<a href="#" class="social-facebook"><i class="fab fa-facebook"></i><span>Share</span></a>
 							<a href="#" class="social-twitter"><i class="fab fa-twitter"></i><span>Tweet</span></a>
 							<a href="#" class="social-pinterest"><i class="fab fa-pinterest"></i><span>Pin</span></a>
 							<a href="#"><i class="fa fa-envelope"></i><span>Email</span></a>
+							{% endcomment %}
 						</div>
 					</div>
 					<!-- /post share -->
