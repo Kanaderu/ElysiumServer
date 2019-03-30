@@ -22,11 +22,20 @@
 {% endcomment %}
 
 {% block content %}
-    <div class="section">
-        <div class="container">
-        {% for subject_index in page.subject_indices.all %}
-            <a href="{{ subject_index.url }}">{{ subject_index }}</a><br/>
-        {% endfor %}
+<div class="section">
+    {% with page.subject_indices.all as subject_indices %}
+    {% if subject_indices %}
+    <div class="container">
+        <div id="toc_container">
+            <p class="toc_title">Contents</p>
+            <ul class="toc_list">
+                {% for subject_index in subject_indices %}
+                <li><a href="{{ subject_index.url }}">{{ subject_index }}</a></li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
+    {% endif %}
+    {% endwith %}
+</div>
 {% endblock %}

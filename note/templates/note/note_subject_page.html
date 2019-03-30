@@ -51,11 +51,16 @@
 					</div>
 					<!-- /post share -->
 
-					<div class="section-row">
-                        {% for note in notes %}
-                        <a href="{{ note.url }}">{{ note }}</a><br/>
-                        {% endfor %}
+                    {% if notes %}
+                    <div id="toc_container">
+                        <p class="toc_title">Contents</p>
+                        <ul class="toc_list">
+                            {% for note in notes %}
+                            <li><a href="{{ note.url }}">{{ note }}</a></li>
+                            {% endfor %}
+                        </ul>
                     </div>
+                    {% endif %}
 
 					<!-- post content -->
 					<div class="section-row">
@@ -81,7 +86,7 @@
                     {% endif %}
 
                     <!-- return to notes -->
-                    <p><a href="{{ page.get_parent.url }}">Return to notes</a></p>
+                    <p><a href="{{ page.get_parent.url }}">Return to {{ page.get_parent.title | lower }}</a></p>
 
 				</div>
 			</div>

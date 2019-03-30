@@ -38,7 +38,6 @@
         {% endblock %}
 
         {# Global stylesheets #}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/ElysiumServer.css' %}" />
         {# Google Fonts #}
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CMuli:400,700" rel="stylesheet" />
         {# Bootstrap #}
@@ -52,6 +51,8 @@
         <link type="text/css" rel="stylesheet" href="{% static 'css/simplemde.min.css' %}" /> {# TODO: check if really needed #}
         <link type="text/css" rel="stylesheet" href="{% static 'css/prism-coy.css' %}" />
         <link type="text/css" rel="stylesheet" href="{% static 'css/superfences.css' %}" />
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/ElysiumServer.css' %}" />
     </head>
 
     <body class="{% block body_class %}{% endblock %}">
