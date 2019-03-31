@@ -56,7 +56,9 @@
     </head>
 
     <body class="{% block body_class %}{% endblock %}">
+        {% if user.is_authenticated %}
         {% wagtailuserbar %}
+        {% endif %}
         {# Header #}
         <header id="header">
             {# NAV #}
