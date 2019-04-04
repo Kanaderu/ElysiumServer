@@ -43,7 +43,9 @@
         {# Bootstrap #}
         <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
         {# Font Awesome Icon #}
-        <link rel="stylesheet" href="{% static 'css/all.css' %}" />
+        <link type="text/css" rel="stylesheet" href="{% static 'css/all.css' %}" />
+        <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="{% static 'parallax/parallax.css' %}">
         {# Callie Custom Style #}
         <link type="text/css" rel="stylesheet" href="{% static 'css/callie-style.css' %}" />
         <link type="text/css" rel="stylesheet" href="{% static 'css/katex.min.css' %}" />
@@ -52,7 +54,7 @@
         <link type="text/css" rel="stylesheet" href="{% static 'css/prism-coy.css' %}" />
         <link type="text/css" rel="stylesheet" href="{% static 'css/superfences.css' %}" />
 
-        <link rel="stylesheet" type="text/css" href="{% static 'css/ElysiumServer.css' %}" />
+        <link type="text/css" rel="stylesheet" href="{% static 'css/ElysiumServer.css' %}" />
     </head>
 
     <body class="{% block body_class %}{% endblock %}">
@@ -232,6 +234,9 @@
         <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/jquery.stellar.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+
+        <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'parallax/parallax.js' %}"></script>
 
         {% block extra_js %}
             {# Override this in templates to add extra javascript #}

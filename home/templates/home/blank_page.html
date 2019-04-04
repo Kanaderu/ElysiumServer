@@ -3,8 +3,19 @@
 {% load wagtailcore_tags wagtailimages_tags static %}
 {% load menu_tags %}
 
-{% block body_class %}template-homepage{% endblock %}
+{% block content %}
+{% for block in self.body %}
+    {% if block.block_type == 'parallax' %}
+    {% include_block block %}
+    {% else %}
+    <div class="container">
+        {% include_block block %}
+    </div>
+    {% endif %}
+{% endfor %}
+{% endblock %}
 
+{% comment %}
 {% block content %}
 <div class="section">
     <div class="container">
@@ -19,3 +30,4 @@
     </div>
 </div>
 {% endblock %}
+{% endcomment %}
