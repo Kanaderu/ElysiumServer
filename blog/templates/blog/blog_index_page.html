@@ -118,7 +118,9 @@
                     </div>
                 </div>
                 <div class="col-md-3"> {# right column of sub-category #}
-					<!-- category widget -->
+
+                    {% if root_categories.all|length > 0 %}
+                    <!-- category widget -->
 					<div class="aside-widget">
 						<div class="section-title">
                         {% if category %}
@@ -146,6 +148,8 @@
 						</div>
 					</div>
 					<!-- /category widget -->
+                    {% endif %}
+
                 </div>
             </div>
         </div>
