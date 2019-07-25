@@ -35,11 +35,19 @@ def set_var(parser, token):
     return SetVarNode(parts[1], parts[3])
 
 
+class GetSettingsNode(template.Node):
+
+    def __init__(self, settings_param):
+        self.settings_param = settings_param
+
+    def render(self, context):
+        return self.settings_param
+
 @register.tag(name='settings')
 @stringfilter
 def get_settings(value, token):
     parts = token.split_contents()
-    print('val is ' + str(parts))
-    print('BLOG_NUM_RECENT_POSTS is ' + str(base.BLOG_NUM_RECENT_POSTS))
+    #print('val is ' + str(parts))
+    #print('BLOG_NUM_RECENT_POSTS is ' + str(base.BLOG_NUM_RECENT_POSTS))
     setting = getattr(base, parts[1])
-    return setting
+    return GetSettingsNode(setting)
